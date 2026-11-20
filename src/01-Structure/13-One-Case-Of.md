@@ -216,4 +216,4 @@ enum Message {
 }
 ```
 
-The generated backend representation is an implementation detail. First source should use case constructors and matching rather than depending on a specific tag layout.
+The generated backend representation is an implementation detail. Typical source should use case constructors and matching rather than depending on a specific tag layout.

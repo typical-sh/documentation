@@ -1,6 +1,6 @@
 # Anchors
 
-Anchors are compiler-aware natural-language sentences written in First source. They describe what nearby code is supposed to mean, do, preserve, or still decide. They are program context, not comments: the compiler parses them, assigns them to their enclosing declaration, classifies them, and exposes them to tools.
+Anchors are compiler-aware natural-language sentences written in Typical source. They describe what nearby code is supposed to mean, do, preserve, or still decide. They are program context, not comments: the compiler parses them, assigns them to their enclosing declaration, classifies them, and exposes them to tools.
 
 Anchors are primarily authored by language models and maintained through the editor. They should therefore use a deliberately small syntax that is easy to generate, easy to check, and hard to confuse with ordinary First code.
 

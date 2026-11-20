@@ -1,6 +1,6 @@
 # Agent Instructions
 
-This repository contains the First language documentation. When editing:
+This repository contains the Typical language documentation. When editing:
 
 - Keep documentation concise and consistent with surrounding files.
 - Preserve existing terminology unless intentionally changing it.

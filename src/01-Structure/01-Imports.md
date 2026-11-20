@@ -166,7 +166,7 @@ First reports invalid imports with notices rather than compilation errors. A mal
 
 An invalid wrapper schedules no startup. `unknowable` is compiler recovery state, not a user-expressible type or a value intended for shipped code. Its propagation rules are defined in [Unknowable Recovery](../../03-Compiler/01-Front-End/01-Unknowable-Recovery.md).
 
-Quoted source paths and source globs are not import forms. First source files use the `.first` extension, but files remain a storage detail rather than inclusion units.
+Quoted source paths and source globs are not import forms. Typical source files use the `.ty` extension, but files remain a storage detail rather than inclusion units.
 
 ## Unsupported TypeScript Forms
 

@@ -92,4 +92,4 @@ renderWithPreact() (
 
 We actually really need this for server-side code... because if we're going to take over the back end, we're going to need some way to do server-side code hydration. So we absolutely need HTML on the back end. And the syntax we have here has subtle changes so its not actually that much different than what features we already have in First.
 
-Also we need a way to work around that limitation of upper and lower case tag names having specific meanings. This is something that is very specific to React and not something that should be baked into the First language. For example, people may want to make their own templating languages that use <if></if> etc. React's limitations should leak into this design.
+Also we need a way to work around that limitation of upper and lower case tag names having specific meanings. This is something that is very specific to React and not something that should be baked into the Typical language. For example, people may want to make their own templating languages that use <if></if> etc. React's limitations should leak into this design.

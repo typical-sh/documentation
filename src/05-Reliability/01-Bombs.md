@@ -29,7 +29,7 @@ You don't need to provide a bomb value. You can just throw without a value and i
 ```first
 start() (
 	if (1 + 1 === 3) (
-		// > Bomb message is "Failure in start(), at SourceFile.first:123"
+		// > Bomb message is "Failure in start(), at SourceFile.ty:123"
 		throw
 	)
 	

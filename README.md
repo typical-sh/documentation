@@ -4,7 +4,7 @@
 
 # First Documentation
 
-This repository contains the documentation source for the First language website.
+This repository contains the documentation source for the Typical language website.
 
 ## Structure
 
