@@ -2,13 +2,13 @@ Units are compile-time numeric tags with suffix syntax.
 
 They are a language primitive for building unit libraries. A unit affects type checking, overload selection, completions, and lowering, but it does not allocate a wrapper or preserve a distinct runtime object. Lowered output stores and passes the underlying numeric representation required by context.
 
-First does not include dimensional analysis, automatic conversion tables, unit cancellation, or compound unit generation as built-in language behavior. Libraries define those behaviors with functions and operator overloads.
+Typical does not include dimensional analysis, automatic conversion tables, unit cancellation, or compound unit generation as built-in language behavior. Libraries define those behaviors with functions and operator overloads.
 
 ## Declaration
 
 A unit is declared with `is unit`.
 
-```first
+```ty
 m is unit
 cm is unit
 
@@ -19,7 +19,7 @@ A unit does not declare a numeric base. The tagged expression keeps or resolves 
 
 Units cannot inherit from other units, and other declarations cannot inherit from units.
 
-```first
+```ty
 m is unit
 surveyM is unit
 
@@ -29,7 +29,7 @@ surveyM is unit
 
 Unit declarations may use ordinary identifier casing, including conventional uppercase symbols.
 
-```first
+```ty
 K is unit
 Hz is unit
 ```
@@ -38,7 +38,7 @@ Hz is unit
 
 A unit may have a body for functions and operator overloads. Fields, constructors, setters, and ghosts are not allowed. A unit without members may omit the body.
 
-```first
+```ty
 m is unit
 
 cm is unit (
@@ -50,7 +50,7 @@ cm is unit (
 
 Functions associated with a unit are resolved as compile-time member syntax on tagged values and lower to ordinary function calls with the unit value as the first argument.
 
-```first
+```ty
 cm is unit (
 	toM(this) returns m (
 		return m(this / 100)
@@ -65,7 +65,7 @@ meters = distance.toM()
 
 Unit suffix syntax applies only to numeric literals and has no space between the literal and the unit name.
 
-```first
+```ty
 width = 10m
 offset = -3m
 temperature = 300K
@@ -73,13 +73,13 @@ temperature = 300K
 
 Built-in numeric suffixes are recognized first. Any remaining suffix must resolve to an in-scope unit.
 
-```first
+```ty
 precise = m(1.25ff)
 ```
 
 Suffix syntax is not used for variables or expressions. Use unit application instead.
 
-```first
+```ty
 size = getSize()
 width = m(size)
 ```
@@ -88,7 +88,7 @@ width = m(size)
 
 `Unit(expression)` applies a compile-time unit tag to a numeric expression. It is unit application, not an ordinary class constructor call.
 
-```first
+```ty
 width = m(getWidth())
 ```
 
@@ -96,7 +96,7 @@ Unit application lowers to the expression's underlying numeric value after check
 
 Validation, normalization, and conversion belong in ordinary functions or explicit operator overloads.
 
-```first
+```ty
 requirePositiveMeters(value is m) returns m (
 	if (value < m(0)) (
 // > library-defined notice or bomb behavior
@@ -110,19 +110,19 @@ requirePositiveMeters(value is m) returns m (
 
 A unit may appear alone as a type annotation for a unit-tagged provisional numeric value.
 
-```first
+```ty
 width is m = 10
 ```
 
 This is equivalent for unit checking to:
 
-```first
+```ty
 width is m = m(10)
 ```
 
 API boundaries should pin the runtime numeric representation with `with`.
 
-```first
+```ty
 measure(width is i64 with cm) (
 )
 
@@ -136,19 +136,19 @@ provisional is cm = 10
 
 When a bare number appears in a binary operation with a unit, the compiler adopts the bare number into the unit type.
 
-```first
+```ty
 total = 10m + 2
 ```
 
 This is equivalent for unit checking to:
 
-```first
+```ty
 total = m(10) + m(2)
 ```
 
 The same rule applies when the bare number is on the left.
 
-```first
+```ty
 total = 2 + 10m
 ```
 
@@ -164,7 +164,7 @@ Bare number adoption applies to the overloadable binary arithmetic operators:
 
 Compound assignment operators use the same rule as their underlying binary operator.
 
-```first
+```ty
 distance += 2
 ```
 
@@ -174,7 +174,7 @@ Equality operators do not use bare number adoption. Bitwise and logical operator
 
 Distinct units are unrelated unless a function, conversion, or operator overload explicitly relates them.
 
-```first
+```ty
 m is unit
 surveyM is unit
 
@@ -184,7 +184,7 @@ distance = 10m + 5surveyM
 
 Libraries may define conversions or cross-unit operations with unit functions and operator overloads.
 
-```first
+```ty
 inch is unit (
 	toCm(this) returns cm (
 		return cm(this * 2.54)
@@ -200,9 +200,9 @@ cm is unit (
 
 ## Unit Algebra
 
-First does not automatically create compound units.
+Typical does not automatically create compound units.
 
-```first
+```ty
 area = 10m * 10m
 ratio = 10m / 2m
 ```
@@ -211,7 +211,7 @@ The compiler never synthesizes compound units, cancels units, or infers that `m 
 
 Same-unit `+` and `-` are valid by default and return the same unit. Same-unit `*`, `/`, `\`, `%`, and `**` require explicit operator overloads unless the operation involves bare-number adoption from the other operand.
 
-```first
+```ty
 sum = 10m + 5m
 // > compiler notice unless an overload defines the result
 area = 10m * 5m
@@ -219,7 +219,7 @@ area = 10m * 5m
 
 If a library wants `m * m` to return an area unit, or `m / s` to return a speed unit, it defines those operator overloads.
 
-```first
+```ty
 m2 is unit
 s is unit
 mps is unit
@@ -239,14 +239,14 @@ m is unit (
 
 Loose equality between a unit value and a bare numeric value compares the underlying numeric values unless a unit overloads `== !=`.
 
-```first
+```ty
 // > true
 10m == 10
 ```
 
 Strict equality is checked statically before lowering and requires the same unit tag and compatible underlying numeric value.
 
-```first
+```ty
 // > false
 10m === 10
 // > true

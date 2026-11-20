@@ -2,11 +2,11 @@
 
 Imports make built-in modules and wrapper packages available inside a space or class.
 
-First intentionally has a small import syntax. Ordinary package imports use canonical names rather than strings or paths. Named, default, namespace, type-only, and dynamic TypeScript imports are not supported.
+Typical intentionally has a small import syntax. Ordinary package imports use canonical names rather than strings or paths. Named, default, namespace, type-only, and dynamic TypeScript imports are not supported.
 
 ## Name Categories
 
-First has three relevant categories of names:
+Typical has three relevant categories of names:
 
 - Standard built-ins: `Math`, `console`, `Array`
 - Module built-ins: `Fs`, `Path`, `Net`
@@ -14,33 +14,33 @@ First has three relevant categories of names:
 
 Standard built-ins are always available. Module built-ins and wrapper packages must be imported before use.
 
-A wrapper package is a First-facing module generated around a Rust crate. First code imports the wrapper rather than accessing the crate directly. The wrapper adapts the crate's API, types, ownership behavior, documentation, startup metadata, and Cargo features to First.
+A wrapper package is a Typical-facing module generated around a Rust crate. Typical code imports the wrapper rather than accessing the crate directly. The wrapper adapts the crate's API, types, ownership behavior, documentation, startup metadata, and Cargo features to Typical.
 
 ## Module Imports
 
 The basic import form uses a module's canonical name:
 
-```first
+```ty
 import Postgres
 ```
 
 An alias changes the local binding:
 
-```first
+```ty
 import Postgres as MyPostgres
 ```
 
-The alias may be any valid non-reserved First identifier. UpperCamelCase is conventional but not mechanically required. An alias affects only lexical lookup; it does not rename the package or its API.
+The alias may be any valid non-reserved Typical identifier. UpperCamelCase is conventional but not mechanically required. An alias affects only lexical lookup; it does not rename the package or its API.
 
 An import may specify Cargo features and an exact package version:
 
-```first
+```ty
 import Sqlx features postgres mysql sqlite version 1.2.3
 ```
 
 Features are whitespace-separated. When an alias, features, and a version are all present, they occur in that order, with the version last:
 
-```first
+```ty
 import Sqlx as Database features postgres mysql sqlite version 1.2.3
 ```
 
@@ -48,13 +48,13 @@ import Sqlx as Database features postgres mysql sqlite version 1.2.3
 
 A `declare import` establishes inherited package policy without introducing a module binding:
 
-```first
+```ty
 declare import Sqlx features postgres mysql sqlite version 1.2.3
 ```
 
 The declaration applies in its containing space or class and in nested spaces and classes. A matching import inherits any version or features it does not state itself:
 
-```first
+```ty
 declare import Sqlx features postgres version 1.2.3
 
 DataAccess (
@@ -70,13 +70,13 @@ Versions are exact semantic versions. A version written on an import or inherite
 
 Bare imports are valid:
 
-```first
+```ty
 import Postgres
 ```
 
 The package manager first selects the newest compatible wrapper version already available in its local cache. If no compatible cached version exists, it selects and downloads the newest compatible non-yanked registry version. The editor then rewrites the import with the exact selected version:
 
-```first
+```ty
 import Postgres version 1.2.3
 ```
 
@@ -86,15 +86,15 @@ Different spaces and classes may explicitly import different versions of the sam
 
 ## Cargo Features
 
-Wrapper metadata maps its First feature names to Cargo features. Wrapper-facing feature names are ordinary First identifiers; for example, a Cargo feature named `native-tls` can be exposed as `nativeTls`. Features required unambiguously by API use are inferred. The editor writes inferred features into the import or applicable `declare import` automatically.
+Wrapper metadata maps its Typical feature names to Cargo features. Wrapper-facing feature names are ordinary Typical identifiers; for example, a Cargo feature named `native-tls` can be exposed as `nativeTls`. Features required unambiguously by API use are inferred. The editor writes inferred features into the import or applicable `declare import` automatically.
 
 Some features select behavior that API use cannot reveal, such as a TLS implementation, runtime integration, database backend, compression format, macro support, or bundled native library. Those features must be selected explicitly or through an editor decision.
 
-Cargo unions all requested features for one package version across the final dependency graph. First follows that rule even when the feature requests originate in different lexical spaces or classes. Features for different package versions remain separate. Mutually incompatible features produce a notice and dependency-resolution recovery.
+Cargo unions all requested features for one package version across the final dependency graph. Typical follows that rule even when the feature requests originate in different lexical spaces or classes. Features for different package versions remain separate. Mutually incompatible features produce a notice and dependency-resolution recovery.
 
 ## Canonical Package Names
 
-Ordinary wrapper names derive from Cargo package names. Hyphens and underscores divide words, and wrapper metadata applies First's .NET-style casing:
+Ordinary wrapper names derive from Cargo package names. Hyphens and underscores divide words, and wrapper metadata applies Typical's .NET-style casing:
 
 ```text
 tokio-postgres -> TokioPostgres
@@ -109,7 +109,7 @@ Two-letter initialisms remain uppercase. Longer initialisms use ordinary word ca
 
 Built-in module names are reserved. In the rare case where a Cargo package collides with a built-in or otherwise cannot be named unambiguously, its exact Cargo name may be quoted and must be aliased:
 
-```first
+```ty
 import Path
 import "path" as CratePath version 1.2.3
 ```
@@ -132,7 +132,7 @@ Within one space or class, the first import of a package creates its module bind
 
 A module import creates a runtime module value:
 
-```first
+```ty
 import Postgres version 1.2.3
 
 entries = Object.entries(Postgres)
@@ -158,11 +158,11 @@ Each wrapper package version starts at most once. A startup dependency cycle pro
 
 Startup functions cannot return bombs. Attempting to do so produces a notice. If a bomb occurs at runtime, execution of that startup function stops.
 
-The compiler injects wrapper startup calls into the final generated Rust `main` before running project startup functions. Rust library crates do not provide the executed program entry point; the generated First wrapper supplies the startup hook and metadata.
+The compiler injects wrapper startup calls into the final generated Rust `main` before running project startup functions. Rust library crates do not provide the executed program entry point; the generated Typical wrapper supplies the startup hook and metadata.
 
 ## Invalid Imports And Recovery
 
-First reports invalid imports with notices rather than compilation errors. A malformed, misplaced, unavailable, or unresolvable module import creates an internal `unknowable` module placeholder. Values derived from it are unknowable, and affected statements are short-circuited so the rest of the program remains executable.
+Typical reports invalid imports with notices rather than compilation errors. A malformed, misplaced, unavailable, or unresolvable module import creates an internal `unknowable` module placeholder. Values derived from it are unknowable, and affected statements are short-circuited so the rest of the program remains executable.
 
 An invalid wrapper schedules no startup. `unknowable` is compiler recovery state, not a user-expressible type or a value intended for shipped code. Its propagation rules are defined in [Unknowable Recovery](../../03-Compiler/01-Front-End/01-Unknowable-Recovery.md).
 
@@ -170,7 +170,7 @@ Quoted source paths and source globs are not import forms. Typical source files 
 
 ## Unsupported TypeScript Forms
 
-First does not support TypeScript-style import forms or dynamic imports:
+Typical does not support TypeScript-style import forms or dynamic imports:
 
 ```ts
 import { readFile } from "fs"

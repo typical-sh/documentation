@@ -4,7 +4,7 @@
 
 This example shows declarations, nested calls, and intermediate values.
 
-```first
+```ty
 square(value is int) returns int (
 	return value * value
 )
@@ -20,7 +20,7 @@ distanceSquared(x is int, y is int) returns int (
 
 This function accepts both a default value and an optional fallback.
 
-```first
+```ty
 clamp(value is int, minimum is int = 0, maximum is int = 100) returns int (
 	if (value < minimum) (
 		return minimum
@@ -38,7 +38,7 @@ clamp(value is int, minimum is int = 0, maximum is int = 100) returns int (
 
 This example collects an arbitrary number of integer arguments.
 
-```first
+```ty
 sum(...values is int[]) returns int (
 	total is var int = 0
 	
@@ -58,7 +58,7 @@ sampleTotal() returns int (
 
 This example keeps a nested calculation readable by naming its intermediate results.
 
-```first
+```ty
 clamp(value is int, minimum is int = 0, maximum is int = 100) returns int (
 	if (value < minimum) (
 		return minimum

@@ -2,7 +2,7 @@
 
 Anchors are compiler-aware natural-language sentences written in Typical source. They describe what nearby code is supposed to mean, do, preserve, or still decide. They are program context, not comments: the compiler parses them, assigns them to their enclosing declaration, classifies them, and exposes them to tools.
 
-Anchors are primarily authored by language models and maintained through the editor. They should therefore use a deliberately small syntax that is easy to generate, easy to check, and hard to confuse with ordinary First code.
+Anchors are primarily authored by language models and maintained through the editor. They should therefore use a deliberately small syntax that is easy to generate, easy to check, and hard to confuse with ordinary Typical code.
 
 An anchor is not a proof, contract, invariant, test, or formal postcondition. Deterministic requirements that the compiler can check directly belong in those mechanisms. Anchors exist for intent, responsibility, generation guidance, partial implementation points, and visible uncertainty.
 
@@ -10,7 +10,7 @@ An anchor is not a proof, contract, invariant, test, or formal postcondition. De
 
 An anchor begins with `-` at a structural boundary:
 
-```first
+```ty
 PaymentRecovery (
 	- Keeps declined payments understandable to the customer.
 
@@ -28,7 +28,7 @@ Anchors may appear wherever the enclosing construct permits structural items or 
 
 Comments are separate. A `//` comment may visually group nearby anchors, but it does not own, classify, scope, inherit into, or otherwise affect them.
 
-```first
+```ty
 // Customer-visible recovery
 - Keeps recovery language consistent with checkout.
 - Should failed gift-card payments use the same retry path?
@@ -56,7 +56,7 @@ There is no general escape syntax for anchor prose. Reserved characters, includi
 
 If the final non-whitespace character of an anchor is `?`, the compiler classifies it as a pending question anchor. Raw `?` is not permitted anywhere else in anchor prose.
 
-```first
+```ty
 - Should failed gift-card payments use the same retry path?
 ```
 
@@ -70,13 +70,13 @@ Accepted non-question anchors are classified as declarative, imperative, or unce
 
 A **declarative anchor** states a fact, responsibility, invariant-like intent, constraint, or guardrail about its enclosing declaration.
 
-```first
+```ty
 - Payment failures remain explainable without exposing processor internals.
 ```
 
 An **imperative anchor** gives an instruction at an executable source position. Implementation may be inserted after it while retaining the anchor as the statement of intent.
 
-```first
+```ty
 retryPayment() (
 	- Load the current payment attempt.
 	- Return the normalized retry outcome.
@@ -93,7 +93,7 @@ Imperative anchors may appear only inside executable bodies: functions, construc
 
 Braces introduce a semantic island inside an anchor. A semantic island uses its own grammar rather than the raw anchor-prose character rules. Partial Verification is provisional and is not required for parsing islands.
 
-```first
+```ty
 - Keeps offline work usable when {Network} is unavailable.
 - Makes initialization failures from {calculateThings()} actionable.
 - Preserve the behavior described in {chat:2f4a9d87}.
@@ -126,7 +126,7 @@ Unknown schemes remain valid resource islands. Editors may render supported sche
 
 An imperative anchor introduces an implementation context for the statements that follow it in the same executable body. The context ends at the next imperative anchor in that body or at the end of the body. A nested statement body remains part of its enclosing statement; an anchor inside that nested body introduces a context within that body.
 
-```first
+```ty
 download() (
 	- Download the data.
 	size = getSize()
@@ -141,7 +141,7 @@ The context introduces no lexical scope, runtime scope, or control-flow boundary
 
 A sketch may contain only the instructions. Filling it in inserts ordinary statements between the anchors:
 
-```first
+```ty
 download() (
 	- Download the data.
 	- Organize the results alphabetically.
@@ -150,7 +150,7 @@ download() (
 
 A verification agent checks whether the statements in each context contribute to the instruction and whether the implementation satisfies it. A statement unrelated to that responsibility is a semantic smell, even when the code compiles:
 
-```first
+```ty
 download() (
 	- Download the data.
 	size = getSize()
@@ -194,7 +194,7 @@ Imports, parameters, locals, and statements do not own anchors.
 
 Fields use an optional anchor body after the complete field declaration when they contain anchors. The body attaches to the field as a declaration, not to the initializer expression. It creates no runtime scope, receiver, or namespace, and it permits anchors plus ordinary `//` comments only.
 
-```first
+```ty
 value is int = 12 (
 	// Ranking
 	- Keeps ranking changes explainable when this confidence score changes.

@@ -1,6 +1,6 @@
 # Language Examples
 
-This section contains complete, independently compilable First fragments. The examples are inputs for compound parser tests and editor visualizations rather than a progressive tutorial.
+This section contains complete, independently compilable Typical fragments. The examples are inputs for compound parser tests and editor visualizations rather than a progressive tutorial.
 
 Each example uses ordinary serialized Typical source. Editor-generated glyphs and other derived presentation do not appear in the code blocks.
 

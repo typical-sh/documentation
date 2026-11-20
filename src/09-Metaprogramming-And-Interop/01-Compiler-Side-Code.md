@@ -3,11 +3,11 @@ _Design document. Captures the staging model, the compile/runtime bridge, the re
 
 ## 1. Motivation
 
-First is meant to compile to native code while staying fully sound and always-compiling. Separately, Typist is meant to let AI generate large bodies of code that a human can still understand and direct rather than accept as a black box.
+Typical is meant to compile to native code while staying fully sound and always-compiling. Separately, Typist is meant to let AI generate large bodies of code that a human can still understand and direct rather than accept as a black box.
 
 Those two goals meet at a single feature: **compile-time code that can construct and mutate the program itself**, with the compiler recording enough about that construction that a reviewer can trace any piece of generated code back to exactly what produced it — not by static analysis after the fact, but because the compiler watched it happen.
 
-This is the same idea as the "generation chain" model (codegen as a sequence of reviewable stages, each a projection of the last) applied specifically to First's own compile/runtime boundary.
+This is the same idea as the "generation chain" model (codegen as a sequence of reviewable stages, each a projection of the last) applied specifically to Typical's own compile/runtime boundary.
 
 ## 2. The staging model
 
@@ -67,7 +67,7 @@ Compile-time code follows the same structural access rules as runtime code. It m
 
 ## 3. Types as compile-time values
 
-Reflection code needs to pass types around as ordinary values (e.g. `Field("description", string)`). First's generics already use a types-as-values syntax, so this falls out of the existing design rather than requiring a new mechanism — a type reference is just a value like any other argument.
+Reflection code needs to pass types around as ordinary values (e.g. `Field("description", string)`). Typical's generics already use a types-as-values syntax, so this falls out of the existing design rather than requiring a new mechanism — a type reference is just a value like any other argument.
 
 ## 4. Spaces as mutable collections
 
@@ -94,7 +94,7 @@ App (
 
 ### Stage-polymorphic construction
 
-First has no `new` keyword — constructing something is just calling it, e.g. `RuntimeObject()`. What that call produces depends on which side calls it:
+Typical has no `new` keyword — constructing something is just calling it, e.g. `RuntimeObject()`. What that call produces depends on which side calls it:
 
 - At runtime, `RuntimeObject()` allocates an ordinary instance.
 - At compile time, a constructor call produces a **builder / code-DOM representation** of the class — something you can mutate (add fields, rename, etc.) before it's appended anywhere. Typist renders this with a leading 🏗️ before the call (`🏗️ RuntimeObject()`), so the distinction is visible directly in the editor rather than only inferable from context.
@@ -127,7 +127,7 @@ Compile-time code isn't required to be referentially transparent itself — it's
 ## 8. Open questions
 
 1. **Hole identity for template-generating functions.** A related but distinct pattern (a class definition with bare `!` holes standing in for constructor parameters, producing a portable, fillable class value) needs named holes if the same hole is meant to be reused at multiple positions (e.g. a field name reused in a method signature). A bare, unnamed `!` only works cleanly if each occurrence is guaranteed to be a distinct parameter.
-2. **Typed holes vs. raw AST.** Whether the "class with holes" produced by such a function should be a first-class typed value (a declared hole signature, checked before it's filled) rather than untyped syntax — the former stays consistent with First's "no escape hatches" goal; the latter risks the stringly-typed pitfalls of text-based macro systems.
+2. **Typed holes vs. raw AST.** Whether the "class with holes" produced by such a function should be a first-class typed value (a declared hole signature, checked before it's filled) rather than untyped syntax — the former stays consistent with Typical's "no escape hatches" goal; the latter risks the stringly-typed pitfalls of text-based macro systems.
 3. **Nested compile-time calls.** If compile-time code's output can itself contain further compile-time constructor or reflection calls, an expansion order needs to be chosen (single pass, fixpoint, explicit stage numbering) or ordering bugs of the kind proc-macro systems run into become possible.
 4. **Multiple entry points into one space.** If more than one `! startup` (or other compile-time entry point) can append into the same space, sealing has to wait for all contributors, and an ordering/determinism story is needed across them — the same class of problem as nested expansion, one level up.
 5. **Compiler-side imports**. Should authors be able to `! import` code on the compiler side like they can on the runtime side?

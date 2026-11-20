@@ -2,7 +2,7 @@
 
 > **This feature is provisional. Its purpose and broad behavior are known, but many details of its syntax, verification model, and implementation still require clarification.**
 
-Partial Verification is the process of checking intentionally incomplete First code without requiring it to be a complete executable program. The system that performs this process is the Partial Verifier.
+Partial Verification is the process of checking intentionally incomplete Typical code without requiring it to be a complete executable program. The system that performs this process is the Partial Verifier.
 
 Partial Verification is intended for code embedded in documentation, anchor semantic islands, and usage examples. These fragments should remain useful when their surrounding setup or irrelevant details have been omitted.
 
@@ -10,7 +10,7 @@ Partial Verification is not ordinary compilation. It uses the language parser, n
 
 ## Principles
 
-- A partial fragment uses ordinary First syntax wherever practical.
+- A partial fragment uses ordinary Typical syntax wherever practical.
 - Missing information does not automatically make a partial fragment invalid.
 - Information present in the fragment is still checked.
 - Omissions must not hide contradictions in the information that was provided.
@@ -28,7 +28,7 @@ The current parser accepts one complete particle or resource reference inside si
 
 Examples of the intended future partial-code syntax:
 
-```first
+```ty
 {SomeClass}
 {Files.readFileSync}
 {calculateThings(...)}
@@ -38,23 +38,23 @@ Partial-code islands use ordinary lexical visibility and name-resolution rules. 
 
 In the token-based editor, a resolved reference may retain the identity of its target rather than only its textual spelling. Renaming the target can then update the displayed reference. When raw text is parsed without identity information, the reference is resolved again using ordinary language rules.
 
-First does not support function overloading. Functions use optional arguments, rest arguments, and sum types when they need to accept different call shapes. Consequently, `{calculateThings(...)}` does not refer to an overload family. It refers to `calculateThings` while deliberately omitting the details of its arguments.
+Typical does not support function overloading. Functions use optional arguments, rest arguments, and sum types when they need to accept different call shapes. Consequently, `{calculateThings(...)}` does not refer to an overload family. It refers to `calculateThings` while deliberately omitting the details of its arguments.
 
 Resource islands use the form `{scheme:payload}`. The scheme begins with an ASCII letter and may continue with ASCII letters, digits, `+`, `.`, or `-`. The payload is opaque to the language and follows URL-style UTF-8 percent encoding; literal `{` and `}` must be encoded as `%7B` and `%7D` so they cannot terminate the island. The language does not require any specific scheme to be supported by every implementation.
 
-Resource islands are not checked as First code. Unknown schemes remain valid islands and may be rendered or ignored by editors according to their capabilities. Parsing a resource island must not require fetching, opening, or executing the referenced resource.
+Resource islands are not checked as Typical code. Unknown schemes remain valid islands and may be rendered or ignored by editors according to their capabilities. Parsing a resource island must not require fetching, opening, or executing the referenced resource.
 
 ## Holes
 
 The `...` token may represent deliberately omitted information in a context processed by the Partial Verifier:
 
-```first
+```ty
 result = calculateThings(...)
 ```
 
 In this example, the arguments are known to exist but are irrelevant to the example. The Partial Verifier determines whether some valid completion of the omitted argument list can satisfy the function signature.
 
-This use of `...` is contextual. First also uses `...value` as the spread operator in ordinary code. A bare `...` used as a partial hole must only be accepted in a context where Partial Verification is active.
+This use of `...` is contextual. Typical also uses `...value` as the spread operator in ordinary code. A bare `...` used as a partial hole must only be accepted in a context where Partial Verification is active.
 
 Holes do not mean that all surrounding constraints are discarded. The Partial Verifier should infer and retain every constraint it can obtain from the enclosing expression and the referenced declaration.
 
@@ -64,7 +64,7 @@ A Partial Verification hole is distinct from compiler `unknowable` recovery. A h
 
 Usage examples often refer to values supplied by an implied surrounding environment:
 
-```first
+```ty
 result = calculateThings(request)
 ```
 

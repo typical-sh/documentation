@@ -2,7 +2,7 @@ Contracts are runtime checks written with the `ensure` keyword. They make assump
 
 An `ensure` statement fails if its expression evaluates to `false` or `null`.
 
-```first
+```ty
 divide(value is int, divisor is int) (
 	ensure divisor != 0
 	
@@ -16,7 +16,7 @@ Contracts are language syntax rather than ordinary function calls. This lets rel
 
 An `ensure` that does not reference `return` runs immediately when execution reaches it.
 
-```first
+```ty
 read(filePath is string) (
 	fileText = Fs.readFile(filePath) 💣
 	ensure fileText is not bomb
@@ -28,7 +28,7 @@ After `ensure fileText is not bomb`, `fileText` is narrowed from `string | bomb`
 
 Contracts can appear inside ordinary scopes. A narrowing created by an `ensure` applies after the statement within the same control-flow path.
 
-```first
+```ty
 handle(value is Foo or Bar) (
 	ensure value is Foo
 	
@@ -40,7 +40,7 @@ handle(value is Foo or Bar) (
 
 An `ensure` that references `return` is a postcondition. It checks the value currently being returned.
 
-```first
+```ty
 normalize(value is string) (
 	result = value.trim()
 	return result
@@ -51,7 +51,7 @@ normalize(value is string) (
 
 Postconditions follow normal source order. A postcondition cannot reference `return` before a return value exists.
 
-```first
+```ty
 normalize(value is string) (
 	// > Notice: no return value exists yet.
 	ensure return.length > 0
@@ -67,7 +67,7 @@ This avoids hidden defer-like behavior. Returning does not register earlier code
 
 Postconditions belong to the scope where they appear. When a `return` exits nested scopes, execution continues through the remaining postconditions on that path before the function completes.
 
-```first
+```ty
 process(value is Foo or Bar) (
 	if value is Foo (
 		return value
@@ -83,7 +83,7 @@ If the `Foo` branch returns, the branch postcondition runs first, followed by th
 
 Postconditions in scopes that were not entered do not run.
 
-```first
+```ty
 process(value is Foo or Bar) (
 	if value is Foo (
 		return value
@@ -105,7 +105,7 @@ Returning from the `Foo` branch does not run the `Bar` branch postcondition.
 
 Inside a scoped postcondition, `return` has the type known for that return path at that point in the scope.
 
-```first
+```ty
 process(value is Foo or Bar) (
 	if value is Foo (
 		return value
@@ -123,7 +123,7 @@ Outer scopes see `return` through the type information available in the outer sc
 
 Some `ensure` checks can affect compile-time analysis even though contracts are runtime checks.
 
-```first
+```ty
 getItem() (
 	item = getItemOrNone()
 	ensure item != none

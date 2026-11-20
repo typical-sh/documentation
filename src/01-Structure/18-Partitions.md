@@ -8,7 +8,7 @@ Merging exists to connect intentional contributions across partition levels. Rep
 
 An unpartitioned contribution belongs to the implicit architectural root. No declaration is needed to select this root.
 
-```first
+```ty
 ServiceManager (
 	getString() returns string
 )
@@ -16,7 +16,7 @@ ServiceManager (
 
 Named partitions form a tree below that root. `logic` is one level below it; `logic internals` selects `internals` below `logic`. Paths are space-separated and may have arbitrary depth.
 
-```first
+```ty
 ServiceManager (
 	declare partition logic
 	// Implementation contribution.
@@ -34,7 +34,7 @@ Partition names select levels of detail; they do not create namespaces, subclass
 
 A parenthesized block may apply a partition to several declarations:
 
-```first
+```ty
 (
 	declare partition logic
 
@@ -64,7 +64,7 @@ Two declarations of the same function within the same partition are duplicates, 
 
 A partition can refer to its own declarations and declarations in its ancestors. It cannot refer to declarations introduced only in descendants or siblings.
 
-```first
+```ty
 ServiceManager (
 	validate() (
 		// Visibility notice: this helper exists only below this boundary.
@@ -91,7 +91,7 @@ A merged function may have at most one bodyless architectural declaration and mu
 
 The compiler orders executable contributions by depth-first traversal of the partition tree. Sibling branches follow declaration order. Each contribution may supply a result, let a bomb escape, or complete without supplying a value (`void`). Completing a contribution without a value continues execution into the next contribution; it does not return from the merged function.
 
-```first
+```ty
 ServiceManager (
 	getString(early is boolean) returns string
 )

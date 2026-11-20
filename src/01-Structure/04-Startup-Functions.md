@@ -2,13 +2,13 @@ Startup functions define code that runs automatically for the storage owner of t
 
 A startup function is function-like, but it is not a normal callable function. It has a body, can use the same statements as a function body, and follows the same lexical scope rules. It does not have a name, parameters, or a return type.
 
-```first
+```ty
 startup (
 	console.log("Starting")
 )
 ```
 
-First uses startup functions instead of requiring a special `main()` function.
+Typical uses startup functions instead of requiring a special `main()` function.
 
 ## No Parameters
 
@@ -16,7 +16,7 @@ Startup functions cannot take parameters.
 
 Command-line arguments are accessed through the runtime API instead of being passed into the startup function.
 
-```first
+```ty
 startup (
 	console.log(process.argv)
 )
@@ -24,7 +24,7 @@ startup (
 
 This is invalid:
 
-```first
+```ty
 startup(args is string[]) (
 )
 ```
@@ -33,7 +33,7 @@ startup(args is string[]) (
 
 Startup functions do not declare a return type.
 
-```first
+```ty
 startup (
 	setup()
 )
@@ -43,7 +43,7 @@ Any value produced inside a startup-function body is ignored unless the program 
 
 This is invalid:
 
-```first
+```ty
 startup is int (
 	return 1
 )
@@ -55,13 +55,13 @@ A startup function is called by the program runtime. User code cannot call it di
 
 This is invalid:
 
-```first
+```ty
 startup()
 ```
 
 If code needs to be shared between a startup function and another part of the program, put that code in a normal function and call the function from both places.
 
-```first
+```ty
 setupLogging() (
 )
 
@@ -74,7 +74,7 @@ startup (
 
 Startup functions can appear at the top level or inside spaces at any depth.
 
-```first
+```ty
 startup (
 	loadConfig()
 )
@@ -90,7 +90,7 @@ Startup functions cannot appear directly inside classes. A space inside a class 
 
 This is valid:
 
-```first
+```ty
 Server (
 	constructor
 	In (
@@ -103,7 +103,7 @@ Server (
 
 This remains invalid because the startup is a direct class member:
 
-```first
+```ty
 Server (
 	constructor
 	startup (
@@ -115,7 +115,7 @@ Server (
 
 A program can contain more than one startup function.
 
-```first
+```ty
 startup (
 	configureLogging()
 )
@@ -127,7 +127,7 @@ startup (
 
 Program-owned startup runs after imported wrapper startup has completed. For each storage owner, startup blocks run in lexical source order using a depth-first traversal of its spaces. A block runs where it appears; when traversal reaches a nested space, that space is traversed before later declarations in the enclosing space. Nested classes are not traversed, because each nested class has its own construction lifecycle.
 
-```first
+```ty
 Panel (
 	constructor
 	Alpha (

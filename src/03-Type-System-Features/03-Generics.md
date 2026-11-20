@@ -1,6 +1,6 @@
 # Generics
 
-Generics let one declaration work with several types while preserving static type information. First's generics are inspired by TypeScript, with a reduced feature set designed for intelligibility and straightforward lowering to statically compiled targets.
+Generics let one declaration work with several types while preserving static type information. Typical's generics are inspired by TypeScript, with a reduced feature set designed for intelligibility and straightforward lowering to statically compiled targets.
 
 Classes, functions, selection types, and aliases may be generic.
 
@@ -8,7 +8,7 @@ Classes, functions, selection types, and aliases may be generic.
 
 Generic parameters share the ordinary parameter list with runtime parameters. An uppercase-leading parameter is generic; a lowercase-leading parameter is a runtime parameter.
 
-```first
+```ty
 identity(T, value is T) returns T (
 	return value
 )
@@ -18,13 +18,13 @@ A bare generic parameter is unconstrained. This follows the ordinary rule that a
 
 Annotate a generic parameter to constrain it. `TCol is Collection` is analogous to TypeScript's `TCol extends Collection`.
 
-```first
+```ty
 first(T, TCol is Collection(T), values is TCol) returns T (
 	return values[0]
 )
 ```
 
-A type argument satisfies its constraint when it is assignable to the constraint under First's ordinary compatibility rules. Nominal classes use inheritance, aliases use their expanded structural types, and selections use selected-value compatibility. A constraint may reference an earlier generic parameter.
+A type argument satisfies its constraint when it is assignable to the constraint under Typical's ordinary compatibility rules. Nominal classes use inheritance, aliases use their expanded structural types, and selections use selected-value compatibility. A constraint may reference an earlier generic parameter.
 
 Generic parameters must precede runtime parameters. A generic parameter may refer only to earlier generic parameters.
 
@@ -32,13 +32,13 @@ Generic parameters must precede runtime parameters. A generic parameter may refe
 
 Function calls infer omitted generic arguments from runtime arguments first and the expected result type second.
 
-```first
+```ty
 name = identity("Ada")
 ```
 
 When inference cannot determine one unique satisfying type, supply generic arguments in the declared leading positions.
 
-```first
+```ty
 empty = identity(string, "")
 ```
 
@@ -46,14 +46,14 @@ Generic arguments are compile-time arguments. They do not become runtime values.
 
 A reference to a generic function preserves its generic signature. Assignment to a monomorphic callable type specializes it using the expected signature.
 
-```first
+```ty
 IntIdentity is alias of (value is int) returns int
 intIdentity is IntIdentity = identity
 ```
 
 Generic function expressions follow the same rules.
 
-```first
+```ty
 identityFn = (T, value is T) returns T => value
 ```
 
@@ -61,7 +61,7 @@ identityFn = (T, value is T) returns T => value
 
 A class declares its generic parameters on its constructor. The parameters have declaration-wide type scope, including the class body, member signatures, member bodies, and inheritance clause.
 
-```first
+```ty
 Box (
 	constructor(T, value is T)
 	value is T
@@ -72,20 +72,20 @@ A generic class must have an explicit constructor signature. Its body may be omi
 
 In a type position, generic application specializes the class type.
 
-```first
+```ty
 textBox is Box(string)
 ```
 
 In an expression position, the same form constructs the specialized class. Construction may infer omitted type arguments from runtime arguments.
 
-```first
+```ty
 explicitBox = Box(string, "hello")
 inferredBox = Box("hello")
 ```
 
 An inheritance clause may refer to generic parameters declared by the constructor. The compiler collects the constructor signature before resolving the class header.
 
-```first
+```ty
 ChildBox is Box(T) (
 	constructor(T, value is T)
 )
@@ -97,7 +97,7 @@ A nested class does not implicitly receive an enclosing class's generic argument
 
 Selection types declare generic parameters after the selection name and before `is`.
 
-```first
+```ty
 Result(T, E) is one case of (
 	ok(value is T)
 	error(value is E)
@@ -106,7 +106,7 @@ Result(T, E) is one case of (
 
 Applications require exactly one explicit type argument per declared parameter. Missing, excess, and partial applications are invalid.
 
-```first
+```ty
 result is Result(string, Error)
 ```
 
@@ -116,7 +116,7 @@ The same parameter rules apply to `one of`, `many of`, and `one case of` declara
 
 Aliases use the same generic parameter rules.
 
-```first
+```ty
 Pair(T, U) is alias of {
 	first is T
 	second is U
@@ -125,7 +125,7 @@ Pair(T, U) is alias of {
 
 Alias applications require every declared type argument and do not support partial application.
 
-```first
+```ty
 pair is Pair(string, int)
 ```
 
@@ -135,21 +135,21 @@ See [[15-Aliases]] for alias type expressions and extraction.
 
 Immutable generic values are covariant across nominal subtype relationships.
 
-```first
+```ty
 dogs is Dog[]
 animals is Animal[] = dogs
 ```
 
 `var` permits rebinding and does not change variance.
 
-```first
+```ty
 animals is var Animal[] = dogs
 animals = [Cat()]
 ```
 
 An `editable` specialization is invariant wherever editing could replace a value involving the generic parameter.
 
-```first
+```ty
 editableDogs is editable Dog[]
 // > Invalid.
 editableAnimals is editable Animal[] = editableDogs
@@ -157,7 +157,7 @@ editableAnimals is editable Animal[] = editableDogs
 
 An immutable or narrower specialization may widen into a new editable specialization through an independent copy or conversion.
 
-```first
+```ty
 editableAnimals is editable Animal[] = editableDogs.copy()
 ```
 
@@ -165,9 +165,9 @@ Aliases remain transparent and use the compatibility of their expanded types. Se
 
 ## Specialization
 
-First monomorphizes each concrete generic application. Generic parameters and explicit generic arguments exist at compile time and are not passed or stored as runtime values. Each concrete nominal class specialization has distinct static type identity; aliases remain transparent.
+Typical monomorphizes each concrete generic application. Generic parameters and explicit generic arguments exist at compile time and are not passed or stored as runtime values. Each concrete nominal class specialization has distinct static type identity; aliases remain transparent.
 
-```first
+```ty
 name = identity("Ada")
 count = identity(1)
 ```
@@ -176,7 +176,7 @@ The compiler produces separate `string` and `int` specializations. Neither call 
 
 Generic type attestations such as `T is Animal` are not supported. Attest runtime values instead.
 
-```first
+```ty
 inspect(T is Animal, value is T) (
 	if (value is Dog) (
 		useDog(value)
@@ -188,7 +188,7 @@ inspect(T is Animal, value is T) (
 
 A generic function must be specialized before its signature can be extracted. An expected callable alias can provide that specialization.
 
-```first
+```ty
 StringIdentity is alias of (value is string) returns string
 stringIdentity is StringIdentity = identity
 StringIdentityReturn is alias of stringIdentity.return
@@ -196,22 +196,22 @@ StringIdentityReturn is alias of stringIdentity.return
 
 To keep the extracted alias generic, explicitly declare and forward its generic parameters through a generic callable alias.
 
-```first
+```ty
 Identity(T) is alias of (value is T) returns T
 IdentityReturn(T) is alias of Identity(T).return
 ```
 
 An extraction such as `identity.return` is invalid because `T` is unbound. A generic class may be specialized directly in an extraction target.
 
-```first
+```ty
 BoxArguments is alias of Box(string).arguments
 ```
 
 ## Built-In Utilities
 
-First provides compiler-implemented generic type transformations rather than exposing TypeScript-style mapped types.
+Typical provides compiler-implemented generic type transformations rather than exposing TypeScript-style mapped types.
 
-```first
+```ty
 Partial(T)
 Pick(T, K)
 Omit(T, K)
@@ -225,4 +225,4 @@ ToSnake(T)
 FromSnake(T)
 ```
 
-Generic application uses parentheses, never angle brackets. The utilities are built into the compiler and cannot be defined in ordinary First code.
+Generic application uses parentheses, never angle brackets. The utilities are built into the compiler and cannot be defined in ordinary Typical code.

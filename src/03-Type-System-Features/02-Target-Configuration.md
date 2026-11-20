@@ -2,7 +2,7 @@
 
 `declare target` selects a backend and configures the output for a space.
 
-```first
+```ty
 declare target swift {
 	path = "../src-swift",
 	options = {}
@@ -20,7 +20,7 @@ The backend name is an all-lowercase identifier. Backend implementations define 
 
 The configuration object and both fields are optional.
 
-```first
+```ty
 declare target swift
 
 declare target rust {
@@ -40,7 +40,7 @@ A target declaration directly in a class or function produces a notice and has n
 
 Different backends declared in one logical space form its target set. Shared source targeting several backends is compiled separately for each.
 
-```first
+```ty
 Common (
 	declare target typescript
 	declare target rust
@@ -60,7 +60,7 @@ A space with neither explicit nor inherited targets produces no output. This is 
 
 Several declarations for the same backend in one logical space merge their configuration objects using shallow copy-over behavior, like `Object.assign`. Later supplied fields replace earlier fields; omitted fields preserve earlier values. A supplied `options` object replaces the earlier `options` object rather than recursively merging it.
 
-```first
+```ty
 declare target rust {
 	path = "../src-rust"
 }
@@ -76,7 +76,7 @@ These declarations select one Rust target with the supplied path and options. Th
 
 `path` names the directory receiving generated source and associated build metadata. Each backend defines the layout beneath it and any subsequent build steps. It does not name the final executable.
 
-Relative paths resolve against the First project root. Absolute paths are accepted. Normalize `.` and `..` when identifying destinations; parent-directory destinations such as `../src-rust` are allowed. Source storage and the compiler's working directory do not change path resolution.
+Relative paths resolve against the Typical project root. Absolute paths are accepted. Normalize `.` and `..` when identifying destinations; parent-directory destinations such as `../src-rust` are allowed. Source storage and the compiler's working directory do not change path resolution.
 
 If two spaces independently target the same directory, report a notice and suppress one competing output. Which output is suppressed is unspecified. Descendants inheriting one target configuration contribute to that output rather than creating competing destinations.
 

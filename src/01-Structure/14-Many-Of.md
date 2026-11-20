@@ -1,6 +1,6 @@
 The `many of` feature is a selection type for choosing zero or more named identities as flags.
 
-It is the First syntax for what other languages call a _flags enum_. The shared selection type rules are defined in [[Selection Types]].
+It is the Typical syntax for what other languages call a _flags enum_. The shared selection type rules are defined in [[Selection Types]].
 
 Basic syntax:
 
@@ -66,7 +66,7 @@ The right-hand side of a composite assignment may contain only entries declared 
 
 Explicit values do not need to be powers of two, and they do not need to be clean composites of other declared flags.
 
-When values are not ordinary powers of two or clean composites, the generated flag helpers may not behave the way the author expects. First still preserves the explicitly written values.
+When values are not ordinary powers of two or clean composites, the generated flag helpers may not behave the way the author expects. Typical still preserves the explicitly written values.
 
 Reserve all explicit bits before inference within the current `many of` body, regardless of entry position. Inferred values begin at the power of two above the highest occupied explicit bit and advance by powers of two in declaration order. With no occupied explicit bits, begin at 1. This numbering is local to each declaration and is completed before the declaration is composed into another `many of`.
 
@@ -118,7 +118,7 @@ Explicit aliases and composite values within one original body remain allowed. W
 
 ## Composition
 
-```first
+```ty
 Permission is many of (
 	read
 	write
@@ -140,7 +140,7 @@ Each `many of` definition is packaged with a built-in API for performing the ope
 
 The list of "methods" available on each `many of` is as follows:
 
-```first
+```ty
 // Returns true if this value contains the flag.
 // Replaces: (target & flag) === flag
 hasFlag(flag is TManyOf) returns boolean

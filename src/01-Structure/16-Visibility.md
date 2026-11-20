@@ -1,10 +1,10 @@
 # Visibility
 
-First does not use visibility modifiers or visibility lists for ordinary source declarations. Access follows the program's structural hierarchy.
+Typical does not use visibility modifiers or visibility lists for ordinary source declarations. Access follows the program's structural hierarchy.
 
 Direct ordinary members of a class are public. Nested spaces and nested classes inside a class are protected structural partitions. They are visible to the owning class, structurally nested class bodies when they have an explicit compatible receiver, and nominal descendants. They are not public instance paths.
 
-```first
+```ty
 Panel (
 	constructor
 	In (
@@ -27,7 +27,7 @@ console.log(panel.count())
 
 A protected nested class may be named in type positions, return types, generic arguments, and ordinary type comparisons. Naming the type does not grant construction or protected member access.
 
-```first
+```ty
 Panel (
 	constructor
 	Item (
@@ -55,7 +55,7 @@ Using a protected nested class as an inheritance parent requires the same protec
 
 A descendant class may access protected partitions owned by its ancestors. The access check is on the declaring body, not on whether the receiver is the current object.
 
-```first
+```ty
 Base (
 	constructor
 	In (
@@ -82,7 +82,7 @@ Imported package declarations retain package identity and cannot be reopened mer
 
 Attempting to cross a protected structural partition without authority produces a notice. The protected access does not execute; the affected operation becomes a no-op under ordinary recovery.
 
-```first
+```ty
 Panel (
 	constructor
 	In (

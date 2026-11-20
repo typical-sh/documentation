@@ -84,9 +84,9 @@ Comparison overloads are declared as fixed pairs. `operator == !=` defines `==` 
 | `else` | False-or-null coalescing | Left value without `false` or `null`, or fallback |
 | `catch` | Bomb coalescing | Left value without bomb, or fallback |
 
-First does not use broad JavaScript-style truthiness. Coalescing operators fall through only for the condition named by the operator.
+Typical does not use broad JavaScript-style truthiness. Coalescing operators fall through only for the condition named by the operator.
 
-`&&` and `||` parse as legacy spellings for `and` and `or`. Tooling should rewrite them to the First spellings.
+`&&` and `||` parse as legacy spellings for `and` and `or`. Tooling should rewrite them to the Typical spellings.
 
 ## Bitwise
 
@@ -109,7 +109,7 @@ First does not use broad JavaScript-style truthiness. Coalescing operators fall 
 
 ## Omitted Operators
 
-First does not include `++` or `--`. Use explicit assignment or compound assignment instead.
+Typical does not include `++` or `--`. Use explicit assignment or compound assignment instead.
 
 ## Evaluation And Recovery
 

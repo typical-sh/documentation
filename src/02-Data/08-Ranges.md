@@ -1,10 +1,10 @@
 # Ranges
 
-Ranges in First are immutable copy values that represent a regularly-spaced sequence between two numeric boundary values.
+Ranges in Typical are immutable copy values that represent a regularly-spaced sequence between two numeric boundary values.
 
 They are defined with the following syntax:
 
-```first
+```ty
 <initial-value> <to | til> <max-value> ?(step <step-value>)
 ```
 
@@ -14,7 +14,7 @@ The `til` keyword creates an exclusive range. The end value never appears during
 
 The optional `step` keyword controls the granularity of the range. If `step` is omitted, it is assumed to be `1`.
 
-```first
+```ty
 // > Iterates 0, 2, 4
 0 to 5 step 2
 // > Iterates 0, 2, 4, 6
@@ -34,7 +34,7 @@ The types of `<initial-value>`, `<max-value>`, and `<step-value>` may be differe
 
 The range type is the narrowest type that can represent the start, end, and step values after any required conversion. Provisional numbers are pinned to that shared range type.
 
-```first
+```ty
 // > Range(i64.2)
 0 to 10 step 0.25
 ```
@@ -43,7 +43,7 @@ The range type is the narrowest type that can represent the start, end, and step
 
 A range is empty when its step can never move from the start value toward the end value, or when the start and end values leave no values to iterate.
 
-```first
+```ty
 // > Empty range
 0 to 0
 // > Empty range
@@ -56,7 +56,7 @@ A range is empty when its step can never move from the start value toward the en
 
 If an empty range can be determined statically, the compiler emits a notice. If it can only be discovered at runtime, the range is simply empty.
 
-```first
+```ty
 lo = getLowValue()
 hi = getHighValue()
 step = getStep()
@@ -71,7 +71,7 @@ range = lo to hi step step
 
 Ranges may move forward or backward. A backward range must have a negative step.
 
-```first
+```ty
 // > Iterates 5, 3, 1
 5 to 0 step -2
 // > Iterates 6, 4, 2, 0
@@ -86,7 +86,7 @@ Once a range is created, its start, end, step, and inclusivity cannot be changed
 
 Ranges support iteration with the `each` keyword:
 
-```first
+```ty
 0 to 10 each i (
 	console.log(i)
 )
@@ -98,7 +98,7 @@ The iteration type is the range type.
 
 Ranges have the following definition:
 
-```first
+```ty
 📦 Range(T is numeric) (
 	declare copy
 	
@@ -150,7 +150,7 @@ Ranges are copy values and can be equality-tested with `==` and `===`.
 
 Loose equality with `==` compares the iterated sequence. Compatible numeric types may compare equal without forcing the author to cast.
 
-```first
+```ty
 range1 = 0 to 6 step 2
 range2 = 0 til 7 step 2
 
@@ -160,7 +160,7 @@ console.log(range1 == range2)
 
 Strict equality with `===` compares the exact range shape, including `start`, `end`, `step`, `inclusive`, and type.
 
-```first
+```ty
 range1 = 0 to 6 step 2
 range2 = 0 til 7 step 2
 
@@ -172,7 +172,7 @@ console.log(range1 === range2)
 
 Ranges do not support scalar binary operations.
 
-```first
+```ty
 range = 0 to 5
 
 // > Notice
@@ -191,7 +191,7 @@ Ranges follow the same rules around number type conversion as described in [[04-
 
 Simple variable bindings may be used in a range, provided the values are numeric.
 
-```first
+```ty
 lo = 10
 high = 20
 range = lo to high

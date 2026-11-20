@@ -30,13 +30,13 @@ The project root accepts `declare target` with a lowercase backend name and an o
 
 ## Selections
 
-```first
+```ty
 Width is one of (16, 32)
 Person is one of (User, Admin, null)
 Permission is many of (read, write)
 Message is one case of (text(value is string), closed())
 Extended is Base or one of (extra)
-Combined is First or Second or Third
+Combined is Typical or Second or Third
 ```
 
 Selection composition uses `or`; selection bodies do not support spread. `one of` and `many of` bodies contain no author-defined functions. The old `one value of` form is retired.

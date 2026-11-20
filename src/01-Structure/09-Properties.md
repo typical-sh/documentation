@@ -1,6 +1,6 @@
 Properties provide computed access using a field-shaped declaration. The member type uses `is`; function return annotations use `returns`.
 
-```first
+```ty
 User (
 	name is string (
 		get firstName + " " + lastName
@@ -15,7 +15,7 @@ The property body recognizes every anchor, the first top-level `get`, and the fi
 
 Each accessor prefixes exactly one statement or expression. The getter supplies the property's value; the setter performs an assignment or another operation. Multiple statements require an explicit scope:
 
-```first
+```ty
 name is string (
 	- The display name of this user.
 	get (

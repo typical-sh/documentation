@@ -6,7 +6,7 @@ Operator overloads are defined inside the custom primitive or unit body. Extensi
 
 An operator overload starts with `operator`, followed by the operator token or fixed comparison pair, followed by the operand list.
 
-```first
+```ty
 📏 cm is unit (
 	operator + (this, that is cm) returns cm (
 		return cm(this + that)
@@ -26,7 +26,7 @@ Every operator overload declares exactly two operands. One operand is the bare t
 
 The operand order is exact. The compiler does not assume that an operator is commutative.
 
-```first
+```ty
 📏 cm is unit (
 	operator - (this, that is i32) returns cm (
 		return cm(this - that)
@@ -62,7 +62,7 @@ The overloadable comparison forms are fixed pairs:
 
 The body defines the first operator in the pair. The second operator is the boolean negation of the body result.
 
-```first
+```ty
 🪨 UserId is u64 (
 	operator == != (this, that is UserId) (
 		return this == that

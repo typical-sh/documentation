@@ -1,8 +1,8 @@
 # Tests
 
-First has no special test declaration syntax. Tests are ordinary calls into compiler-known standard modules.
+Typical has no special test declaration syntax. Tests are ordinary calls into compiler-known standard modules.
 
-```first
+```ty
 import Test
 import Assert
 
@@ -13,7 +13,7 @@ Test.case("addition works", () => (
 
 Tests can be grouped.
 
-```first
+```ty
 import Test
 import Assert
 

@@ -1,11 +1,11 @@
 ---
 name: design-review
-description: Audit a First specification document or named language feature for every unresolved design ambiguity, propose a concrete resolution for each, and write the complete batch review to an editable Markdown file. Use when the user asks to load or run the design review skill, make a specification handbook-ready, find underspecified behavior, or create an ambiguity review they can approve or revise in one pass.
+description: Audit a Typical specification document or named language feature for every unresolved design ambiguity, propose a concrete resolution for each, and write the complete batch review to an editable Markdown file. Use when the user asks to load or run the design review skill, make a specification handbook-ready, find underspecified behavior, or create an ambiguity review they can approve or revise in one pass.
 ---
 
 # Design Review
 
-Turn an incomplete First specification into an exhaustive batch review that the user can approve or revise in one Markdown editing pass.
+Turn an incomplete Typical specification into an exhaustive batch review that the user can approve or revise in one Markdown editing pass.
 
 ## Establish The Target
 

@@ -1,12 +1,12 @@
 # Provisional Numbers
 
-`numeric` is First's provisional numeric annotation. It allows the compiler to select and revise a concrete numeric primitive as information becomes available from literals, operations, assignments, arguments, and return values.
+`numeric` is Typical's provisional numeric annotation. It allows the compiler to select and revise a concrete numeric primitive as information becomes available from literals, operations, assignments, arguments, and return values.
 
 `numeric` is not a runtime numeric type. Every provisional number has a compiler-known concrete representation before it is lowered.
 
 `number` has a different meaning: it is an alias for the concrete `f64` type.
 
-```first
+```ty
 provisional is numeric = 1.25
 floatingPoint is number = 1.25
 ```
@@ -17,7 +17,7 @@ The first value begins as a fixed decimal. The second value is an `f64`.
 
 An unsuffixed whole-number literal begins with the narrowest integer type that can represent its value. Positive values prefer unsigned integers; negative values require signed integers.
 
-```first
+```ty
 count = 0
 // > u8
 console.log(getPrimitiveTypeName(count))
@@ -25,7 +25,7 @@ console.log(getPrimitiveTypeName(count))
 
 An unsuffixed literal with a decimal point begins as the narrowest fixed decimal that can represent the written value.
 
-```first
+```ty
 amount = 1.25
 // > u8.2
 console.log(getPrimitiveTypeName(amount))
@@ -33,7 +33,7 @@ console.log(getPrimitiveTypeName(amount))
 
 A lowercase `f` suffix pins a literal to `f32`. A lowercase `ff` suffix pins it to `f64`.
 
-```first
+```ty
 single = 1.25f
 double = 1.25ff
 ```
@@ -42,7 +42,7 @@ double = 1.25ff
 
 The compiler revises a provisional number when later operations require another concrete representation.
 
-```first
+```ty
 x is var numeric = 0
 x += getInt16()
 
@@ -50,7 +50,7 @@ x += getInt16()
 console.log(getPrimitiveTypeName(x))
 ```
 
-```first
+```ty
 x is var numeric = 0
 x += getInt16()
 x += getFloat32()
@@ -67,7 +67,7 @@ When control-flow paths require different representations, the compiler first se
 
 Context can pin a provisional number to a concrete type.
 
-```first
+```ty
 small is u8 = 10
 ratio is f32 = 1 / 3
 price is decimal = 19.99
@@ -79,7 +79,7 @@ If the surrounding program does not otherwise constrain a provisional literal, i
 
 ## Automatic Conversion
 
-First automatically converts compatible numeric representations:
+Typical automatically converts compatible numeric representations:
 
 1. A provably lossless conversion is inserted silently.
 2. A potentially lossy conversion is inserted and receives the saw decoration (🪚).
@@ -87,7 +87,7 @@ First automatically converts compatible numeric representations:
 
 The saw is an editor decoration. It communicates that the generated program contains a conversion that can discard information.
 
-```first
+```ty
 source is u16 = 257
 target is u8 = 🪚source
 
@@ -95,13 +95,13 @@ target is u8 = 🪚source
 console.log(target)
 ```
 
-First still produces compiled output when an automatic conversion violates `declare noAutomaticNumberConversion`. The compiler reports a notice and uses the ordinary conversion as its recovery behavior.
+Typical still produces compiled output when an automatic conversion violates `declare noAutomaticNumberConversion`. The compiler reports a notice and uses the ordinary conversion as its recovery behavior.
 
 ## Fixed-Decimal Conversion
 
 Converting a fixed decimal to a smaller scale truncates toward zero by default.
 
-```first
+```ty
 source is i32.4 = 1.2399
 target is i32.2 = 🪚source
 
@@ -127,9 +127,9 @@ There is no type-wide provably lossless conversion from floats to integers, floa
 
 ## Type Attestations
 
-`numeric` can test whether an otherwise broad value is one of First's built-in numeric primitives. `number` tests specifically for `f64` because it is an alias for that type.
+`numeric` can test whether an otherwise broad value is one of Typical's built-in numeric primitives. `number` tests specifically for `f64` because it is an alias for that type.
 
-```first
+```ty
 write(value is any) (
 	if (value is numeric) (
 		console.log(value)
@@ -139,7 +139,7 @@ write(value is any) (
 
 A provisional value may also be tested against its currently selected concrete primitive. The result is determined statically for a given compilation.
 
-```first
+```ty
 x is var numeric = 0
 
 if (x is u8) (

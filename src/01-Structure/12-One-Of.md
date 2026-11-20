@@ -4,7 +4,7 @@
 
 ## Named Entries
 
-```first
+```ty
 Day is one of (
 	monday
 	tuesday
@@ -20,7 +20,7 @@ Reserve explicit numeric values first, then number inferred entries above the hi
 
 When `none` is absent, the first surviving entry is the zero value. This allows selections to choose whether their default should be an explicit empty state or an ordinary domain value.
 
-```first
+```ty
 Day is one of (
 	none
 	monday
@@ -41,7 +41,7 @@ LateNone is one of (
 // Notice: none should be first. Recovery moves none to the front.
 ```
 
-```first
+```ty
 Example is one of (
 	// > 3
 	a
@@ -53,7 +53,7 @@ Example is one of (
 
 Explicit aliases within one body are allowed:
 
-```first
+```ty
 HttpStatus is one of (
 	ok = 200
 	success = 200
@@ -65,7 +65,7 @@ ok and success compare equal but remain separate entries for iteration and displ
 
 ## Literal Values
 
-```first
+```ty
 Width is one of (16, 32, 64)
 Mixed is one of (1, "one", true)
 Reply is one of ({ code = 1 }, { code = 2 })
@@ -76,7 +76,7 @@ Literal entries constrain exact values. A literal may be a string, number, boole
 
 Named and literal entries cannot be mixed:
 
-```first
+```ty
 Invalid is one of (
 	ready
 	"ready"
@@ -85,7 +85,7 @@ Invalid is one of (
 
 Computation is excluded even if statically evaluable:
 
-```first
+```ty
 Bad is one of (
 	// > Notice.
 	8 + 8
@@ -95,7 +95,7 @@ Bad is one of (
 
 ## Named Constant Assignments
 
-```first
+```ty
 Settings (
 	small = 16
 	large = 32
@@ -111,7 +111,7 @@ The right-hand side of a named assignment may refer directly to a compiler-known
 
 ## Composition
 
-```first
+```ty
 Base is one of (
 	a
 	b
@@ -123,14 +123,14 @@ Extended is Base or one of (
 )
 // Extended: a = 11, b = 12, c = 10, d = 13.
 
-Combined is First or Second or Third
+Combined is Typical or Second or Third
 ```
 
 Explicit values stay fixed. Inferred entries are numbered across the resulting selection after all explicit values. Source declarations remain unchanged. Body spread is not supported.
 
 ## Access And Iteration
 
-```first
+```ty
 Offset is one of (-1, 0, null)
 Reply is one of ({ code = 1 })
 

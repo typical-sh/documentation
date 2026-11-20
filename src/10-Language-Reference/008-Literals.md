@@ -1,6 +1,6 @@
 # Literals
 
-This page lists First's literal forms. It is a syntactic reference, not the full semantic definition of each value family. Detailed behavior belongs to the linked topic pages.
+This page lists Typical's literal forms. It is a syntactic reference, not the full semantic definition of each value family. Detailed behavior belongs to the linked topic pages.
 
 ## Primitive Literals
 
@@ -39,7 +39,7 @@ String and byte string literals may span physical lines. Their escaping, indenta
 
 Regular expression literals follow the current JavaScript regular expression literal form.
 
-```first
+```ty
 pattern = /[a-z0-9]+/i
 ```
 
@@ -50,7 +50,7 @@ Their pattern grammar, flags, escaping, and runtime behavior are the JavaScript 
 | Form | Kind | Notes |
 | ---- | ---- | ----- |
 | `[1, 2, 3]` | Array literal | Entries are ordinary expressions. See [[09-Arrays]]. |
-| `{ name is string = "bob" }` | Object literal | Fields use First field syntax. See [[10-Objects]]. |
+| `{ name is string = "bob" }` | Object literal | Fields use Typical field syntax. See [[10-Objects]]. |
 
 Array and object literals are also permitted as exact literal values in selection entries and match patterns when the surrounding feature allows literal alternatives.
 
@@ -58,7 +58,7 @@ Array and object literals are also permitted as exact literal values in selectio
 
 Ranges are created with range literal syntax.
 
-```first
+```ty
 0 to 10
 0 til 10
 0 to 10 step 2
@@ -68,9 +68,9 @@ Ranges are created with range literal syntax.
 
 ## Markup Literals
 
-Markup literals use First's JSX-like surface without a separate file extension.
+Markup literals use Typical's JSX-like surface without a separate file extension.
 
-```first
+```ty
 link = <a class=name href=url>Text {value}</a>
 ```
 
@@ -80,7 +80,7 @@ Attribute values are ordinary expressions. Text may contain `{expression}` islan
 
 Resource tokens have the form `scheme:payload`.
 
-```first
+```ty
 figma:file-id
 asset:icons/logo.svg
 ```

@@ -22,7 +22,7 @@ The following constructs are not independently breakable:
 
 An explicit standalone scope inside one of these constructs remains independently breakable. A function-like body instead establishes a target-lookup boundary.
 
-```first
+```ty
 items each item (
 	if (finished(item)) (
 		break
@@ -32,7 +32,7 @@ items each item (
 
 `break` never accepts an operand.
 
-```first
+```ty
 // > ❌ Wrong: break does not carry a value
 break value
 ```
@@ -43,7 +43,7 @@ When an operand is attached through manually edited or generated source, the com
 
 Breaking a captured `matches` expression or captured standalone scope causes that construct to produce frozen `null`.
 
-```first
+```ty
 result = (
 	if (cancelled) (
 		break
@@ -55,7 +55,7 @@ result = (
 
 Breaking a captured loop terminates iteration and finalizes the immutable array accumulated by earlier `yield` operations. `break` never adds an element to that array.
 
-```first
+```ty
 values = items each item (
 	if (finished(item)) (
 		break
@@ -67,7 +67,7 @@ values = items each item (
 
 To add a final element and then terminate a captured loop, use both operations.
 
-```first
+```ty
 yield finalValue
 break
 ```
@@ -80,7 +80,7 @@ An unqualified `break` targets the nearest breakable construct.
 
 An outward `break` names a visible breakable target:
 
-```first
+```ty
 outerItems each outerItem as outer (
 	innerItems each innerItem as inner (
 		if (shouldStopEverything(innerItem)) (
@@ -92,7 +92,7 @@ outerItems each outerItem as outer (
 
 The unqualified operation inside an incidental conditional still targets its nearest enclosing breakable construct.
 
-```first
+```ty
 items each item (
 	if (shouldStop(item)) (
 		break
@@ -112,7 +112,7 @@ Target lookup stops at the current function-like boundary.
 
 When `break` abandons active `each` iterations before their iterators report `done`, the compiler invokes each iterator's qualifying cleanup `break()` exactly once. Cleanup runs from the innermost abandoned iterator to the outermost. The targeted iterator is included when the destination is an `each` loop.
 
-```first
+```ty
 outerItems each outerItem as outer (
 	middleItems each middleItem as middle (
 		innerItems each innerItem as inner (
@@ -130,7 +130,7 @@ Cleanup runs for the inner, middle, and outer iterators in that order. See [[04-
 
 `continue` skips the rest of the current iteration and advances the targeted loop exactly as if its body had reached its end normally.
 
-```first
+```ty
 items each item (
 	if (shouldSkip(item)) (
 		continue
@@ -142,7 +142,7 @@ items each item (
 
 An unqualified `continue` targets the current loop. An outward `continue` names a visible loop target:
 
-```first
+```ty
 rows each row as outer (
 	row each cell as inner (
 		if (skipRow(cell)) (

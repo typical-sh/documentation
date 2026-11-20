@@ -2,7 +2,7 @@
 
 Constructors make a declaration a class and define how construction calls produce instances.
 
-```first
+```ty
 User (
 	name is string
 	
@@ -14,7 +14,7 @@ User (
 
 A constructor with parameters or behavior uses `constructor(...) (...)`. A constructor body may be omitted; the omitted body behaves like an empty body. A parameterless empty constructor may be shortened to `constructor`.
 
-```first
+```ty
 Marker (
 	constructor
 )
@@ -24,9 +24,9 @@ Both spellings make the declaration a class. Constructors may appear in referenc
 
 ## Construction
 
-Calling a class constructs a value. First has no `new` keyword.
+Calling a class constructs a value. Typical has no `new` keyword.
 
-```first
+```ty
 user = User("Ada")
 ```
 
@@ -36,7 +36,7 @@ An inheritance clause also makes a declaration a class. When no constructor is w
 
 Constructor overloading is not supported. A class may have one constructor. Default and optional parameters provide multiple call shapes. The constructor may be synchronous or async.
 
-First does not have abstract classes or constructor visibility modifiers. Inheritance parents are classes, so shared inherited structure belongs to a constructible class. A non-constructible space can group declarations but cannot serve as an inheritance parent. A nested class under a class has a protected construction path; outside code may name its type but cannot construct or inherit from it without authority over the containing class's protected route.
+Typical does not have abstract classes or constructor visibility modifiers. Inheritance parents are classes, so shared inherited structure belongs to a constructible class. A non-constructible space can group declarations but cannot serve as an inheritance parent. A nested class under a class has a protected construction path; outside code may name its type but cannot construct or inherit from it without authority over the containing class's protected route.
 
 ## Constructor Results
 
@@ -44,7 +44,7 @@ A constructor is a value-producing construction function whose implicit result t
 
 A constructor may fall through, which returns the normally initialized `this`, or explicitly return a value assignable to the containing class type. Compatible returns include `this`, another instance of the same class, or an instance of a descendant class. Returning an incompatible value produces a notice and recovers with the typed zero value.
 
-```first
+```ty
 XDataStore (
 	constructor() (
 		found = XDataStoreCache.current()
@@ -61,7 +61,7 @@ Returning a descendant does not introduce dynamic dispatch. Static member lookup
 
 Every stored field must be definitely assigned by the end of construction.
 
-```first
+```ty
 User (
 	active is bool = true
 	name is string
@@ -74,11 +74,11 @@ User (
 
 A field type may be inferred from a definite constructor assignment. If a stored field is not definitely assigned by the end of construction, the compiler produces a notice and supplies a recovery value.
 
-The observable `this` instance is materialized on first touch. The first touch may be explicit `this`, implicit receiver access, `super(...)`, explicit `return this`, or constructor fallthrough. At that point, First allocates and establishes the zero value of all storage, then initializes parent class parts before child class parts. Within each class body, explicit field initializers run in lexical source order, descending through instance-owned spaces where those spaces appear. Nested classes are not initialized as part of the outer instance.
+The observable `this` instance is materialized on first touch. The first touch may be explicit `this`, implicit receiver access, `super(...)`, explicit `return this`, or constructor fallthrough. At that point, Typical allocates and establishes the zero value of all storage, then initializes parent class parts before child class parts. Within each class body, explicit field initializers run in lexical source order, descending through instance-owned spaces where those spaces appear. Nested classes are not initialized as part of the outer instance.
 
-First establishes storage from each field type's zero value when that zero can be synthesized. Source order is observable when one initializer reads a field whose explicit initializer has not run yet:
+Typical establishes storage from each field type's zero value when that zero can be synthesized. Source order is observable when one initializer reads a field whose explicit initializer has not run yet:
 
-```first
+```ty
 Panel (
 	In (
 		seen is int = value
@@ -97,9 +97,9 @@ An explicit call to a constructor with an omitted, empty, or anchor-only body st
 
 This is distinct from synthetic zero construction used by typed fallback. Synthetic zero construction is compiler authority: it does not run user constructors, parent constructors, field initializer expressions, or startup functions. It allocates storage directly and recursively fills it with zero values. Separate zero-producing exits create separate reference instances.
 
-If a reference type's stored fields require an impossible strong recursive construction, it has no valid synthetic zero. First reports an invalid zero-value shape rather than inventing a cyclic sentinel object.
+If a reference type's stored fields require an impossible strong recursive construction, it has no valid synthetic zero. Typical reports an invalid zero-value shape rather than inventing a cyclic sentinel object.
 
-```first
+```ty
 Node (
 	next is strong Node
 )
@@ -107,7 +107,7 @@ Node (
 
 The shape becomes zero-synthesizable when it contains a legal construction break, such as `null`, weak ownership, laziness, an explicit default, or an explicit body that supplies a sanctioned value.
 
-```first
+```ty
 Node (
 	next is strong Node or null
 )
@@ -119,7 +119,7 @@ A path that returns another compatible instance before touching `this` skips fie
 
 Constructors may bomb. A constructor body may `throw`, or use the postfix `throw` operator to pass through a bomb from another expression. When a constructor can bomb, calling the class produces `ClassName | bomb` and the call site must handle or propagate the bomb like any other bombable expression.
 
-```first
+```ty
 User (
 	name is string
 	
@@ -141,7 +141,7 @@ On a bombing path, construction produces no usable instance. If `this` has not m
 
 A constructor parameter may declare and initialize a same-named stored field by writing `is field of T`.
 
-```first
+```ty
 Document (
 	status is DocumentStatus
 
@@ -155,7 +155,7 @@ Document (
 
 The parameter value is assigned to the stored field when `this` materializes. Field parameters replace explicit constructor copies for their stored fields.
 
-```first
+```ty
 Document (
 	identifier is string
 	accountName is string
@@ -171,7 +171,7 @@ Document (
 
 The field type is part of the field parameter. The field does not need a separate declaration.
 
-```first
+```ty
 ScrapedPage (
 	constructor(
 		target is field of ScrapeTarget
@@ -187,7 +187,7 @@ Field parameters participate in ordinary construction. They satisfy definite ass
 
 When a class initializes its own instance and inherits from a parent with a constructor, its constructor must call `super(...)`.
 
-```first
+```ty
 Animal (
 	constructor(name is string) (
 		this.name = name
@@ -203,11 +203,11 @@ Bunny is Animal (
 
 Typist inserts required `super(...)` calls automatically on paths that materialize `this`. These calls are fixed tokens: they may be reordered where permitted but cannot be deleted while the path still initializes `this`. `this` is unavailable until every required parent constructor call has completed.
 
-When a child constructor omits its body, implicit parent calls are available only when every required parent argument can be supplied by defaults or optional parameters. Missing required parent arguments produce a notice and construction recovery until an explicit body supplies the call. First does not silently zero required parent arguments.
+When a child constructor omits its body, implicit parent calls are available only when every required parent argument can be supplied by defaults or optional parameters. Missing required parent arguments produce a notice and construction recovery until an explicit body supplies the call. Typical does not silently zero required parent arguments.
 
 If a constructor returns another compatible instance before `this` materializes, the constructor does not need to initialize parent parts for an abandoned instance.
 
-Inside `super(...)`, a parent constructor must initialize the child's parent part. A parent constructor path that tries to replace the child instance by returning a different object through `super(...)` produces a notice and construction recovery; First does not copy cached objects or resources into the child.
+Inside `super(...)`, a parent constructor must initialize the child's parent part. A parent constructor path that tries to replace the child instance by returning a different object through `super(...)` produces a notice and construction recovery; Typical does not copy cached objects or resources into the child.
 
 With multiple inheritance, the constructor calls one parent constructor per parent. Parent order determines the default call order. Incompatible inherited initialization produces a notice.
 
@@ -219,7 +219,7 @@ A `super` use outside a valid instance inheritance context is ignored and produc
 
 A constructor may be asynchronous.
 
-```first
+```ty
 Foo (
 	constructor(initialValue is int) returns async (
 		this.value = await load(initialValue)
@@ -237,7 +237,7 @@ For TypeScript output, async construction lowers to a static async `new()` metho
 
 Spaces use startup functions for initialization.
 
-```first
+```ty
 Registry (
 	items is Array(string) = []
 	

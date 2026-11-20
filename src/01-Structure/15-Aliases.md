@@ -2,13 +2,13 @@
 
 An alias gives a type expression a name. Aliases use `is alias of`.
 
-```first
+```ty
 Password is alias of string
 ```
 
 An alias is purely structural. It does not create a more-derived nominal type.
 
-```first
+```ty
 Password is alias of string
 
 Passphrase is string (
@@ -21,7 +21,7 @@ Passphrase is string (
 
 Simple aliases can name primitive, class, selection, generic, union, intersection, array, and callable types.
 
-```first
+```ty
 Primitive is alias of string or int or boolean
 NamedItems is alias of Item[]
 Reader is alias of () returns string
@@ -30,7 +30,7 @@ Transform is alias of (value is int) returns string
 
 Use aliases when an inline annotation would need precedence grouping or a mixed composition.
 
-```first
+```ty
 LoadSource is alias of Cached or Remote
 Combined is alias of A and B or C
 
@@ -48,33 +48,33 @@ Generic aliases follow [[03-Generics]].
 
 A callable type is written as `(parameters) returns Result`. Callable types use `returns` and do not contain `=>`.
 
-```first
+```ty
 ReadInt is alias of () returns int
 Formatter is alias of (value is int) returns string
 ```
 
 Callable result types nest to the right.
 
-```first
+```ty
 Factory is alias of () returns () returns int
 ```
 
 Name callable types before forming arrays, nullable callables, or overload-like unions.
 
-```first
+```ty
 readers is ReadInt[] = []
 maybeReader is ReadInt or null = null
 ```
 
 Default expressions belong to the implementation, not to callable types. A type-only signature may write `= ?`, but not an executable default.
 
-```first
+```ty
 Connector is alias of (port is int = ?) returns int
 ```
 
 A union of callable aliases in callable position acts as a simple overload list. Calls resolve to the first callable member in alias order whose signature accepts the provided arguments. Later, more specific signatures do not win.
 
-```first
+```ty
 TextReader is alias of (value is int) returns string
 NumberReader is alias of (value is int) returns int
 
@@ -87,7 +87,7 @@ result = readerFn(1)
 
 If an alias can be non-callable, call it only after narrowing to a callable type.
 
-```first
+```ty
 MaybeReader is alias of TextReader or string
 ```
 
@@ -99,7 +99,7 @@ Callable intersections are unsupported.
 
 Callable assignment uses exact positional parameter-type matching. Result types may be covariant: an implementation may return a more specific type than the destination requires.
 
-```first
+```ty
 DogReader is alias of (dog is Dog) returns Animal
 
 readDogFn = (dog is Dog) returns Dog => makeDog()
@@ -117,14 +117,14 @@ A callable may ignore trailing supplied arguments only when the destination perm
 
 Type extraction carries type information from a statically known callable or class member into an alias.
 
-```first
+```ty
 Result is alias of transformFn.return
 Arguments is alias of transformFn.arguments
 ```
 
 For callable values, `.return` extracts the callable result type and `.arguments` extracts the callable parameter signature.
 
-```first
+```ty
 Transform is alias of (value is int) returns string
 transformFn is Transform = value => "converted"
 
@@ -134,7 +134,7 @@ TransformArguments is alias of transformFn.arguments
 
 The same extraction works from a callable alias.
 
-```first
+```ty
 AliasResult is alias of Transform.return
 AliasArguments is alias of Transform.arguments
 ```
@@ -143,7 +143,7 @@ Extraction uses the finalized static signature. It does not inspect runtime clos
 
 For callable overload aliases, `.return` follows the same first-matching signature rule as invocation when enough argument context exists. Otherwise, narrow to one callable member before extraction. `.arguments` is available only when one callable member is known or every callable member has the same labels, types, optionality, and rest shape.
 
-```first
+```ty
 TextReader is alias of (value is int) returns string
 NumberReader is alias of (value is int) returns int
 Reader is alias of TextReader or NumberReader
@@ -157,7 +157,7 @@ ReaderResult is alias of Reader.return
 
 If an alias is not always callable, `.return` and `.arguments` are unavailable until the type is narrowed to the callable part.
 
-```first
+```ty
 MaybeReader is alias of TextReader or string
 MaybeReaderResult is alias of MaybeReader.return
 // Invalid until narrowed: MaybeReader is not always callable.

@@ -1,10 +1,10 @@
 # Identifier Constraints
 
-First identifiers follow JavaScript identifier rules. A valid identifier uses the same start and continuation rules as JavaScript, and it must not be a reserved word in the position where it appears.
+Typical identifiers follow JavaScript identifier rules. A valid identifier uses the same start and continuation rules as JavaScript, and it must not be a reserved word in the position where it appears.
 
 The current parser may still use a narrower early implementation. The language rule is the JavaScript rule.
 
-Identifier casing is part of First's syntax. Uppercase-leading identifiers belong to the structural family. Lowercase-leading identifiers belong to the runtime family. The parser and editor use this distinction to classify source forms, not merely to style-check them afterward.
+Identifier casing is part of Typical's syntax. Uppercase-leading identifiers belong to the structural family. Lowercase-leading identifiers belong to the runtime family. The parser and editor use this distinction to classify source forms, not merely to style-check them afterward.
 
 ## Lowercase Names
 
@@ -21,7 +21,7 @@ This includes:
 - entries inside selection types
 - built-in primitive type names
 
-```first
+```ty
 displayName(user is User) returns string (
 	label = user.name
 	return label
@@ -55,7 +55,7 @@ This includes:
 - generic type parameters
 - import names and import aliases
 
-```first
+```ty
 App (
 	User (
 		name is string
@@ -76,7 +76,7 @@ import Postgres as Database
 
 The selection declaration name is structural and therefore uppercase. Entries inside the selection are runtime names and therefore lowercase.
 
-```first
+```ty
 Direction is many of (
 	up
 	down
@@ -92,7 +92,7 @@ Message is one case of (
 
 Literal alternatives and type alternatives are not identifier declarations.
 
-```first
+```ty
 Width is one of (16, 32, 64)
 Person is one of (User, Admin, null)
 ```
@@ -101,7 +101,7 @@ Person is one of (User, Admin, null)
 
 Unit definitions may use either casing. This allows conventional unit symbols without creating a separate naming family.
 
-```first
+```ty
 m is unit
 cm is unit
 K is unit
@@ -112,14 +112,14 @@ Hz is unit
 
 Qualified names are made from separate identifiers joined by dots. The dot is not part of the identifier.
 
-```first
+```ty
 App.Backend.User
 user.displayName()
 ```
 
 Named declarations cannot use dotted names in their declaration header. Write the nesting explicitly instead.
 
-```first
+```ty
 App (
 	Backend (
 		User (
@@ -132,7 +132,7 @@ App (
 
 Casing affects how a form is read. An uppercase call-shaped declaration is structural. A lowercase call-shaped declaration is a function.
 
-```first
+```ty
 DisplayName (
 )
 

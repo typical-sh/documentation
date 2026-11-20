@@ -1,6 +1,6 @@
 The `one case of` feature is a selection type for choosing exactly one named case.
 
-It is First's spelling for algebraic-data-type-style values. Each case has its own constructor shape, and each constructed value carries exactly one active case.
+It is Typical's spelling for algebraic-data-type-style values. Each case has its own constructor shape, and each constructed value carries exactly one active case.
 
 The shared selection type rules are defined in [[Selection Types]].
 
@@ -8,7 +8,7 @@ The shared selection type rules are defined in [[Selection Types]].
 
 Every case is written with function-call syntax.
 
-```first
+```ty
 Message is one case of (
 	default()
 	text(value is string)
@@ -19,13 +19,13 @@ Message is one case of (
 
 No-payload cases use an empty parameter list.
 
-```first
+```ty
 default()
 ```
 
 Payload-bearing cases declare one or more parameters.
 
-```first
+```ty
 text(value is string)
 image(url is Url)
 ```
@@ -38,7 +38,7 @@ Generic `one case of` declarations follow [[03-Generics]].
 
 A `one case of` declaration creates an access surface with one constructor per case.
 
-```first
+```ty
 message is Message = Message.default()
 message = Message.text("hello")
 message = Message.image(Url("http://example.com"))
@@ -47,7 +47,7 @@ message = Message.reaction(":)")
 
 Payloadless cases are still called with `()`.
 
-```first
+```ty
 Message.default()
 ```
 
@@ -57,7 +57,7 @@ This keeps all cases conceptually uniform: every case is a constructor, and some
 
 Each case creates a distinct shape inside the selection type.
 
-```first
+```ty
 Result is one case of (
 	ok(value is string)
 	failed(code is u16, message is string)
@@ -72,7 +72,7 @@ The payload fields are not ordinary properties on the whole selection type. They
 
 Programs inspect a `one case of` value by matching on its active case.
 
-```first
+```ty
 handle(message is Message) (
 	message matches (
 		default() console.log("default")
@@ -88,13 +88,13 @@ handle(message is Message) (
 
 A match arm names the case and may declare local bindings for the payload values declared by that case. In the editor, new payload bindings are rendered with the `🥚` decoration.
 
-```first
+```ty
 text(🥚 value) console.log(value)
 ```
 
 An ordinary identifier does not create a new local binding. It must resolve to a statically resolvable compile-time constant under the ordinary match-pattern rules.
 
-```first
+```ty
 handle(message is Message) (
 	🥚 expected = "the-value"
 	
@@ -106,7 +106,7 @@ handle(message is Message) (
 
 When a payload value must match a specific literal or constant instead of being bound as a local, the arm writes that value directly.
 
-```first
+```ty
 message matches (
 	reaction(":)") console.log("smile")
 )
@@ -114,7 +114,7 @@ message matches (
 
 Case patterns may omit trailing payload positions when those values are not needed.
 
-```first
+```ty
 message matches (
 	text() handleAnyText()
 )
@@ -124,7 +124,7 @@ This omission is available only in patterns. Calling `Message.text()` as a const
 
 `always matches` opts into complete case coverage. The compiler emits a prominent notice and injects an `else null` recovery when any case remains uncovered.
 
-```first
+```ty
 message always matches (
 	default() showDefault()
 	text() showText()
@@ -141,7 +141,7 @@ The complete ordering, binding, shared-body, result, and exhaustiveness rules ar
 
 Two `one case of` declarations are compatible when they describe the same case names and compatible payload shapes.
 
-```first
+```ty
 Message is one case of (
 	text(value is string)
 	image(url is Url)
@@ -159,7 +159,7 @@ Notification is one case of (
 
 Case names must be unique within a `one case of` declaration.
 
-```first
+```ty
 Message is one case of (
 	text(value is string)
 	// > notice
@@ -175,7 +175,7 @@ Repeated case names are conflicts even when they have identical payloads or arri
 
 Compose case selections in the header with `or`. Body spreads are not supported.
 
-```first
+```ty
 CommonMessage is one case of (
 	default()
 	text(value is string)
@@ -186,7 +186,7 @@ Message is CommonMessage or one case of (
 	reaction(emoji is string)
 )
 
-Combined is First or Second or Third
+Combined is Typical or Second or Third
 ```
 
 Composition preserves source order. Duplicate case names always produce notices, including diamond inheritance and identical declarations. The later case wins recovery. The original source declarations remain unchanged.

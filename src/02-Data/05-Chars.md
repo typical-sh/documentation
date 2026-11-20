@@ -4,19 +4,19 @@
 
 A Unicode scalar value is any Unicode code point from `U+0000` through `U+10FFFF`, excluding the surrogate range `U+D800` through `U+DFFF`.
 
-```first
+```ty
 letter is char = 'A'
 accented is char = 'é'
 emoji is char = '😀'
 ```
 
-First has one character type. It does not provide separate `char8`, `char16`, or `char32` primitives. A `char` is stored in 32 bits regardless of the number of bytes required to encode it as UTF-8.
+Typical has one character type. It does not provide separate `char8`, `char16`, or `char32` primitives. A `char` is stored in 32 bits regardless of the number of bytes required to encode it as UTF-8.
 
 ## Scalars And Displayed Characters
 
 A `char` is one Unicode scalar value, not necessarily one user-perceived character. A displayed character may contain multiple scalars, such as a base letter followed by a combining mark.
 
-```first
+```ty
 // > One scalar: U+00E9
 'é'
 // > ❌ Wrong: two scalars in one character literal
@@ -35,7 +35,7 @@ Ordinary-string indexing and iteration produce `char` values. Encoding, byte-str
 
 Converting a `char` to `u32` returns its Unicode scalar value and is lossless.
 
-```first
+```ty
 // > 65
 codePoint is u32 = 'A'
 ```
@@ -50,7 +50,7 @@ Integer conversion exposes a character's scalar value. It does not encode the ch
 
 Group membership does not give `char` arithmetic operators. Convert a character to an integer before performing numeric arithmetic.
 
-```first
+```ty
 // > ❌ Wrong: char does not support arithmetic
 'A' + 1
 

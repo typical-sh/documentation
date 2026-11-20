@@ -4,7 +4,7 @@
 
 This function uses sequential conditions with early returns.
 
-```first
+```ty
 classify(value is int) returns string (
 	if (value < 0) (
 		return "negative"
@@ -22,7 +22,7 @@ classify(value is int) returns string (
 
 This captured match assigns a label according to the first matching arm.
 
-```first
+```ty
 temperatureLabel(celsius is int) returns string (
 	return celsius matches (
 		-50 to 0 "freezing"
@@ -38,7 +38,7 @@ temperatureLabel(celsius is int) returns string (
 
 Several command names intentionally select the same behavior.
 
-```first
+```ty
 normalizedCommand(command is string) returns string (
 	return command matches (
 		"q"
@@ -57,7 +57,7 @@ normalizedCommand(command is string) returns string (
 
 This composed example uses a loop, a condition, and a captured match.
 
-```first
+```ty
 firstPassingGrade(grades is int[]) returns string (
 	grades each grade index (
 		label = grade matches (

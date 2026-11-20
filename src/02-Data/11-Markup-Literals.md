@@ -1,17 +1,17 @@
 
-First supports Markup Literals, but these have some minor differences from JSX. These differences are designed to make the syntax feel more First-native. JSX/TSX feel like a different language bolted on JavaScript and TypeScript, and we aim to avoid that.
+Typical supports Markup Literals, but these have some minor differences from JSX. These differences are designed to make the syntax feel more Typical-native. JSX/TSX feel like a different language bolted on JavaScript and TypeScript, and we aim to avoid that.
 
-First doesn't use a separate file extension for markup literals. A `<` immediately followed by a valid tag-name start begins markup. Whitespace after `<` leaves it as a comparison operator: write `a < b`, rather than `a<b`. This includes spaces, tabs, and newlines.
+Typical doesn't use a separate file extension for markup literals. A `<` immediately followed by a valid tag-name start begins markup. Whitespace after `<` leaves it as a comparison operator: write `a < b`, rather than `a<b`. This includes spaces, tabs, and newlines.
 
 Valid JSX looks like this:
 
-```first
+```ty
 <a className={value} href={value}>text before {someVariable} text after</a>
 ```
 
-But the First syntax looks like this:
+But the Typical syntax looks like this:
 
-```first
+```ty
 <a class=value href=value>text before {someVariable} text after</a>
 // Or with parens
 <a class=(a + b) href=(a + b)>text before someVariable text after</a>
@@ -19,19 +19,19 @@ But the First syntax looks like this:
 
 Functions are just like this:
 
-```first
+```ty
 <a onclick=( () => console.log("clicked") )>Link</a>
 ```
 
-Or they could be like this, because the ( ) syntax in First creates a statement list.
+Or they could be like this, because the ( ) syntax in Typical creates a statement list.
 
-```first
+```ty
 <a onclick=( console.log("clicked") )>Link</a>
 ```
 
 There is potential for a parsing ambiguity. In tokens, we simply wrap all the values in ( and ) characters to avoid this.
 
-```first
+```ty
 // Would be ambiguous
 <a onclick=() => 1 > 2 or 3 > 4</a>
 
@@ -39,11 +39,11 @@ There is potential for a parsing ambiguity. In tokens, we simply wrap all the va
 <a onclick=( () => 1 > 2 or 3 )> 4</a>
 ```
 
-Each attribute uses `name=value`, with one particle or literal as its value: for example, an entity, member chain, function call, string, or parenthesized block. Infix expressions such as `a + b` must be enclosed: `name=(a + b)`. Parenthesized values use ordinary First statement/expression blocks.
+Each attribute uses `name=value`, with one particle or literal as its value: for example, an entity, member chain, function call, string, or parenthesized block. Infix expressions such as `a + b` must be enclosed: `name=(a + b)`. Parenthesized values use ordinary Typical statement/expression blocks.
 
 Embedded text uses `{expression}` islands, sharing the delimiters used by backtick strings and anchors. Nested expression constructs do not close the enclosing island. In text, `\{` writes a literal opening brace; a closing brace outside an island is literal text. Quoted attribute strings follow [[06-Strings]]: double quotes do not interpolate, and backticks do. The string indentation rules apply to string literals, not automatically to markup text.
 
-```first
+```ty
 render() (
 	🥚 className = "my-class-here"
 	🥚 url = "http://www.foo.com"
@@ -52,11 +52,11 @@ render() (
 )
 ```
 
-Also, because First has an optional comma-as-newline syntax, this means that this annoying JSX case
+Also, because Typical has an optional comma-as-newline syntax, this means that this annoying JSX case
 
-```first
+```ty
 🥚 array = [
-	<div key="a">First</div>,
+	<div key="a">Typical</div>,
 	<div key="b">Second</div>,
 	<div key="c">Third</div>,
 ]
@@ -64,9 +64,9 @@ Also, because First has an optional comma-as-newline syntax, this means that thi
 
 ...doesn't actually need commas, it can just look like:
 
-```first
+```ty
 🥚 array = [
-	<div key="a">First</div>
+	<div key="a">Typical</div>
 	<div key="b">Second</div>
 	<div key="c">Third</div>
 ]
@@ -76,7 +76,7 @@ Also, because First has an optional comma-as-newline syntax, this means that thi
 
 Authors can change the markup factory on a per-scope basis. For example:
 
-```first
+```ty
 renderWithReact() (
 	declare markupFactory React.createElement;
 	return <b>Created with React!</b>
@@ -90,6 +90,6 @@ renderWithPreact() (
 
 # Use Case
 
-We actually really need this for server-side code... because if we're going to take over the back end, we're going to need some way to do server-side code hydration. So we absolutely need HTML on the back end. And the syntax we have here has subtle changes so its not actually that much different than what features we already have in First.
+We actually really need this for server-side code... because if we're going to take over the back end, we're going to need some way to do server-side code hydration. So we absolutely need HTML on the back end. And the syntax we have here has subtle changes so its not actually that much different than what features we already have in Typical.
 
 Also we need a way to work around that limitation of upper and lower case tag names having specific meanings. This is something that is very specific to React and not something that should be baked into the Typical language. For example, people may want to make their own templating languages that use <if></if> etc. React's limitations should leak into this design.

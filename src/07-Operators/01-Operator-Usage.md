@@ -1,6 +1,6 @@
 # Operator Usage
 
-Operators combine, compare, update, or choose between values. First keeps most familiar TypeScript operator behavior, but uses named operators where the symbolic form is too dense or conflicts with the language's readability goals.
+Operators combine, compare, update, or choose between values. Typical keeps most familiar TypeScript operator behavior, but uses named operators where the symbolic form is too dense or conflicts with the language's readability goals.
 
 For the complete operator list and precedence table, see [[06-Operators]] in the language reference.
 
@@ -8,7 +8,7 @@ For the complete operator list and precedence table, see [[06-Operators]] in the
 
 Arithmetic operators work on numeric values and on other values that define the relevant operation.
 
-```first
+```ty
 width = 12
 height = 4
 
@@ -17,9 +17,9 @@ remaining = width - height
 scaled = area / 2
 ```
 
-First separates fractional division from integer division.
+Typical separates fractional division from integer division.
 
-```first
+```ty
 items = 7
 boxes = 2
 
@@ -32,14 +32,14 @@ fullBoxes = items \ boxes
 
 Use `%` for remainders and `**` for exponentiation.
 
-```first
+```ty
 index = 17 % 5
 volume = side ** 3
 ```
 
-First does not include `++` or `--`. Reassign explicitly when a mutable value needs to change by one.
+Typical does not include `++` or `--`. Reassign explicitly when a mutable value needs to change by one.
 
-```first
+```ty
 var count = 0
 
 count += 1
@@ -49,7 +49,7 @@ count += 1
 
 `=` assigns a new value to a mutable binding, field, or indexed target.
 
-```first
+```ty
 var retries = 0
 
 retries = 1
@@ -57,7 +57,7 @@ retries = 1
 
 Compound assignment combines an operation with assignment.
 
-```first
+```ty
 var total = 10
 
 total += 5
@@ -70,7 +70,7 @@ Compound assignment uses the same underlying operation as the non-assignment for
 
 Comparison operators return `boolean`.
 
-```first
+```ty
 age = 41
 
 isAdult = age >= 18
@@ -78,9 +78,9 @@ isExact = age == 41
 isDifferent = age != 0
 ```
 
-Use comparisons explicitly. First does not treat numbers, strings, arrays, or objects as general truthy or falsy conditions.
+Use comparisons explicitly. Typical does not treat numbers, strings, arrays, or objects as general truthy or falsy conditions.
 
-```first
+```ty
 count = 3
 
 hasItems = count != 0
@@ -90,7 +90,7 @@ hasItems = count != 0
 
 Use `not` to negate a boolean.
 
-```first
+```ty
 isReady = false
 
 shouldWait = not isReady
@@ -98,7 +98,7 @@ shouldWait = not isReady
 
 Use `and` and `or` for boolean logic when both sides are boolean expressions.
 
-```first
+```ty
 canSend = isReady and hasConnection
 canRetry = hasRetries or isManualOverride
 ```
@@ -111,7 +111,7 @@ The same words are also used by coalescing forms in value-producing expressions.
 
 Bitwise operators operate on integer bits.
 
-```first
+```ty
 read = 0b001
 write = 0b010
 
@@ -126,7 +126,7 @@ Selection types such as `many of` are usually clearer than raw bit masks. Use bi
 
 The ternary operator chooses between two expressions from a boolean condition.
 
-```first
+```ty
 label = count == 0 ? "Empty" : "Ready"
 ```
 
@@ -136,7 +136,7 @@ Use a ternary when both branches are ordinary values. Use coalescing when the ch
 
 `key of` returns the source name of a visible declaration or member as a string.
 
-```first
+```ty
 Name = "Bob"
 
 Animal (

@@ -1,10 +1,10 @@
 Ownership controls whether stored references keep their targets alive.
 
-First uses gradual ownership. The compiler infers ordinary ownership, borrowing, shared ownership, and the storage needed to implement them. First programmers do not write Rust lifetimes, borrow annotations, reference-counting types, or interior-mutability wrappers.
+Typical uses gradual ownership. The compiler infers ordinary ownership, borrowing, shared ownership, and the storage needed to implement them. Typical programmers do not write Rust lifetimes, borrow annotations, reference-counting types, or interior-mutability wrappers.
 
 Ownership modifiers are needed only when the programmer must express lifetime behavior that inference cannot choose or acknowledge a potentially leaking ownership cycle.
 
-```first
+```ty
 Node (
 	constructor
 	
@@ -23,7 +23,7 @@ An unannotated stored reference uses inferred ownership.
 
 The compiler may represent an inferred reference as an owned value, a borrow, a uniquely allocated value, or a reference-counted value. It may also generate the machinery needed for shared mutation. The representation is an implementation detail and may change without changing the observable behavior of the program.
 
-```first
+```ty
 Tree (
 	constructor
 	
@@ -31,7 +31,7 @@ Tree (
 )
 ```
 
-The absence of an ownership modifier does not mean that the generated Rust field has one particular representation. It directs the compiler to choose a representation that preserves First semantics and produces valid Rust.
+The absence of an ownership modifier does not mean that the generated Rust field has one particular representation. It directs the compiler to choose a representation that preserves Typical semantics and produces valid Rust.
 
 When a more precise representation cannot be used, the compiler may conservatively fall back to reference counting. Crossing a Worker boundary similarly permits the compiler to select thread-safe shared ownership rather than single-threaded shared ownership.
 
@@ -39,7 +39,7 @@ When a more precise representation cannot be used, the compiler may conservative
 
 A `weak` reference does not keep its target alive.
 
-```first
+```ty
 Child (
 	constructor
 	
@@ -49,7 +49,7 @@ Child (
 
 A weak reference is inherently nullable. It may have no target before assignment, and its target may disappear after the target's strong owners release it. Nullability cannot be removed from a weak reference.
 
-Reading an expired weak reference produces `null`. Operations through a weak reference use First's shield behavior. A shield indicates that an operation or statement may short-circuit because the target is null. This includes reads, calls, and assignments through a nullable chain.
+Reading an expired weak reference produces `null`. Operations through a weak reference use Typical's shield behavior. A shield indicates that an operation or statement may short-circuit because the target is null. This includes reads, calls, and assignments through a nullable chain.
 
 Weak ownership is part of the field's type and observable semantics. Assigning another value to the field does not change its ownership classification.
 
@@ -59,7 +59,7 @@ Only reference-class types may be weak. Value types cannot be weak because their
 
 `strong` acknowledges that a reference intentionally participates in a potential strong ownership cycle.
 
-```first
+```ty
 Node (
 	constructor
 	
@@ -79,7 +79,7 @@ Explicit strong ownership does not form a distinct assignable type. It is owners
 
 Recursive type relationships are permitted.
 
-```first
+```ty
 Parent (
 	constructor
 	
@@ -101,7 +101,7 @@ If every edge completing a potential type-level ownership cycle is strong, at le
 
 Containers own their storage normally. Ownership modifiers on generic arguments classify the values stored in the corresponding generic positions.
 
-```first
+```ty
 Graph (
 	constructor
 	
@@ -115,7 +115,7 @@ In this example, `nodes` stores strong `Node` references, `observers` stores wea
 
 An ownership modifier applied to the container type itself classifies the container reference rather than its elements.
 
-```first
+```ty
 Cache (
 	constructor
 	
@@ -131,7 +131,7 @@ Unannotated generic positions use the container type's ordinary ownership behavi
 
 Ownership modifiers may classify stored fields.
 
-```first
+```ty
 Link (
 	constructor(target is weak Node) (
 		this.target = target
@@ -149,7 +149,7 @@ Ownership modifiers do not classify ordinary parameters, local variables, or clo
 
 When mutability and ownership modifiers are both present, their canonical order is mutability, ownership, then the type.
 
-```first
+```ty
 Selection (
 	constructor
 	
@@ -163,7 +163,7 @@ Ownership belongs to the stored field declaration, not to an individual assigned
 
 Assigning a value to an inferred or explicit strong field makes the field retain the target according to its generated representation. Assigning a value to a weak field records a weak reference and does not keep the target alive.
 
-The compiler inserts any Rust moves, clones, upgrades, downgrades, borrows, or generated wrappers needed to preserve these semantics. These operations are not part of First's surface ownership model.
+The compiler inserts any Rust moves, clones, upgrades, downgrades, borrows, or generated wrappers needed to preserve these semantics. These operations are not part of Typical's surface ownership model.
 
 ## Inheritance
 
@@ -179,7 +179,7 @@ Ghosts run only when a value is actually destroyed.
 
 A strong reference cycle may keep every reference count above zero indefinitely. If that happens, the values leak and their ghosts do not run. A ghost cannot break the cycle that prevents its own execution.
 
-Code may explicitly disconnect a reachable graph before releasing it. If breaking its strong edges allows the reference counts to reach zero, destruction proceeds normally and the corresponding ghosts run. First does not require the compiler to prove that an acknowledged strong cycle will eventually be broken.
+Code may explicitly disconnect a reachable graph before releasing it. If breaking its strong edges allows the reference counts to reach zero, destruction proceeds normally and the corresponding ghosts run. Typical does not require the compiler to prove that an acknowledged strong cycle will eventually be broken.
 
 ## Notices and Recovery
 
@@ -191,13 +191,13 @@ The compiler generates a notice when:
 - An ownership modifier is applied to an unsupported declaration.
 - Conflicting ownership modifiers classify the same type position.
 
-First still compiles after these notices.
+Typical still compiles after these notices.
 
 For an unacknowledged cycle, the compiler conservatively uses reference counting where needed. For `weak` on a value type or an unsupported declaration, the compiler ignores the modifier. When modifiers conflict, the last modifier wins for recovery.
 
 ## Rust Output
 
-First does not guarantee a particular Rust representation for an ownership classification. The compiler may use ordinary values, borrows, `Box`, `Rc`, `Arc`, `Weak`, interior-mutability containers, locks, or other representations that preserve the program's observable semantics.
+Typical does not guarantee a particular Rust representation for an ownership classification. The compiler may use ordinary values, borrows, `Box`, `Rc`, `Arc`, `Weak`, interior-mutability containers, locks, or other representations that preserve the program's observable semantics.
 
 A single-threaded parent and child relationship may have the following Rust shape:
 

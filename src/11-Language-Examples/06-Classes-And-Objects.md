@@ -4,7 +4,7 @@
 
 This class stores two fields and exposes a computed function.
 
-```first
+```ty
 Point (
 	x is int
 	y is int
@@ -24,7 +24,7 @@ Point (
 
 This example creates an instance and calls one of its functions.
 
-```first
+```ty
 Counter (
 	value is int
 	
@@ -47,7 +47,7 @@ nextCounter() returns Counter (
 
 This example gives a child class a refined description.
 
-```first
+```ty
 Animal (
 	name is string
 	
@@ -75,7 +75,7 @@ Dog is Animal (
 
 This denser example combines construction, member access, arrays, and iteration.
 
-```first
+```ty
 LineItem (
 	name is string
 	price is int

@@ -1,14 +1,14 @@
 # Numbers
 
-First combines TypeScript-style numeric expressions with concrete Rust-style numeric representations. Most numeric literals begin provisionally and settle on a concrete primitive as their surrounding context becomes known. See [[04-Provisional-Numbers]].
+Typical combines TypeScript-style numeric expressions with concrete Rust-style numeric representations. Most numeric literals begin provisionally and settle on a concrete primitive as their surrounding context becomes known. See [[04-Provisional-Numbers]].
 
 `number` is an alias for `f64`. `numeric` is the annotation for a provisional number. They are not interchangeable.
 
 ## Integers
 
-First provides five signed and five unsigned fixed-width integer types:
+Typical provides five signed and five unsigned fixed-width integer types:
 
-```first
+```ty
 i8
 i16
 i32
@@ -28,7 +28,7 @@ Their widths, ranges, binary representations, and ordinary bitwise operations ma
 
 Fixed-width integer arithmetic uses two's-complement wrapping. Overflow never panics or terminates execution, and development and release builds produce the same value.
 
-```first
+```ty
 value is u8 = 255
 value += 1
 
@@ -52,7 +52,7 @@ A fixed decimal stores an integer together with a fixed number of decimal places
 
 For a type with scale `N`, the represented value is its backing integer divided by `10 ** N`.
 
-```first
+```ty
 amount is i16.2 = 123.45
 ```
 
@@ -76,7 +76,7 @@ The available unsigned fixed-decimal types are:
 
 Fixed decimals inherit the wrapping behavior of their backing integers.
 
-```first
+```ty
 signed is i8.2 = 1.27
 signed += 0.01
 // > -1.28
@@ -90,7 +90,7 @@ console.log(unsigned)
 
 The common type for fixed-decimal arithmetic uses the widest operand backing type and the greatest operand scale.
 
-```first
+```ty
 left is i32.4 = getLeft()
 right is i64.2 = getRight()
 // > i64.4
@@ -108,13 +108,13 @@ When a fixed-decimal operation or conversion must discard fractional digits, it 
 - `big`
 - `big.1` through `big.64`
 
-These values allocate storage as needed. They do not overflow because of magnitude. First does not provide unsigned `big` variants.
+These values allocate storage as needed. They do not overflow because of magnitude. Typical does not provide unsigned `big` variants.
 
 ## Floating-Point Numbers
 
-First provides four IEEE 754 binary floating-point types:
+Typical provides four IEEE 754 binary floating-point types:
 
-```first
+```ty
 f16
 f32
 f64
@@ -125,7 +125,7 @@ They respectively implement the IEEE 754 binary16, binary32, binary64, and binar
 
 The special values are spelled in lowercase:
 
-```first
+```ty
 nan
 infinity
 -infinity
@@ -133,7 +133,7 @@ infinity
 
 A decimal-point literal is a provisional fixed decimal by default. A lowercase `f` suffix explicitly creates an `f32`; `ff` creates an `f64`.
 
-```first
+```ty
 // > Provisional fixed decimal
 1.25
 // > f32
@@ -146,14 +146,14 @@ A decimal-point literal is a provisional fixed decimal by default. A lowercase `
 
 `/` is fractional division. Dividing integers with `/` does not silently perform Rust-style truncating integer division.
 
-```first
+```ty
 // > 2.5
 5 / 2
 ```
 
 `\` is integer division and truncates toward zero.
 
-```first
+```ty
 // > 2
 5 \ 2
 // > -2
@@ -187,7 +187,7 @@ Cross-compilation uses the destination target. The architecture of the machine r
 
 `primitive` is the top type of every built-in and user-defined primitive. A custom primitive may inherit from a built-in primitive, another custom primitive, or directly from `primitive` to define a fresh value representation. See [[07-Custom-Primitives]].
 
-```first
+```ty
 writePrimitive(value is primitive) (
 	console.log(value)
 )

@@ -4,7 +4,7 @@
 
 This function adds the integers from one through a supplied limit.
 
-```first
+```ty
 sumThrough(limit is int) returns int (
 	total is var int = 0
 	
@@ -20,7 +20,7 @@ sumThrough(limit is int) returns int (
 
 This function searches an array and returns the first matching index.
 
-```first
+```ty
 indexOf(values is int[], wanted is int) returns uint or null (
 	values each value index (
 		if (value == wanted) (
@@ -36,7 +36,7 @@ indexOf(values is int[], wanted is int) returns uint or null (
 
 This example combines array access, a range, arithmetic, and an array result.
 
-```first
+```ty
 changes(values is int[]) returns int[] (
 	result is editable int[]
 	
@@ -54,7 +54,7 @@ changes(values is int[]) returns int[] (
 
 This naturally nested example produces a two-dimensional array.
 
-```first
+```ty
 multiplicationTable(size is int) returns int[][] (
 	rows is editable int[][]
 	

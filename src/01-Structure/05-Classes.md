@@ -2,7 +2,7 @@
 
 A declaration with a constructor or inheritance clause is a **class**. A class defines a nominal type, creates values, and provides a qualified scope for instance members.
 
-```first
+```ty
 User (
 	constructor(name is string) (
 		this.name = name
@@ -16,9 +16,9 @@ displayName() returns string (
 )
 ```
 
-Calling the class invokes its constructor. First has no `new` keyword.
+Calling the class invokes its constructor. Typical has no `new` keyword.
 
-```first
+```ty
 user = User("Ada")
 ```
 
@@ -28,7 +28,7 @@ Classes are reference types by default. Primitive classes define value types and
 
 Stored fields are class or space members that begin with a runtime member name. A field may omit its type annotation; a bare field is equivalent to a field annotated as `unknown`.
 
-```first
+```ty
 Session (
 	authentication
 	identifier is int
@@ -37,7 +37,7 @@ Session (
 
 When a field has an initializer but no explicit type, its type is inferred from the initializer.
 
-```first
+```ty
 Status (
 	label = "ready"
 )
@@ -45,7 +45,7 @@ Status (
 
 Field initializers are intentionally restricted to a literal value or a single named value. Function calls, operators, and formula-like expressions belong in constructors or executable bodies instead of field declarations.
 
-```first
+```ty
 Counter (
 	count is int = 0
 	state = InitialState
@@ -54,7 +54,7 @@ Counter (
 
 Fields may use an anchor-only body after the complete declaration. That body may contain anchors and `//` comments, but it is not executable.
 
-```first
+```ty
 Counter (
 	count is int = 0 (
 // > Persistence
@@ -68,7 +68,7 @@ Counter (
 
 Inheritance uses `is` and makes the declaration a class even when it has no explicit constructor.
 
-```first
+```ty
 Animal (
 	constructor
 	
@@ -87,7 +87,7 @@ Inherited members behave like structural embedding: members from the parent clas
 
 There is no virtual or dynamic dispatch. A value accessed through `Animal` uses the `Animal` member. A value accessed through `Bunny` uses the `Bunny` member.
 
-```first
+```ty
 animal is Animal = Bunny()
 
 animal.eat()
@@ -100,7 +100,7 @@ The expression `(animal is Bunny)` is an implicit short-circuiting cast. If the 
 
 When a child declares a member with the same name as an inherited member, it overrides that member for the child type.
 
-```first
+```ty
 Animal (
 	constructor
 	
@@ -125,7 +125,7 @@ Override signatures may widen or narrow parameter and return types because overr
 
 A class may inherit from multiple classes.
 
-```first
+```ty
 Bunny is Animal, Pet (
 )
 ```
@@ -134,7 +134,7 @@ Parent order matters. Later inherited members are assigned into the child after 
 
 Spaces inherited as members merge recursively by name. The merge preserves every inherited member's nominal origin, storage, and lexical bindings. An inherited function continues to resolve unqualified names in the environment where it was declared; grouping does not introduce virtual rebinding. At a colliding non-space leaf, ordinary nominal-view dispatch and later-parent precedence apply.
 
-```first
+```ty
 Base (
 	constructor
 	In (
@@ -169,7 +169,7 @@ Inheritance parents are classes. A non-constructible space cannot be used as a p
 
 Protected nested partitions follow the declaring class, not the final merged child view. A child body may access protected partitions owned by any of its ancestors through any compatible receiver. An inherited parent body keeps the authority and bindings it had where it was declared; it does not gain access to child-only partitions or unrelated-parent partitions merely because a child merges those groups.
 
-```first
+```ty
 Left (
 	constructor
 	In (
@@ -196,7 +196,7 @@ Combined is Left, Right (
 
 `Combined.readBoth` can see both inherited protected partitions. `Left.readLeft` keeps its original `Left` authority and does not acquire a binding for `In.right`.
 
-First does not have abstract classes, abstract constructors, or abstract members. A declaration without a constructor remains a space. Bodyless functions and members are ordinary incomplete declarations with fallback behavior, not descendant implementation requirements.
+Typical does not have abstract classes, abstract constructors, or abstract members. A declaration without a constructor remains a space. Bodyless functions and members are ordinary incomplete declarations with fallback behavior, not descendant implementation requirements.
 
 ## Nested Class Refinement
 
@@ -204,7 +204,7 @@ An inherited nested class keeps its declaration identity. A local same-name nest
 
 When several outer parents contribute a same-name nested class, the local refinement inherits all of them in outer-parent order. Explicitly named parents follow those implicit parents in written order. Repeating the same parent explicitly does not add it twice. Ordinary later-parent precedence then applies.
 
-```first
+```ty
 Left (
 	constructor
 	Item (
@@ -248,7 +248,7 @@ Declaration-qualified nested class paths such as `Left.Item` are valid in type p
 
 A protected nested class may be used as an inheritance parent only where authority over its containing class's protected route is available. Code outside that structural or nominal class family may name the type in annotations and use returned values, but it may not derive a public constructor from that nested class.
 
-```first
+```ty
 Panel (
 	constructor
 	Item (
@@ -275,9 +275,9 @@ A nested class does not implicitly receive an enclosing class's generic construc
 
 ## Static Inheritance Cycles
 
-First rejects inheritance that would make a class's nested static surface contain itself recursively. After resolving explicit parents and implicit same-name nested parents, the compiler considers class-parent edges together with nested-owner edges. An inheritance edge is invalid when its parent is the class itself or one of its static owners, or when adding it creates any cycle in that combined graph.
+Typical rejects inheritance that would make a class's nested static surface contain itself recursively. After resolving explicit parents and implicit same-name nested parents, the compiler considers class-parent edges together with nested-owner edges. An inheritance edge is invalid when its parent is the class itself or one of its static owners, or when adding it creates any cycle in that combined graph.
 
-```first
+```ty
 Outer (
 	constructor
 	Bad is Outer (

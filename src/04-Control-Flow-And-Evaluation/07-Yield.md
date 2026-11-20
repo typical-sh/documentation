@@ -3,13 +3,13 @@
 `yield` emits one value without ending its enclosing loop or function. It has two destination kinds:
 
 - A captured `each` or `loop`, where emitted values construct an immutable array.
-- The current function, where emitted values make the function a generator. First calls these 🏓 ping-pong functions.
+- The current function, where emitted values make the function a generator. Typical calls these 🏓 ping-pong functions.
 
 Standalone scopes, conditionals, `matches` expressions, and other non-iterative constructs are never yield destinations. Use `return` to provide the single result of a captured standalone scope or captured `matches` expression.
 
 Every `yield` requires an explicit operand.
 
-```first
+```ty
 // > ❌ Wrong: a yielded value is required.
 yield
 ```
@@ -20,7 +20,7 @@ Typist may expand an incomplete `yield` by inserting `null`, but the resulting s
 
 The nearest captured loop is the default yield destination.
 
-```first
+```ty
 positive = numbers each number (
 	if (number > 0) (
 		yield number
@@ -36,7 +36,7 @@ A loop-targeting `yield`:
 
 The captured array's element type is the union of all values lexically yielded to that loop.
 
-```first
+```ty
 values = items each item (
 	if (item is TextItem) (
 		yield item.text
@@ -54,7 +54,7 @@ Here, the captured element type is the union of the yielded text and number type
 
 A named loop capture is visible inside its own body as the current accumulated array. It begins empty and reflects every value previously yielded to that loop.
 
-```first
+```ty
 unique = items each item (
 	if (!unique.includes(item)) (
 		yield item
@@ -66,7 +66,7 @@ The current capture is immutable. It cannot be reassigned or mutated from inside
 
 When the current capture is emitted to the function, the consumer receives a stable immutable snapshot. Later loop yields create newer accumulated versions without changing an already exposed snapshot. The compiler may implement this through freezing, structural sharing, or copy-on-write storage without changing source semantics.
 
-```first
+```ty
 snapshots(items is Item[]) (
 	collected = items each item (
 		yield item
@@ -81,7 +81,7 @@ snapshots(items is Item[]) (
 
 To emit a final value and then terminate the loop, write both operations:
 
-```first
+```ty
 values = items each item (
 	yield transform(item)
 	break
@@ -105,7 +105,7 @@ An unqualified `yield` targets the nearest eligible destination. A targeted loop
 - `yield outer value` targets the visible captured loop labeled `outer`.
 - `yield function value` targets the current function.
 
-```first
+```ty
 produce() (
 	outerValues = outerItems each outerItem as outer (
 		innerValues = innerItems each innerItem as inner (
@@ -127,11 +127,11 @@ An operation whose named loop target is not visible, not captured, or not a loop
 
 # Ping-Pong Functions
 
-A runnable `yield` lexically targeting the current function statically makes that function a generator, which First presents as a 🏓 ping-pong function. This does not depend on whether the yield executes at runtime. Loop-targeting and cooked yields do not affect the containing function's kind.
+A runnable `yield` lexically targeting the current function statically makes that function a generator, which Typical presents as a 🏓 ping-pong function. This does not depend on whether the yield executes at runtime. Loop-targeting and cooked yields do not affect the containing function's kind.
 
 A function may also declare generator status in its signature without relying on an implementation body.
 
-```first
+```ty
 values() returns yield int
 ```
 
@@ -139,9 +139,9 @@ When a function has an implementation body, this explicit spelling is optional i
 
 Typist draws the 🏓 function treatment and a non-editable `yields` chip in its signature presentation. `returns` and `yields` are derived editor chips rather than serialized or editable keywords. The broader syntax for explicit and inferred function result types is defined with function signatures.
 
-The underlying protocol uses the familiar `Generator(TYieldType)`, `Iterator`, and `Iterable` terminology. Ping-pong is the human-facing First name, as `one case of` is the human-facing name for an algebraic data type.
+The underlying protocol uses the familiar `Generator(TYieldType)`, `Iterator`, and `Iterable` terminology. Ping-pong is the human-facing Typical name, as `one case of` is the human-facing name for an algebraic data type.
 
-The `Yield` type is the union of the operands of every reachable function-targeting `yield`. Loop-targeting yields do not contribute to it. First generators have no separate consumer-input or final-return type parameters.
+The `Yield` type is the union of the operands of every reachable function-targeting `yield`. Loop-targeting yields do not contribute to it. Typical generators have no separate consumer-input or final-return type parameters.
 
 ## Calling And Advancing
 
@@ -170,13 +170,13 @@ Resumption continues with the following expression. The `yield` operation itself
 
 ## Completion And Return
 
-Reaching the end of a ping-pong function or executing a valueless function-targeting `return` completes the generator with plain `done()`. First generators do not have a separate final completion value.
+Reaching the end of a ping-pong function or executing a valueless function-targeting `return` completes the generator with plain `done()`. Typical generators do not have a separate final completion value.
 
 When a function-targeting `return` carries an operand inside a ping-pong function, the operand is evaluated, Typist draws `🗑️`, the result is discarded, and the generator then completes. A possible low-priority notice for this code smell is reserved for future diagnostic policy.
 
 To emit a final value and then complete, write both operations:
 
-```first
+```ty
 yield value
 return
 ```
@@ -187,7 +187,7 @@ A `return` captured by a nested match or standalone scope does not complete the 
 
 ## ECMAScript Differences
 
-First deliberately omits ECMAScript's bidirectional and final-value generator channels in its initial design:
+Typical deliberately omits ECMAScript's bidirectional and final-value generator channels in its initial design:
 
 - `next()` accepts no resumption value.
 - `yield` does not evaluate to a consumer-supplied value.
@@ -206,4 +206,4 @@ Every generator provides the ordinary iterator cleanup `break()`. Calling it per
 
 # Asynchronous Generators
 
-The initial yield specification commits only synchronous `Generator(TYieldType)` behavior. A function combining `await` with function-targeting `yield` is expected eventually to produce an asynchronous generator consumed through `await each`, but its exact protocol and cancellation semantics are deferred until First's async, worker, and asynchronous-iteration model is finalized.
+The initial yield specification commits only synchronous `Generator(TYieldType)` behavior. A function combining `await` with function-targeting `yield` is expected eventually to produce an asynchronous generator consumed through `await each`, but its exact protocol and cancellation semantics are deferred until Typical's async, worker, and asynchronous-iteration model is finalized.

@@ -2,7 +2,7 @@ Extensions group functions that can be called as members on an existing type.
 
 They are useful when behavior belongs with a type at the call site, but the original type should not be structurally reopened or cannot be reopened because it comes from an imported package.
 
-```first
+```ty
 🔌 StringMethods is extension of string (
 	reverseTrim() returns string (
 	)
@@ -18,7 +18,7 @@ An extension is a distinct structural declaration that groups extension members 
 
 An extension can target primitives, reference classes, and custom primitives.
 
-```first
+```ty
 🔌 StringMethods is extension of string (
 )
 
@@ -30,13 +30,13 @@ An extension can target primitives, reference classes, and custom primitives.
 
 Extensions may target local types, imported package types, primitives, and other target families accepted by the type system. They do not structurally merge into the target. They attach callable behavior while leaving the target's owned declaration unchanged.
 
-First does not have a capitalized `String` object type. `string` is the string type.
+Typical does not have a capitalized `String` object type. `string` is the string type.
 
 ## Multiple Targets
 
 An extension can target multiple types with a space-separated target list. Commas separate declarations and cannot separate targets within an extension declaration.
 
-```first
+```ty
 🔌 ReadableTools is extension of string File Buffer (
 	
 	readText() returns string (
@@ -48,7 +48,7 @@ This is repeated application of the same extension body to each target. It is no
 
 When an extension applies to multiple targets, `this` has the union of the possible target types.
 
-```first
+```ty
 🔌 DebugTools is extension of string User (
 	
 	debugLabel() returns string (
@@ -61,7 +61,7 @@ When an extension applies to multiple targets, `this` has the union of the possi
 
 Inside an extension member, `this` refers to the value being extended.
 
-```first
+```ty
 🔌 StringMethods is extension of string (
 	
 	wrapped() returns string (
@@ -85,7 +85,7 @@ They cannot contain operator overloads.
 
 When resolving a member call, real members on the type win over extension members.
 
-```first
+```ty
 User (
 	constructor
 	
@@ -105,7 +105,7 @@ In this example, `user.displayName()` calls the real `User` function. Extensions
 
 If more than one applicable extension provides the same member, ordinary member lookup keeps real members first. Extension conflict and shadowing rules are under review; the compiler must not silently choose by file order.
 
-```first
+```ty
 🔌 FirstUserExtensions is extension of User (
 	label() returns string (
 		return "first"
@@ -123,7 +123,7 @@ In this example, `user.label()` needs the extension conflict rules to choose one
 
 When a program needs a specific extension member instead of the inferred one, it can attest the access path.
 
-```first
+```ty
 (user is FirstUserExtensions).label()
 ```
 
@@ -137,7 +137,7 @@ An extension defined in the current program participates in the effective struct
 
 An extension target does not grant protected access to the target's nested implementation partitions. Extension bodies have the authority of their own logical declaration, not the authority of the type they extend.
 
-```first
+```ty
 Panel (
 	constructor
 	In (
@@ -159,7 +159,7 @@ Extensions do not participate in inheritance.
 
 If an extension targets a base class, subclasses can use that extension through normal subtype compatibility.
 
-```first
+```ty
 Animal (
 	constructor
 	
@@ -185,7 +185,7 @@ Extensions cannot override inherited members. They also cannot call `super`.
 
 To call a member from a compatible base view, attest `this` to that base type.
 
-```first
+```ty
 Animal (
 	constructor
 	

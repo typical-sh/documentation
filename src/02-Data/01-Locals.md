@@ -4,7 +4,7 @@
 
 Space-local bindings are addressable through their space, without an additional declaration or export syntax. Function-locals and block-locals remain local to their lexical scope. Qualification and visibility are orthogonal.
 
-```first
+```ty
 Settings (
 	small = 16
 
@@ -19,16 +19,16 @@ A selection may capture a direct immutable literal value, but not a computed ini
 
 ## Earlier Local Design Notes
 
-Identifiers are always immutable. First also doesn't support variable shadowing. Therefore, we can support emoji-based variable declarations, like so:
+Identifiers are always immutable. Typical also doesn't support variable shadowing. Therefore, we can support emoji-based variable declarations, like so:
 
-```first
+```ty
 🥚 x = 1
 🥚 y = 2
 ```
 
 Another declaration in the same scope causes a notice to appear
 
-```first
+```ty
 🥚 a = 1
 // > Notice: you can't make a = 12 because it was already set to 1.
 a = 12
@@ -36,7 +36,7 @@ a = 12
 
 Mutable variables need to be annotated as "var" explicitly. This is true both in argument lists, as well as in control flow.
 
-```first
+```ty
 🐝 a is var = 1
 // > No notices
 a = 12
@@ -44,7 +44,7 @@ a = 12
 
 If you try to re-assign an identifier in a scope, it just makes a new one:
 
-```first
+```ty
 🥚 x = 1
 
 1 to 10 each i (
@@ -64,13 +64,13 @@ If you try to re-assign an identifier in a scope, it just makes a new one:
 
 You have to annotate something with "variable" in order to actually make it mutable. Also, it doesn't just auto-flip to variable. It asks you if you want to make it variable. Such as:
 
-```first
+```ty
 🐝 z is var = 3
 ```
 
 The `is var` annotation looks long and ugly because it should. It also gives you help about why its easier if you keep things not variable. The `: variable` annotation is also necessary in parameter lists:
 
-```first
+```ty
 foo(x is var int, y is var int)
 {
 	x += 1
@@ -81,11 +81,11 @@ foo(x is var int, y is var int)
 
 Also, this has immediate visual differentiation, because they're going to see something that looks much different, and it re-enforces the "kids can use this, but you can write avionics controls systems in this".
 
-You can't variable shadow in First like you can in Rust. This wouldn't work in TypeScript anyway. Also, I don't know how you'd get that understood or how that would work in a structured editor. Different emoji colors? It gets ugly fast. Also it screws up the structured editor UI and workflow.
+You can't variable shadow in Typical like you can in Rust. This wouldn't work in TypeScript anyway. Also, I don't know how you'd get that understood or how that would work in a structured editor. Different emoji colors? It gets ugly fast. Also it screws up the structured editor UI and workflow.
 
 Perhaps just use `var` instead? We already have this for mutable arrays
 
-```first
+```ty
 foo(x is var int, y is var int)
 {
 	x += 1
@@ -100,7 +100,7 @@ foo(x is var int, y is var int)
 
 Constructor parameters are ordinary local bindings inside the constructor body. They are not promoted by visibility markers. Store a parameter by assigning it to an explicit field.
 
-```first
+```ty
 Baz (
 	constructor(a is int, b is int) (
 		this.a = a
@@ -123,7 +123,7 @@ console.log(baz.a)
 
 This design is a bit odd, but is much more ergonomic. We allow scope-based shadowing of immutable hatches, and no shadowing on mutable hatches.
 
-```first
+```ty
 foo() (
 	🥚 x = 10
 	🐝 y is var = 20;
@@ -155,7 +155,7 @@ The downside, of course, is different shadowing rules for mutable and immutable 
 
 Unlike Rust, shadowing a variable within the same scope is prohibited. This leads to developer confusion (especially in rust where the shadowing variable can be declared with completely different types). Also, much of the need for this is addressed in self-referencing assignments (discussed further down).
 
-```first
+```ty
 foo() (
 	🥚 x = 10
 	console.log(x)
@@ -169,7 +169,7 @@ foo() (
 
 Closures would only have read-only access to higher-scoped identifiers. This is better because lowering this kind of thing to Rust sucks anyway. Also its a huge source of bugs. The added verbosity doesn't matter that much either because AI will get good at generating it.
 
-```first
+```ty
 
 foo()
 {
@@ -221,7 +221,7 @@ With self-referencing assignments:
 
 This feature is especially useful in educational contexts, top-down programming patterns, and AI-assisted workflows in Tokens, where immutability is the default. It reduces boilerplate, prevents unnecessary mutability, and encourages a cleaner mental model for variable initialization.
 
-Self-referencing assignments provide a shorthand for initializing a variable with a complex expression that references itself. They allow the variable to remain immutable while avoiding boilerplate temporary variables. First-time declarations are visually indicated by the 🥚 icon in Tokens.
+Self-referencing assignments provide a shorthand for initializing a variable with a complex expression that references itself. They allow the variable to remain immutable while avoiding boilerplate temporary variables. Typical-time declarations are visually indicated by the 🥚 icon in Tokens.
 
 ## Self-Referencing Rules
 
@@ -249,7 +249,7 @@ Self-referencing assignments provide a shorthand for initializing a variable wit
 
 ## Self-Referencing Examples
 
-```first
+```ty
 // 🥚 indicates first-time declaration
 // 🥚 indicates susequent declaration
 🥚 x = a() + b() + c() + d() + 🥚 x > 10 ? 0 : 1
@@ -259,7 +259,7 @@ x_1 = a() + b() + c() + d()
 x = x_1 > 10 ? 0 : 1
 ```
 
-```first
+```ty
 🥚 y = a() + (🥚 y + 🥚 y)
 
 // Expands to:
@@ -267,14 +267,14 @@ y = a()
 y += y + y
 ```
 
-```first
+```ty
 🥚 z = (z + 1) * 2
 
 // Nonsensical: expands to default with compiler notice
 z = (0 + 1) * 2
 ```
 
-```first
+```ty
 // Null coalesce:
 🥚 x = a() + b()🛡️.c else 🥚 x
 
@@ -283,7 +283,7 @@ x_1 = a()
 x += b()?.c else x_1
 ```
 
-```first
+```ty
 // Nullable operator
 compute(): int | null { ... }
 
