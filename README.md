@@ -1,8 +1,8 @@
 <p align="center">
-	<img src="assets/readme-header.png" alt="First documentation" width="100%">
+	<img src="assets/readme-header.png" alt="Typical documentation" width="100%">
 </p>
 
-# First Documentation
+# Typical Documentation
 
 This repository contains the documentation source for the Typical language website.
 
@@ -14,7 +14,7 @@ This repository contains the documentation source for the Typical language websi
 
 ## Contributing
 
-Keep changes concise and consistent with the surrounding documentation. Use tabs in First code examples, and use Allman-style grouping for First examples.
+Keep changes concise and consistent with the surrounding documentation. Use tabs in Typical code examples, and use Allman-style grouping for Typical examples.
 
 ## License
 
