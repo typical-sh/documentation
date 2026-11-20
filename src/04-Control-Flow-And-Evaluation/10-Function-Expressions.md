@@ -2,7 +2,7 @@
 
 Function expressions create callable values. Typical uses TypeScript-style arrow syntax with Typical type annotations.
 
-```ty
+```typical
 numbers.map(value => value + 1)
 
 addFn = (a is int, b is int) => a + b
@@ -14,13 +14,13 @@ Use `=>` for executable function-expression bodies. See [[15-Aliases]] for calla
 
 A single untyped parameter may omit parentheses.
 
-```ty
+```typical
 names.map(name => name.length)
 ```
 
 Use parentheses for zero parameters, multiple parameters, typed parameters, optional parameters, default values, rest parameters, and explicit result types.
 
-```ty
+```typical
 readFn = () => readValue()
 
 addFn = (a is int, b is int) => a + b
@@ -32,7 +32,7 @@ Generic function expressions follow [[03-Generics]].
 
 When a parameter type is omitted, Typical infers it from a unique expected callable signature. If there is no unique expected signature, the parameter is `unknown`.
 
-```ty
+```typical
 words is string[] = ["", "hello"]
 nonempty = words.filter(word => word.length > 0)
 // word is inferred as string.
@@ -47,19 +47,19 @@ Function expressions do not support parameter destructuring.
 
 An expression body returns its expression.
 
-```ty
+```typical
 squareFn = (value is int) => value * value
 ```
 
 A parenthesized single expression is still an expression body.
 
-```ty
+```typical
 sumFn = (a is int, b is int) => (a + b)
 ```
 
 A body with declarations, control transfer, or multiple fragments is a scope body. Scope bodies require `return` to supply a value.
 
-```ty
+```typical
 loggedSumFn = (a is int, b is int) => (
 	console.log(a)
 	return a + b
@@ -68,7 +68,7 @@ loggedSumFn = (a is int, b is int) => (
 
 An empty body is valid.
 
-```ty
+```typical
 emptyFn = () => ()
 ```
 
@@ -76,13 +76,13 @@ emptyFn = () => ()
 
 An explicit result type is written before `=>`.
 
-```ty
+```typical
 readIntFn = () returns int => 1
 ```
 
 When the result type is omitted, Typical infers it from the expression body or from reachable `return` operations targeting the function expression. If a reachable path falls through without returning, `null` is included in the inferred result and that path returns `null`.
 
-```ty
+```typical
 maybeOneFn = (ready is boolean) => (
 	if (ready) (
 		return 1
@@ -93,7 +93,7 @@ maybeOneFn = (ready is boolean) => (
 
 When an explicitly typed function expression falls through, it returns the declared result type's zero value.
 
-```ty
+```typical
 zeroFn = () returns int => ()
 // > 0
 zeroFn()
@@ -105,14 +105,14 @@ zeroFn()
 
 Function expressions support optional parameters, default values, and a final rest parameter.
 
-```ty
+```typical
 connectFn = (port is int = 8080) => port
 collectFn = (...values is int[]) => values
 ```
 
 Default expressions run on every invocation, even when the caller supplies that argument. The supplied argument still wins; the evaluated default is discarded.
 
-```ty
+```typical
 chooseFn = (a is int = nextNumber(), b is int = a + 1) => b
 
 chooseFn(10)
@@ -123,14 +123,14 @@ chooseFn(10)
 
 Function expressions capture immutable surrounding values lexically.
 
-```ty
+```typical
 offset is int = 10
 addOffsetFn = (value is int) => value + offset
 ```
 
 Hidden shared mutable captures are invalid for escaping function expressions. Put mutable state in an explicit field or object, or pass it as an argument.
 
-```ty
+```typical
 count is var int = 0
 readCountFn = () => count
 // Invalid if readCountFn can escape: hidden shared mutable capture.
@@ -138,7 +138,7 @@ readCountFn = () => count
 
 A function expression may edit through an explicitly captured editable object when that object is the state container.
 
-```ty
+```typical
 editFn = () => (
 	box.value = 3
 )
@@ -146,7 +146,7 @@ editFn = () => (
 
 Arrows capture their lexical receiver. Calling the stored function through another object does not rebind `this`.
 
-```ty
+```typical
 readNameFn = () => this.name
 
 other.readNameFn = readNameFn
@@ -158,7 +158,7 @@ other.readNameFn()
 
 Function expressions are ordinary values. They may be stored, passed, returned, and placed in containers.
 
-```ty
+```typical
 makeAdderFn = (offset is int) => (value is int) => value + offset
 addTenFn = makeAdderFn(10)
 // > 12
@@ -167,7 +167,7 @@ addTenFn(2)
 
 Each evaluation of an arrow creates a distinct callable identity. Copying a function value preserves that identity. Callable equality uses identity; ordering is unsupported.
 
-```ty
+```typical
 makeFn = () => () => 1
 
 firstFn = makeFn()
@@ -182,7 +182,7 @@ firstFn == secondFn
 
 Ordinary named functions may also be selected as callable values. Selecting an instance function binds the receiver.
 
-```ty
+```typical
 operationFn = double
 operationFn(3)
 
@@ -194,13 +194,13 @@ readNameFn()
 
 Async function expressions use `returns async`.
 
-```ty
+```typical
 readAsyncFn = () returns async => readRemote()
 ```
 
 Function expressions cannot be generators and cannot contain function-targeting `yield`.
 
-```ty
+```typical
 valuesFn = () returns yield int => (
 	yield 1
 )
@@ -209,13 +209,13 @@ valuesFn = () returns yield int => (
 
 Malformed arrows do not parse. The editor should not create them. If an external tool writes one, recovery ignores the malformed line rather than synthesizing a callable fallback.
 
-```ty
+```typical
 brokenFn = () =>
 // Invalid: missing body.
 ```
 
 An explicitly empty body is different and remains valid.
 
-```ty
+```typical
 emptyFn = () => ()
 ```

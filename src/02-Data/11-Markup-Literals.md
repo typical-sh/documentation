@@ -5,13 +5,13 @@ Typical doesn't use a separate file extension for markup literals. A `<` immedia
 
 Valid JSX looks like this:
 
-```ty
+```typical
 <a className={value} href={value}>text before {someVariable} text after</a>
 ```
 
 But the Typical syntax looks like this:
 
-```ty
+```typical
 <a class=value href=value>text before {someVariable} text after</a>
 // Or with parens
 <a class=(a + b) href=(a + b)>text before someVariable text after</a>
@@ -19,19 +19,19 @@ But the Typical syntax looks like this:
 
 Functions are just like this:
 
-```ty
+```typical
 <a onclick=( () => console.log("clicked") )>Link</a>
 ```
 
 Or they could be like this, because the ( ) syntax in Typical creates a statement list.
 
-```ty
+```typical
 <a onclick=( console.log("clicked") )>Link</a>
 ```
 
 There is potential for a parsing ambiguity. In tokens, we simply wrap all the values in ( and ) characters to avoid this.
 
-```ty
+```typical
 // Would be ambiguous
 <a onclick=() => 1 > 2 or 3 > 4</a>
 
@@ -43,7 +43,7 @@ Each attribute uses `name=value`, with one particle or literal as its value: for
 
 Embedded text uses `{expression}` islands, sharing the delimiters used by backtick strings and anchors. Nested expression constructs do not close the enclosing island. In text, `\{` writes a literal opening brace; a closing brace outside an island is literal text. Quoted attribute strings follow [[06-Strings]]: double quotes do not interpolate, and backticks do. The string indentation rules apply to string literals, not automatically to markup text.
 
-```ty
+```typical
 render() (
 	🥚 className = "my-class-here"
 	🥚 url = "http://www.foo.com"
@@ -54,7 +54,7 @@ render() (
 
 Also, because Typical has an optional comma-as-newline syntax, this means that this annoying JSX case
 
-```ty
+```typical
 🥚 array = [
 	<div key="a">Typical</div>,
 	<div key="b">Second</div>,
@@ -64,7 +64,7 @@ Also, because Typical has an optional comma-as-newline syntax, this means that t
 
 ...doesn't actually need commas, it can just look like:
 
-```ty
+```typical
 🥚 array = [
 	<div key="a">Typical</div>
 	<div key="b">Second</div>
@@ -76,7 +76,7 @@ Also, because Typical has an optional comma-as-newline syntax, this means that t
 
 Authors can change the markup factory on a per-scope basis. For example:
 
-```ty
+```typical
 renderWithReact() (
 	declare markupFactory React.createElement;
 	return <b>Created with React!</b>

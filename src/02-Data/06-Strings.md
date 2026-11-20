@@ -27,14 +27,14 @@ The `char` type represents one code point, as defined in [[05-Chars]]. It does n
 
 String literals have two delimiter forms: double quotes contain noninterpolating text, and backticks allow `{expression}` interpolation. Both forms support physical newlines and the indentation rules below. Single quotes are reserved for `char` literals.
 
-```ty
+```typical
 name is string = "Typical"
 letter is char = 'T'
 ```
 
 A plain untagged string literal is context-sensitive compile-time information. Its family is selected as `string` or `byte string` before its contents and interpolations are converted. When no context pins it to `byte string`, it becomes `string`.
 
-```ty
+```typical
 // > string
 text = "hello"
 // > byte string
@@ -49,7 +49,7 @@ After a literal is selected as `byte string`, its source characters, escapes, an
 
 Ordinary literals support TypeScript's string escape forms, including:
 
-```ty
+```typical
 quote = "\""
 backslash = "\\"
 controls = "\0\b\f\n\r\t\v"
@@ -64,12 +64,12 @@ An escape must ultimately produce valid Unicode scalar values. An escape outside
 
 Adjacent fixed-width Unicode escapes that form a valid UTF-16 surrogate pair are combined into their one represented scalar before isolated-surrogate recovery is applied.
 
-```ty
+```typical
 // > "😀"
 emoji = "\uD83D\uDE00"
 ```
 
-```ty
+```typical
 // > ❌ Wrong: isolated surrogate; recovers as U+FFFD
 value = "\uD800"
 ```
@@ -93,7 +93,7 @@ Tabs are not expanded to columns. Mixed tabs and spaces are meaningful, for exam
 
 Trimming operates on literal source text before escape decoding and interpolation evaluation. An interpolation island is an opaque content unit for outer indentation measurement; physical lines inside its expression do not participate. Inserted values are unchanged and receive no automatic indentation. Nested string literals apply their own indentation rules independently.
 
-```ty
+```typical
 message = "
 	first line
 	second line
@@ -117,27 +117,27 @@ The compiler may fold constant concatenations.
 
 Only backtick string literals support interpolation. An interpolation begins with `{` and ends with the structurally matching `}`. Double-quoted literals preserve braces as ordinary text.
 
-```ty
+```typical
 name = "Typical"
 message = `Hello, {name}`
 ```
 
 Spaces around the expression are optional and have no semantic effect.
 
-```ty
+```typical
 compact = `{value}`
 spaced = `{ value }`
 ```
 
 Interpolation expressions use the ordinary expression grammar. They may contain nested parentheses, object braces, and string literals with their own interpolations. Braces inside nested constructs do not close the enclosing island.
 
-```ty
+```typical
 message = `Result: {format((left + right), `nested {value}`)}`
 ```
 
 Escape an opening brace as `\{` to include it as text in a backtick literal. A closing brace outside an island is ordinary text; `\}` is also accepted as an escaped delimiter.
 
-```ty
+```typical
 // > "{value}"
 literal = `\{value}`
 // > "{value}", without interpolation
@@ -150,7 +150,7 @@ Interpolation expressions evaluate from left to right. Each expression evaluates
 
 An empty interpolation inserts no text and produces a notice.
 
-```ty
+```typical
 // > "beforeafter", notice
 value = `before{ }after`
 ```
@@ -174,7 +174,7 @@ Classes and custom primitives do not receive JavaScript's `"[object Object]"` fa
 
 Type values are handled directly by the compiler. Interpolating a class, custom primitive, or selection type itself produces its declared type name rather than requiring runtime reflection.
 
-```ty
+```typical
 // > "Animal"
 `{Animal}`
 // > "Bunny"
@@ -189,7 +189,7 @@ The declared name is the identifier on the type declaration. Generic arguments a
 
 Typical defines the built-in stringification of each supported primitive explicitly.
 
-```ty
+```typical
 // > "true"
 `{true}`
 // > "false"
@@ -214,7 +214,7 @@ Interpolating a `byte string` invokes its built-in `toString()`, which uses [Byt
 
 Arrays use JavaScript-compatible comma-joined string conversion. Elements recursively use their own string conversion.
 
-```ty
+```typical
 // > "1,2,3"
 `{ [1, 2, 3] }`
 // > "1,2,3,4"
@@ -225,7 +225,7 @@ Arrays use JavaScript-compatible comma-joined string conversion. Elements recurs
 
 An array's `null` elements contribute empty fields, matching JavaScript array conversion. If an element lacks a qualifying `toString()`, that element likewise contributes an empty field and produces a notice; commas belonging to the array remain.
 
-```ty
+```typical
 // > "1,,3"
 `{ [1, null, 3] }`
 ```
@@ -240,7 +240,7 @@ Interpolation itself adds no locale behavior. A called formatting function or us
 
 The `length` property of `string` returns `u64` and counts extended grapheme clusters.
 
-```ty
+```typical
 plain = "hello"
 emoji = "😀"
 family = "👨‍👩‍👧‍👦"
@@ -261,7 +261,7 @@ decomposed.length
 
 The `codeLength` property returns `u64` and counts Unicode scalar values. It is the upper bound used by scalar indexing and ordinary string iteration.
 
-```ty
+```typical
 // > 7
 family.codeLength
 // > 2
@@ -280,7 +280,7 @@ Unless an API explicitly names bytes, UTF-16 code units, or graphemes, every ord
 
 Bracket indexing uses zero-based Unicode scalar positions and returns `char`.
 
-```ty
+```typical
 text = "café"
 
 // > 'c'
@@ -291,7 +291,7 @@ text[3]
 
 Bracket indexes are bounded by `codeLength`, not by the grapheme-counting `length` property.
 
-```ty
+```typical
 family = "👨‍👩‍👧‍👦"
 
 // > 1
@@ -319,7 +319,7 @@ For a nonempty string:
 
 Indexing an empty string returns the NUL character `\0`.
 
-```ty
+```typical
 // > 'a'
 "abc"[-1]
 // > 'c'
@@ -332,7 +332,7 @@ When the compiler can prove from constant values that an access will clamp or us
 
 `codePointAt(index)` uses the same scalar positions and recovery rules as bracket indexing. It returns the selected scalar's numeric value as `u32`; the empty-string fallback therefore returns `0`.
 
-```ty
+```typical
 // > 65
 "A".codePointAt(0)
 // > 0
@@ -365,7 +365,7 @@ The `+` operator concatenates string and character values. It evaluates its left
 
 The following operations produce `string`:
 
-```ty
+```typical
 "left" + "right"
 "value: " + 'A'
 'A' + " value"
@@ -373,7 +373,7 @@ The following operations produce `string`:
 
 Two `char` values produce `byte string` when both are statically known to be ASCII. Otherwise they produce `string`.
 
-```ty
+```typical
 // > byte string containing "ab"
 'a' + 'b'
 // > string containing "é😀"
@@ -386,14 +386,14 @@ The byte-preserving concatenation cases are defined under [Byte String Concatena
 
 Numbers, booleans, objects, and other non-string values do not acquire implicit `+` conversion merely because they have a `toString()` member. Use interpolation or call `toString()` explicitly.
 
-```ty
+```typical
 // > ❌ Wrong: use interpolation or toString()
 "Count: " + 10
 ```
 
 Strings are immutable. `+=` creates a new value and reassigns a mutable binding; it does not modify existing string storage.
 
-```ty
+```typical
 text is var string = "a"
 text += "b"
 ```
@@ -404,7 +404,7 @@ The compiler may fold constant concatenations and combine the allocations of a c
 
 `byte string` is an immutable sequence of `u8` values. It has no inherent text encoding. The name describes its representation and positional behavior, not a guarantee that its contents are textual ASCII.
 
-```ty
+```typical
 header is byte string = byte "HTTP"
 binary is byte string = byte "\x00\x80\xFF"
 ```
@@ -415,7 +415,7 @@ Bytes from `0` through `127` have their ordinary ASCII meanings. Bytes from `128
 
 Tagged byte literals place a space between `byte` and the opening delimiter. The `byte` prefix may be applied to either string form, so both the double-quoted form `byte "..."` and a backtick-delimited literal produce `byte string`. The only difference is interpolation: the backtick form supports interpolation, while the double-quoted form does not.
 
-```ty
+```typical
 plain = byte "hello"
 greeting = byte `Hello, {name}`
 ```
@@ -426,7 +426,7 @@ As established for plain literals above, an untagged literal may instead become 
 
 ASCII source characters and ordinary escapes whose values are ASCII contribute their corresponding byte values. `\xNN` contributes exactly one byte and is the canonical way to write an arbitrary byte.
 
-```ty
+```typical
 controls = byte "\0\n\r\t"
 binary = byte "\x00\x7F\x80\xFF"
 quote = byte "\""
@@ -439,7 +439,7 @@ An invalid byte escape retains its source characters as bytes and produces a not
 
 A direct non-ASCII character or a Unicode escape outside the ASCII range converts to one NUL byte. The conversion receives a saw because it discards the original scalar. It does not additionally produce a notice.
 
-```ty
+```typical
 // > Bytes 63 61 66 00
 value = 🪚byte "café"
 // > One 00 byte
@@ -458,7 +458,7 @@ Both byte-literal delimiter forms support physical newlines and use the same bou
 
 Backtick byte literals support the same `{expression}` interpolation grammar, nesting, escaping, evaluation order, and empty-interpolation recovery as ordinary backtick string literals. Double-quoted byte literals do not interpolate.
 
-```ty
+```typical
 name is byte string = byte "Typical"
 message = byte `Hello, {name}`
 ```
@@ -467,7 +467,7 @@ Byte interpolation always produces `byte string`.
 
 An interpolated `byte string` contributes its bytes directly. Every other value first undergoes ordinary interpolation stringification and then the saw-bearing `string` to `byte string` conversion. The saw appears because the inserted value is not already byte-typed and may lose non-ASCII scalars.
 
-```ty
+```typical
 name is string = "Renée"
 message = byte `Hello, {🪚name}`
 ```
@@ -478,7 +478,7 @@ If stringification cannot find a qualifying `toString()`, the interpolation inse
 
 The `length` property of `byte string` returns `u64`, counts stored bytes, and is O(1).
 
-```ty
+```typical
 bytes = byte "A\xFFB"
 
 // > 3
@@ -487,7 +487,7 @@ bytes.length
 
 Bracket indexing uses zero-based byte positions and returns `u8` in O(1).
 
-```ty
+```typical
 // > 65, as u8
 bytes[0]
 // > 255, as u8
@@ -508,7 +508,7 @@ A statically provable fallback produces a compiler notice. A fallback discovered
 
 Byte-string iteration advances one stored byte at a time. It supports a two-value iteration binding:
 
-```ty
+```typical
 text is byte string = "hello"
 
 text each code character (
@@ -523,7 +523,7 @@ The first binding, `code`, is the byte as `u8`. The second binding, `character`,
 
 When the second binding is omitted, the compiler does not construct a `char` for the iteration.
 
-```ty
+```typical
 text each code (
 	console.log(code)
 )
@@ -541,14 +541,14 @@ Each byte-slicing operation defines its boundaries in byte positions. Its ordina
 
 Concatenating two byte strings produces `byte string` and copies their byte sequences without text conversion.
 
-```ty
+```typical
 // > byte string containing 61 62 63 64
 byte "ab" + byte "cd"
 ```
 
 A byte string and a `char` produce `byte string` without a saw when the character is statically known to be ASCII.
 
-```ty
+```typical
 // > byte string
 byte "ab" + 'c'
 // > byte string
@@ -574,7 +574,7 @@ Converting `string` to `byte string` processes one Unicode scalar at a time:
 
 The conversion preserves scalar-to-byte index correspondence: the result's byte `length` equals the source's `codeLength`. It receives a saw wherever information loss is possible.
 
-```ty
+```typical
 source is string = "café"
 // > Bytes 63 61 66 00
 bytes is byte string = 🪚source
@@ -591,7 +591,7 @@ Converting `byte string` to `string` processes one byte at a time:
 
 The conversion preserves byte-to-scalar index correspondence: the result's `codeLength` equals the source's byte `length`. It receives a saw wherever a byte above `127` may occur.
 
-```ty
+```typical
 source is byte string = byte "A\xFFB"
 // > "A\0B"
 text is string = 🪚source
@@ -611,7 +611,7 @@ For two values of the same string family, `==` and `===` produce the same result
 
 Typical never normalizes Unicode implicitly during literal construction, concatenation, interpolation, slicing, or comparison. Equality also does not automatically convert between `string` and `byte string`.
 
-```ty
+```typical
 // > false
 "é" == "é"
 // > true
@@ -624,7 +624,7 @@ The first comparison is false because the first value contains `U+00E9`, while t
 
 Relational operators compare ordinary strings lexicographically by scalar value and byte strings lexicographically by byte value. These comparisons are naïve and deterministic. They do not perform locale collation.
 
-```ty
+```typical
 // > true
 "a" < "b"
 // > true
@@ -647,7 +647,7 @@ Ordinary `toLowerCase()` and `toUpperCase()` use Unicode default casing. Locale-
 
 A future declarative-locale invariant will use the canonical declaration form:
 
-```ty
+```typical
 declare locale frCA
 ```
 

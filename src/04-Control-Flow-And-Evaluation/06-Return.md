@@ -8,7 +8,7 @@
 
 `return` does not target loops. Captured loops construct arrays through `yield` rather than receiving one returned value.
 
-```ty
+```typical
 findItem(items is Item[]) returns Item or null (
 	items each item (
 		if (isMatch(item)) (
@@ -26,7 +26,7 @@ Here, the loop is invisible to return-target lookup, so both operations target t
 
 A match or standalone scope becomes a return destination only when its resulting value is consumed by an enclosing expression.
 
-```ty
+```typical
 result = value matches (
 	"ready" makeReadyResult()
 	
@@ -40,7 +40,7 @@ The multi-expression arm uses `return` to supply `result`. The match arm itself 
 
 An uncaptured match or standalone scope is invisible to return-target lookup.
 
-```ty
+```typical
 run(value is string) (
 	value matches (
 		"stop" return null
@@ -54,7 +54,7 @@ Because the match is uncaptured, `return null` exits `run`.
 
 Adding a capture intentionally makes the construct behave like an immediately evaluated single-result scope.
 
-```ty
+```typical
 result = value matches (
 	"stop" return null
 )
@@ -64,7 +64,7 @@ Here, the same unsuffixed spelling targets `result` instead.
 
 Captured loops remain invisible even when they appear between a `return` and its destination.
 
-```ty
+```typical
 result = value matches (
 	"search"
 		collected = items each item (
@@ -85,7 +85,7 @@ Both returns target the captured match. The first abandons the active loop, whic
 
 A valueless `return` supplies frozen `null` to an unannotated ordinary function, captured match, or captured standalone scope. A valueless `return` targeting an explicitly typed ordinary function supplies that function result type's zero value and produces a notice at the return site.
 
-```ty
+```typical
 result = (
 	if (cancelled) (
 		return
@@ -103,7 +103,7 @@ When an ordinary function has no return type annotation, infer its result type f
 
 When an explicitly typed ordinary function reaches its end without returning, it silently supplies the declared result type's zero value. This also applies to omitted, empty, and anchor-only bodies. The distinction lets architectural declarations execute without implementations while keeping operational inference honest about incomplete return paths. Stable functions and function expressions use the same rule.
 
-```ty
+```typical
 maybeOne(ready is boolean) (
 	if (ready) (
 		return 1
@@ -124,7 +124,7 @@ A valueless `return` remains an explicit return operation and follows the rules 
 
 `declare noImplicitNullReturns` reports a notice at each unannotated function whose reachable fall-through adds `null` to its inferred result. The declaration does not change inference, insert a zero value, or prevent execution. It is off by default. Explicit `return null` does not trigger the notice because the null result is written intentionally.
 
-```ty
+```typical
 declare noImplicitNullReturns
 
 maybeOne(ready is boolean) (
@@ -135,7 +135,7 @@ maybeOne(ready is boolean) (
 )
 ```
 
-```ty
+```typical
 label() returns string (
 	if condition (
 		return "ready"
@@ -146,7 +146,7 @@ label() returns string (
 
 An explicit return operand that is incompatible with the destination type also produces a notice and recovers with that destination's zero value.
 
-```ty
+```typical
 label() returns string (
 	// > Notice; returns "".
 	return 42
@@ -163,7 +163,7 @@ Fallback follows the actual return destination. A return captured by a nested ma
 - `return.1` targets the next eligible destination.
 - `return.2` targets the destination outside that.
 
-```ty
+```typical
 resolve(value is string) returns Result (
 	local = value matches (
 		"local" return makeLocalResult()
@@ -198,7 +198,7 @@ When such a return carries an operand, the operand is evaluated, Typist draws `ð
 
 To emit one final value before completion, use both operations.
 
-```ty
+```typical
 yield value
 return
 ```

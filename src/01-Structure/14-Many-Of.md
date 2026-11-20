@@ -118,7 +118,7 @@ Explicit aliases and composite values within one original body remain allowed. W
 
 ## Composition
 
-```ty
+```typical
 Permission is many of (
 	read
 	write
@@ -140,7 +140,7 @@ Each `many of` definition is packaged with a built-in API for performing the ope
 
 The list of "methods" available on each `many of` is as follows:
 
-```ty
+```typical
 // Returns true if this value contains the flag.
 // Replaces: (target & flag) === flag
 hasFlag(flag is TManyOf) returns boolean

@@ -10,7 +10,7 @@ Spaces and classes share the same declaration syntax. A declaration without a co
 
 This classification applies independently at every depth. Adding a constructor to a declaration reclassifies only that declaration. Its nested declarations keep their identities, but spaces below the new class boundary become groups of that class's instance members until another class introduces a new instance boundary.
 
-```ty
+```typical
 App (
 	run() (
 	)
@@ -23,13 +23,13 @@ App (
 
 This `App` is a space because it has no constructor and no inheritance clause. Its members are accessed directly through the space name:
 
-```ty
+```typical
 App.run()
 ```
 
 A declaration becomes a class when it declares a constructor:
 
-```ty
+```typical
 User (
 	constructor(name is string) (
 		this.name = name
@@ -41,7 +41,7 @@ User (
 
 An inheritance clause also makes a declaration a class:
 
-```ty
+```typical
 Admin is User (
 )
 ```
@@ -52,7 +52,7 @@ Spaces are not types and cannot be called. Classes introduce nominal types and a
 
 Repeated declarations with the same logical parent, name, and kind merge into one structural declaration. Files do not create scopes, so the merge is based on the program structure rather than where the fragments are stored.
 
-```ty
+```typical
 Panel (
 	constructor
 	title is string = "Inbox"
@@ -70,7 +70,7 @@ These fragments declare one `Panel` class. The repeated short `constructor` mark
 
 A constructorless same-name declaration is still a space unless it independently establishes class kind with an inheritance clause. This preserves the paired static side:
 
-```ty
+```typical
 Panel (
 	constructor
 	title is string = "Inbox"
@@ -98,14 +98,14 @@ Target declarations also belong to the logical merged space. Repeated configurat
 
 An empty declaration is a non-constructible space:
 
-```ty
+```typical
 Configuration (
 )
 ```
 
 There are no implicit constructors for ordinary bare declarations. To declare a class with an empty constructor, write either form below:
 
-```ty
+```typical
 User (
 	constructor
 )
@@ -124,7 +124,7 @@ Inheritance is the exception: an inheritance clause makes the declaration a clas
 
 A lexical scope may contain one space and one class with the same name:
 
-```ty
+```typical
 User (
 	find(id is string) returns User (
 	)
@@ -147,7 +147,7 @@ The space and class have independent member surfaces. They share a name but do n
 
 Pairing does not change storage ownership. At program scope, the space is the familiar program-owned side of the pair. Under a class, the space belongs to the surrounding instance, while the paired class still declares its own separately constructed instances:
 
-```ty
+```typical
 App (
 	Panel (
 		constructor() (
@@ -191,7 +191,7 @@ Only spaces may contain startup functions. Only classes may contain constructors
 
 A space inherits the storage owner of its enclosing declaration. The implicit root and spaces below it own program-lifetime state. A space below a class groups members belonging to that class instance. Further nested spaces preserve the same owner until a nested class introduces a new instance boundary.
 
-```ty
+```typical
 Counter (
 	constructor
 	In (
@@ -210,7 +210,7 @@ The path is part of each grouped member's address. `a.In.count` does not create 
 
 Nested spaces and nested classes below a class are protected structural partitions. Their paths are available to the owning class, structurally nested class bodies with an explicit receiver, and nominal descendants. They are not public instance paths:
 
-```ty
+```typical
 Counter (
 	constructor
 	In (
@@ -238,7 +238,7 @@ Adding or removing a constructor recomputes storage ownership below that declara
 
 A nested class introduces a nominal type and a new instance boundary. It is not automatically instantiated and does not capture an instance of its enclosing class. Runtime construction requires an instance of the immediately owning class:
 
-```ty
+```typical
 Panel (
 	constructor
 	Item (
@@ -254,7 +254,7 @@ item = panel.Item()
 
 The declaration-qualified path remains valid in type positions and parent lists because naming a type performs no runtime access:
 
-```ty
+```typical
 read(item is Panel.Item) returns string (
 	return item.name
 )
@@ -262,7 +262,7 @@ read(item is Panel.Item) returns string (
 
 Two `Panel` instances expose the same nested nominal type. This receiver requirement does not create object-dependent types or give `Item` an implicit reference to its `Panel`. A nested class that needs outer instance state must receive or store an explicit reference. Structurally nested class bodies may use that explicit receiver to access the outer class's protected partitions:
 
-```ty
+```typical
 Panel (
 	constructor
 	In (
@@ -281,13 +281,13 @@ An instance-owned space cannot be crossed through a declaration path to bypass t
 
 Names are qualified with dots:
 
-```ty
+```typical
 App.Backend.User
 ```
 
 Named spaces and classes cannot use dotted declaration names. Nesting must be written explicitly.
 
-```ty
+```typical
 App (
 	Backend (
 	)
@@ -318,7 +318,7 @@ The badges are editor projections and are not persisted as source tokens.
 
 Every binding declared directly in a space has a qualified address. Function and block locals remain lexical locals; they do not become members of the containing space. Qualification is independent of visibility or access policy.
 
-```ty
+```typical
 Settings (
 	small = 16
 

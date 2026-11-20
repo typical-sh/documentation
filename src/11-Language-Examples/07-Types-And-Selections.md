@@ -4,7 +4,7 @@
 
 This selection type is consumed by an exhaustive match.
 
-```ty
+```typical
 Day is one of (
 	monday
 	tuesday
@@ -28,7 +28,7 @@ isWeekend(day is Day) returns bool (
 
 This example assigns protocol-style numeric values to named cases.
 
-```ty
+```typical
 Status is one of (
 	ok = 200
 	created = 201
@@ -49,7 +49,7 @@ isSuccess(status is Status) returns bool (
 
 Generic type parameters appear first in the ordinary parameter list. Their uppercase names distinguish them from runtime parameters.
 
-```ty
+```typical
 identity(T, value is T) returns T (
 	return value
 )
@@ -63,7 +63,7 @@ retainName(name is string) returns string (
 
 This example combines a selection declaration with type-level iteration.
 
-```ty
+```typical
 Priority is one of (
 	low = 1
 	normal = 2
@@ -84,7 +84,7 @@ priorityNames() returns string[] (
 
 ## Composition And Numbering
 
-```ty
+```typical
 Base is one of (
 	a
 	b
@@ -101,7 +101,7 @@ Extended is Base or one of (
 
 ## Qualified Literal Values
 
-```ty
+```typical
 Settings (
 	small = 16
 
@@ -114,7 +114,7 @@ Settings (
 
 ## Literal Member Access
 
-```ty
+```typical
 Offset is one of (-1, null)
 Reply is one of ({ code = 1 })
 

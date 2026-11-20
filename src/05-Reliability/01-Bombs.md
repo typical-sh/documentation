@@ -8,7 +8,7 @@ If a function might fail, we use Typical's partial inference feature to convert 
 
 The most natural way to throw a bomb is to just use a `throw` expression that TypeScript developers are already familiar with:
 
-```ty
+```typical
 // This method has a throw, so the 💣 appears,
 // and the return type of the method becomes int | bomb
 // instead of just int.
@@ -26,7 +26,7 @@ start() returns int 💣 (
 
 You don't need to provide a bomb value. You can just throw without a value and it will create a message for you.
 
-```ty
+```typical
 start() (
 	if (1 + 1 === 3) (
 		// > Bomb message is "Failure in start(), at SourceFile.ty:123"
@@ -39,7 +39,7 @@ start() (
 
 When you call a function that could possibly return a bomb, you can't touch the result. Instead, you need to deal with the bomb somehow. Here is the more manual way of doing that:
 
-```ty
+```typical
 start() (
 	// > foo is Foo | bomb
 	🥚 foo = getFooOrBomb() 💣
@@ -53,7 +53,7 @@ start() (
 
 Alternatively, you can use `throw` as an operator and suffix it after the bomb-ridden expression. Using throw as an operator is the quick escape hatch to pass it off to the containing context without thinking too much.
 
-```ty
+```typical
 // start() returns bombable now, because of the throw operator.
 start() 💣 (
 	// > foo is just Foo
@@ -104,7 +104,7 @@ iterate() (
 
 When `throw` is used as an operator, it's placed as a postfix-style suffix behind a bomb-throwing expression. It therefore has high precedence order. For example:
 
-```ty
+```typical
 // Given
 foo = a() 💣 throw + b()
 // This means:
@@ -117,7 +117,7 @@ Because the throw operator always proceeds a 💣 glyph, the Tokens editor will 
 
 Throw as expression is a convenient way to get an early quit mid-expression if something isn't going as planned. This is part of the effort to maximize ergonomics and reduce friction around immutability.
 
-```ty
+```typical
 start() (
 	🥚 str = getStringMaybe() 💣
 	if (str is bomb) (
@@ -149,7 +149,7 @@ getStringOrGenericBomb() returns string 💣 (
 
 Propagation happens using a bomb type inference system.
 
-```ty
+```typical
 mightFail() returns string 💣 (
 	if (Math.random() > 0.5) (
 		throw "Error"
@@ -176,7 +176,7 @@ You can catch bombs using the `catch` operator. It is worth noting that `catch` 
 
 The catch operator essentially does "expression fall-through, if and only if the value is a bomb". For example:
 
-```ty
+```typical
 handle() (
 	🥚 str = getStringMaybe() 💣 catch "Bomb"
 	// > Returns Hello! or Bomb!
@@ -190,7 +190,7 @@ getStringMaybe(): string 💣 (
 
 Below is a more complex example using `catch` with `??`, to show how the fall through operates:
 
-```ty
+```typical
 
 nullishFirst() (
 	🥚 str = getStringNullBomb() 💣 ?? "Null" catch "Bomb"
@@ -224,7 +224,7 @@ The author may choose to throw either a string, a `bomb` object, or nothing at a
 
 `bomb` is a first-class object in Typical. It's structure is created in-place. The structure of a bomb is defined like so:
 
-```ty
+```typical
 📦 Bomb (
 	message        is int;
 	code           is int;
@@ -243,7 +243,7 @@ Throw is an expression. You can put it in places that take an expression, though
 The "throw" keyword is an expression in Typical. This makes handling bomb propagation much more natural.
 This is important, but there are design issues. For example, in this case, its obvious that foo() should be a bombable function, but how does it know this?
 
-```ty
+```typical
 foo() (
 	// It's actually a compiler error to throw in here, because the callback function
 	// does not explicitly allow it, because it's not bombable. Which means that if
@@ -265,7 +265,7 @@ For certain common operations like Array#map, Array#find, Array#filter, you migh
 
 A more realistic option would probably be to have a custom library that supports Interruptible array operations, which would compile to something like this:
 
-```ty
+```typical
 foo() (
 	// T_.Array.map would support interruptible iteration, 
 	// which checks to see if the returned value is an error and quits out.

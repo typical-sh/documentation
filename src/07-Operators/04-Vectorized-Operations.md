@@ -2,7 +2,7 @@
 
 Vectorized operations apply an ordinary scalar operator across array elements.
 
-```ty
+```typical
 values = [1, 2, 3]
 // > [2, 4, 6]
 scaled = values * 2
@@ -10,7 +10,7 @@ scaled = values * 2
 
 Vectorized operations are element-wise. They are not matrix operations, dot products, reductions, range operations, or object-field operations.
 
-```ty
+```typical
 range = 1 to 3
 // > Notice
 range * 2
@@ -37,7 +37,7 @@ The vectorized arithmetic and ordering operators are:
 
 Strict equality, bitwise operators, logical operators, coalescing operators, ternaries, assignment, `key of`, and postfix `throw` do not vectorize.
 
-```ty
+```typical
 scores = [10, 20, 30]
 
 // > [15, 25, 35]
@@ -52,7 +52,7 @@ scores & 1
 
 When one operand is an array and the other is not, the non-array operand is applied to every element. Operand order is preserved.
 
-```ty
+```typical
 values = [2, 4, 8]
 
 // > [1, 3, 7]
@@ -70,14 +70,14 @@ values / 2
 
 When both operands are arrays, elements are paired by index.
 
-```ty
+```typical
 // > [11, 22, 33]
 [1, 2, 3] + [10, 20, 30]
 ```
 
 If one array is shorter, Typical pads the shorter side with the operator's identity value.
 
-```ty
+```typical
 // > [11, 2, 3]
 [1, 2, 3] + [10]
 // > [10, 2, 3]
@@ -88,7 +88,7 @@ The additive identity is `0`. The multiplicative identity is `1`. Operators with
 
 Empty array operations produce empty arrays.
 
-```ty
+```typical
 // > []
 [] * 10
 // > []
@@ -99,7 +99,7 @@ Empty array operations produce empty arrays.
 
 The result element type is the ordinary scalar result type of the element operation.
 
-```ty
+```typical
 left is i32[] = [1, 2]
 right is i64[] = [3, 4]
 
@@ -109,7 +109,7 @@ total = left + right
 
 Unit adoption, unit operator overloads, custom-primitive operator overloads, and numeric promotion work the same way they do for scalar operators.
 
-```ty
+```typical
 distances = [1m, 2m, 3m]
 // > [3m, 4m, 5m]
 distances + 2
@@ -122,7 +122,7 @@ sum = left + right
 
 If every array operand has the same statically known fixed length, the result is fixed-length. Otherwise the result is variable-length.
 
-```ty
+```typical
 left is int[3] = [1, 2, 3]
 right is int[3] = [10, 20, 30]
 // > int[3]
@@ -137,7 +137,7 @@ scaled = values * 2
 
 When an array's element type is a selection, Typical infers the result element type from the statically valid element operations. At runtime, valid lanes produce the scalar result. Invalid lanes produce the zero value of the inferred result element type.
 
-```ty
+```typical
 items is (int or Customer)[] = [1, Customer, 3]
 
 scaled = items * 10
@@ -146,7 +146,7 @@ scaled = items * 10
 
 The same rule applies when both sides contain selections.
 
-```ty
+```typical
 left is (int or Customer)[] = [1, Customer]
 right is (f64 or Animal)[] = [2.5, Animal]
 
@@ -156,7 +156,7 @@ merged = left * right
 
 If no element pairing has a valid scalar operation, the operation produces an empty impossible-value array and the compiler reports a notice.
 
-```ty
+```typical
 customers is Customer[] = getCustomers()
 animals is Animal[] = getAnimals()
 
@@ -168,7 +168,7 @@ customers * animals
 
 Vectorized ordering comparisons return `boolean[]`.
 
-```ty
+```typical
 scores = [10, 20, 30]
 
 // > [false, true, true]
@@ -179,7 +179,7 @@ scores <= [10, 10, 40]
 
 Bare array equality is whole-array equality, not a vectorized boolean-array operation. It compares array length and then compares corresponding elements using the relevant scalar equality behavior for each position.
 
-```ty
+```typical
 // > true
 [1, 2] == [1, 2]
 // > false
@@ -190,7 +190,7 @@ Bare array equality is whole-array equality, not a vectorized boolean-array oper
 
 Compound assignment uses the vectorized binary operation and assigns the result back to the binding. It does not mutate array contents in place as a language-level behavior.
 
-```ty
+```typical
 var items = [1, 2, 3]
 // > items becomes [2, 3, 4]
 items += 1
@@ -206,7 +206,7 @@ Implementations may reuse storage only when ordinary ownership analysis proves t
 
 The left operand expression evaluates once, then the right operand expression evaluates once. Vectorized result elements are observed in ascending index order.
 
-```ty
+```typical
 result = getLeftArray() + getRightArray()
 // getLeftArray() runs once before getRightArray().
 ```
@@ -217,7 +217,7 @@ Implementations may optimize or parallelize only when doing so cannot change obs
 
 String arrays support `+` because scalar string `+` is valid. This is element-wise concatenation.
 
-```ty
+```typical
 // > ["ax", "by", "cz"]
 ["a", "b", "c"] + ["x", "y", "z"]
 // > Notice
@@ -230,7 +230,7 @@ No other string operator becomes valid because of vectorization.
 
 Invalid vectorized operations produce a notice at the outer operator. The diagnostic should include the failing element operation when that is useful.
 
-```ty
+```typical
 names = ["Ada", "Grace"]
 // > Notice
 names - 1
@@ -238,7 +238,7 @@ names - 1
 
 Object values do not vectorize by field. Types that need field-wise arithmetic should define an explicit operator.
 
-```ty
+```typical
 point = { x = 1, y = 2 }
 // > Notice
 point * 2

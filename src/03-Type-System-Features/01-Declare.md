@@ -59,7 +59,7 @@ F = Function
 
 `declare noImplicitNullReturns` is an opt-in notice policy. It applies to unannotated ordinary functions and function expressions in its scope.
 
-```ty
+```typical
 declare noImplicitNullReturns
 
 label(ready is boolean) (
@@ -77,7 +77,7 @@ The declaration does not change the inferred `string or null` result or the runt
 
 `declare import` establishes package policy in a space or class without introducing a module binding:
 
-```ty
+```typical
 declare import Sqlx version 1.2.3 features postgres mysql sqlite
 ```
 

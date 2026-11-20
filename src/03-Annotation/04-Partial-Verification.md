@@ -28,7 +28,7 @@ The current parser accepts one complete particle or resource reference inside si
 
 Examples of the intended future partial-code syntax:
 
-```ty
+```typical
 {SomeClass}
 {Files.readFileSync}
 {calculateThings(...)}
@@ -48,7 +48,7 @@ Resource islands are not checked as Typical code. Unknown schemes remain valid i
 
 The `...` token may represent deliberately omitted information in a context processed by the Partial Verifier:
 
-```ty
+```typical
 result = calculateThings(...)
 ```
 
@@ -64,7 +64,7 @@ A Partial Verification hole is distinct from compiler `unknowable` recovery. A h
 
 Usage examples often refer to values supplied by an implied surrounding environment:
 
-```ty
+```typical
 result = calculateThings(request)
 ```
 

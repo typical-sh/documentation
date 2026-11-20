@@ -4,7 +4,7 @@
 
 ## Named Entries
 
-```ty
+```typical
 Day is one of (
 	monday
 	tuesday
@@ -20,7 +20,7 @@ Reserve explicit numeric values first, then number inferred entries above the hi
 
 When `none` is absent, the first surviving entry is the zero value. This allows selections to choose whether their default should be an explicit empty state or an ordinary domain value.
 
-```ty
+```typical
 Day is one of (
 	none
 	monday
@@ -41,7 +41,7 @@ LateNone is one of (
 // Notice: none should be first. Recovery moves none to the front.
 ```
 
-```ty
+```typical
 Example is one of (
 	// > 3
 	a
@@ -53,7 +53,7 @@ Example is one of (
 
 Explicit aliases within one body are allowed:
 
-```ty
+```typical
 HttpStatus is one of (
 	ok = 200
 	success = 200
@@ -65,7 +65,7 @@ ok and success compare equal but remain separate entries for iteration and displ
 
 ## Literal Values
 
-```ty
+```typical
 Width is one of (16, 32, 64)
 Mixed is one of (1, "one", true)
 Reply is one of ({ code = 1 }, { code = 2 })
@@ -76,7 +76,7 @@ Literal entries constrain exact values. A literal may be a string, number, boole
 
 Named and literal entries cannot be mixed:
 
-```ty
+```typical
 Invalid is one of (
 	ready
 	"ready"
@@ -85,7 +85,7 @@ Invalid is one of (
 
 Computation is excluded even if statically evaluable:
 
-```ty
+```typical
 Bad is one of (
 	// > Notice.
 	8 + 8
@@ -95,7 +95,7 @@ Bad is one of (
 
 ## Named Constant Assignments
 
-```ty
+```typical
 Settings (
 	small = 16
 	large = 32
@@ -111,7 +111,7 @@ The right-hand side of a named assignment may refer directly to a compiler-known
 
 ## Composition
 
-```ty
+```typical
 Base is one of (
 	a
 	b
@@ -130,7 +130,7 @@ Explicit values stay fixed. Inferred entries are numbered across the resulting s
 
 ## Access And Iteration
 
-```ty
+```typical
 Offset is one of (-1, 0, null)
 Reply is one of ({ code = 1 })
 

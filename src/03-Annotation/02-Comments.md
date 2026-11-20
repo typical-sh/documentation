@@ -2,7 +2,7 @@
 
 Comments are free-form text for human readers. They begin with `//` and continue to the end of the physical line.
 
-```ty
+```typical
 // Explain why this value is fixed.
 // > Temporary limit while the service is in preview.
 retryLimit = 3
@@ -12,7 +12,7 @@ Comments occupy their own physical lines and cannot follow code on the same line
 
 Typical has no block-comment syntax. In particular, JavaScript-style `/* ... */` comments are not supported. Use `//` on each line instead.
 
-```ty
+```typical
 // This explanation spans
 // more than one line.
 ```

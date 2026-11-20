@@ -11,7 +11,7 @@ A fixed-length array is created by specifying the length of the array in the typ
 Note that for this syntax to work, the "type area" of the language would have to be part of
 the program flow, not a pre-processor only thing like how TypeScript works.
 
-```ty
+```typical
 // Initialize a 10 number array
 // Fixed-length array initializers don't need an assignment.
 // They're initialized with the default value of the type (0, empty string, false, etc)
@@ -22,7 +22,7 @@ the program flow, not a pre-processor only thing like how TypeScript works.
 
 Array contents are immutable by default. If you want to make the contents mutable, you have to use the `editable` keyword.
 
-```ty
+```typical
 items is editable number[]
 
 0 to 10 each i (
@@ -32,7 +32,7 @@ items is editable number[]
 
 To make the array both have a mutable binding and mutable contents, you'd need to use both annotations together (and hope to not get fired)
 
-```ty
+```typical
 items is editable var number[]
 
 0 to 10 each i (
@@ -42,7 +42,7 @@ items is editable var number[]
 
 To make an array with a mutable binding, editable contents, but a fixed length, the code would look like:
 
-```ty
+```typical
 items is editable var number[10]
 
 0 to 10 each i (
@@ -52,7 +52,7 @@ items is editable var number[10]
 
 Arrays are auto-initialized as such. They don't need to have equal signs with empty vars put after them.
 
-```ty
+```typical
 // These are equivalent
 items is number[]
 items is number[] = [1, 2]

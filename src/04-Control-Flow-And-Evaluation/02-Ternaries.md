@@ -2,13 +2,13 @@
 
 Ternaries use the same syntax and basic behavior as TypeScript.
 
-```ty
+```typical
 label = enabled ? "Enabled" : "Disabled"
 ```
 
 The format is:
 
-```ty
+```typical
 <condition> ? <true-expression> : <false-expression>
 ```
 
@@ -26,7 +26,7 @@ A ternary condition follows the same rules as an `if` condition. It must be eith
 
 Ternaries do not use TypeScript or JavaScript truthiness. Strings, numbers, arrays, objects, and other non-boolean values are not accepted as conditions merely because they could be interpreted as true or false.
 
-```ty
+```typical
 label = count ? "Non-zero" : "Zero"
 // Invalid: numbers are not coerced to boolean
 
@@ -36,7 +36,7 @@ label = count !== 0 ? "Non-zero" : "Zero"
 
 The same rule applies to strings and collections. Use explicit checks.
 
-```ty
+```typical
 label = name !== "" ? name : "Anonymous"
 
 status = items.length !== 0 ? "Has items" : "Empty"
@@ -46,13 +46,13 @@ status = items.length !== 0 ? "Has items" : "Empty"
 
 Nullable values are allowed directly in condition position. The condition checks whether the condition expression itself is not `null`.
 
-```ty
+```typical
 displayName = user ? user.name : "Anonymous"
 ```
 
 The true arm can use the non-null type.
 
-```ty
+```typical
 user is User or null
 
 displayName = user ? user.name : "Anonymous"
@@ -60,7 +60,7 @@ displayName = user ? user.name : "Anonymous"
 
 A non-nullable value is not allowed directly in condition position just because it contains nullable fields.
 
-```ty
+```typical
 label = profile ? "Has profile" : "No profile"
 // Invalid when profile itself is not nullable
 
@@ -70,7 +70,7 @@ label = profile.photo ? "Has photo" : "No photo"
 
 Nullable values keep their type when assigned to a local. The local can then be checked directly.
 
-```ty
+```typical
 photo = profile.photo
 
 label = photo ? "Has photo" : "No photo"
@@ -78,7 +78,7 @@ label = photo ? "Has photo" : "No photo"
 
 Nullable booleans follow the same rule as conditionals: `false` is still a boolean value, not `null`.
 
-```ty
+```typical
 enabled is boolean or null
 
 label = enabled ? "Enabled" : "Disabled or unset"
@@ -86,7 +86,7 @@ label = enabled ? "Enabled" : "Disabled or unset"
 
 Use an explicit comparison when the distinction matters.
 
-```ty
+```typical
 label = enabled !== null ? "Set" : "Unset"
 ```
 
@@ -94,14 +94,14 @@ label = enabled !== null ? "Set" : "Unset"
 
 The result type of a ternary is the shared type of its two arms.
 
-```ty
+```typical
 label = enabled ? "Enabled" : "Disabled"
 // label is string
 ```
 
 When the two arms produce different types, the result is their union or common supertype.
 
-```ty
+```typical
 value = useName ? name : count
 // value is string or the type of count
 ```

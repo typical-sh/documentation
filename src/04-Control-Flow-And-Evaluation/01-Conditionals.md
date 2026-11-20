@@ -3,7 +3,7 @@
 
 Conditionals work like TypeScript conditionals, except block bodies use `(` and `)` instead of `{` and `}`.
 
-```ty
+```typical
 if (condition1) (
 	// Run code
 )
@@ -17,7 +17,7 @@ else (
 
 The format is:
 
-```ty
+```typical
 if (<condition>) (
 	<statements>
 )
@@ -33,7 +33,7 @@ else (
 
 Conditional bodies always require parenthesized blocks. The language does not support TypeScript-style braceless single-statement bodies.
 
-```ty
+```typical
 // ❌ Wrong
 if (ready)
 	start()
@@ -41,7 +41,7 @@ if (ready)
 
 Use:
 
-```ty
+```typical
 if (ready) (
 	start()
 )
@@ -61,7 +61,7 @@ An `if` condition must be either:
 
 Unlike TypeScript and JavaScript, conditionals do not use general truthiness. Strings, numbers, arrays, objects, and other non-boolean values are not accepted as conditions merely because they could be interpreted as true or false.
 
-```ty
+```typical
 if (count) (
 	// Invalid: numbers are not coerced to boolean
 )
@@ -73,7 +73,7 @@ if (count !== 0) (
 
 The editor may offer an expansion for numeric values in condition position. For example, placing a number in an `if` condition can be rewritten to an explicit comparison against zero.
 
-```ty
+```typical
 if (count) (
 	// Editor can expand to:
 )
@@ -85,7 +85,7 @@ if (count !== 0) (
 
 The same rule applies to strings and collections. They require explicit checks.
 
-```ty
+```typical
 if (name !== "") (
 	console.log(name)
 )
@@ -99,7 +99,7 @@ if (items.length !== 0) (
 
 Nullable values are allowed directly in condition position. The condition checks whether the condition expression itself is not `null`.
 
-```ty
+```typical
 if (user) (
 	console.log(user.name)
 )
@@ -110,7 +110,7 @@ else (
 
 Inside the truthy branch, the value is narrowed to its non-null type. Inside the `else` branch, the value is narrowed to `null` when the original type permits that conclusion.
 
-```ty
+```typical
 user is User or null
 
 if (user) (
@@ -124,7 +124,7 @@ else (
 
 A non-nullable value is not allowed directly in condition position just because it contains nullable fields.
 
-```ty
+```typical
 profile is Profile
 
 if (profile) (
@@ -138,7 +138,7 @@ if (profile.photo) (
 
 Nullable values keep their type when assigned to a local. The local can then be checked directly.
 
-```ty
+```typical
 photo = profile.photo
 
 if (photo) (
@@ -148,7 +148,7 @@ if (photo) (
 
 Nullable booleans follow the same rule: `false` is still a boolean value, not `null`.
 
-```ty
+```typical
 enabled is boolean or null
 
 if (enabled) (
@@ -161,7 +161,7 @@ else (
 
 Use an explicit comparison when the distinction matters.
 
-```ty
+```typical
 if (enabled !== null) (
 	// enabled is boolean here
 )
@@ -171,7 +171,7 @@ if (enabled !== null) (
 
 Branches are tested from top to bottom. The first branch whose condition passes is executed, and the remaining branches are skipped.
 
-```ty
+```typical
 if (status === "ready") (
 	start()
 )

@@ -6,7 +6,7 @@ These examples apply realistic pressure to the editor layout without relying on 
 
 This example combines a class, an array of instances, numeric accumulation, branching, and multiline interpolation.
 
-```ty
+```typical
 OrderLine (
 	name is string
 	quantity is int
@@ -39,7 +39,7 @@ orderSummary(lines is OrderLine[]) returns string (
 
 Nested arrays arise naturally when a program groups sequential readings into batches.
 
-```ty
+```typical
 groupMeasurements(values is int[], groupSize is int) returns int[][] (
 	groups is editable int[][]
 	current is editable var int[]
@@ -66,7 +66,7 @@ groupMeasurements(values is int[], groupSize is int) returns int[][] (
 
 This program mixes matching, nested control flow, member calls, and accumulated text while preserving useful breakpoint locations.
 
-```ty
+```typical
 diagnosticReport(readings is int[]) returns string (
 	report is var string = "Readings"
 	
@@ -91,7 +91,7 @@ diagnosticReport(readings is int[]) returns string (
 
 This example creates a meaningful level of nesting through a two-dimensional data transformation.
 
-```ty
+```typical
 scaleGrid(grid is int[][], factor is int) returns int[][] (
 	result is editable int[][]
 	

@@ -4,7 +4,7 @@
 
 `value is Selection` tests whether a value belongs to a selection and narrows that value in the successful branch.
 
-```ty
+```typical
 Width is one of (16, 32)
 
 useWidth(width is Width) ()
@@ -21,7 +21,7 @@ run(input is int) (
 
 For literal alternatives, attest exact value membership. For arrays and anonymous objects, compare deeply immutable values structurally: array order matters; objects require exactly the same fields and recursively equal values. There is no implicit coercion or user-defined equality call.
 
-```ty
+```typical
 Reply is one of ({ code = 1 })
 
 run() (

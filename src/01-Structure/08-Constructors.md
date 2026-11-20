@@ -2,7 +2,7 @@
 
 Constructors make a declaration a class and define how construction calls produce instances.
 
-```ty
+```typical
 User (
 	name is string
 	
@@ -14,7 +14,7 @@ User (
 
 A constructor with parameters or behavior uses `constructor(...) (...)`. A constructor body may be omitted; the omitted body behaves like an empty body. A parameterless empty constructor may be shortened to `constructor`.
 
-```ty
+```typical
 Marker (
 	constructor
 )
@@ -26,7 +26,7 @@ Both spellings make the declaration a class. Constructors may appear in referenc
 
 Calling a class constructs a value. Typical has no `new` keyword.
 
-```ty
+```typical
 user = User("Ada")
 ```
 
@@ -44,7 +44,7 @@ A constructor is a value-producing construction function whose implicit result t
 
 A constructor may fall through, which returns the normally initialized `this`, or explicitly return a value assignable to the containing class type. Compatible returns include `this`, another instance of the same class, or an instance of a descendant class. Returning an incompatible value produces a notice and recovers with the typed zero value.
 
-```ty
+```typical
 XDataStore (
 	constructor() (
 		found = XDataStoreCache.current()
@@ -61,7 +61,7 @@ Returning a descendant does not introduce dynamic dispatch. Static member lookup
 
 Every stored field must be definitely assigned by the end of construction.
 
-```ty
+```typical
 User (
 	active is bool = true
 	name is string
@@ -78,7 +78,7 @@ The observable `this` instance is materialized on first touch. The first touch m
 
 Typical establishes storage from each field type's zero value when that zero can be synthesized. Source order is observable when one initializer reads a field whose explicit initializer has not run yet:
 
-```ty
+```typical
 Panel (
 	In (
 		seen is int = value
@@ -99,7 +99,7 @@ This is distinct from synthetic zero construction used by typed fallback. Synthe
 
 If a reference type's stored fields require an impossible strong recursive construction, it has no valid synthetic zero. Typical reports an invalid zero-value shape rather than inventing a cyclic sentinel object.
 
-```ty
+```typical
 Node (
 	next is strong Node
 )
@@ -107,7 +107,7 @@ Node (
 
 The shape becomes zero-synthesizable when it contains a legal construction break, such as `null`, weak ownership, laziness, an explicit default, or an explicit body that supplies a sanctioned value.
 
-```ty
+```typical
 Node (
 	next is strong Node or null
 )
@@ -119,7 +119,7 @@ A path that returns another compatible instance before touching `this` skips fie
 
 Constructors may bomb. A constructor body may `throw`, or use the postfix `throw` operator to pass through a bomb from another expression. When a constructor can bomb, calling the class produces `ClassName | bomb` and the call site must handle or propagate the bomb like any other bombable expression.
 
-```ty
+```typical
 User (
 	name is string
 	
@@ -141,7 +141,7 @@ On a bombing path, construction produces no usable instance. If `this` has not m
 
 A constructor parameter may declare and initialize a same-named stored field by writing `is field of T`.
 
-```ty
+```typical
 Document (
 	status is DocumentStatus
 
@@ -155,7 +155,7 @@ Document (
 
 The parameter value is assigned to the stored field when `this` materializes. Field parameters replace explicit constructor copies for their stored fields.
 
-```ty
+```typical
 Document (
 	identifier is string
 	accountName is string
@@ -171,7 +171,7 @@ Document (
 
 The field type is part of the field parameter. The field does not need a separate declaration.
 
-```ty
+```typical
 ScrapedPage (
 	constructor(
 		target is field of ScrapeTarget
@@ -187,7 +187,7 @@ Field parameters participate in ordinary construction. They satisfy definite ass
 
 When a class initializes its own instance and inherits from a parent with a constructor, its constructor must call `super(...)`.
 
-```ty
+```typical
 Animal (
 	constructor(name is string) (
 		this.name = name
@@ -219,7 +219,7 @@ A `super` use outside a valid instance inheritance context is ignored and produc
 
 A constructor may be asynchronous.
 
-```ty
+```typical
 Foo (
 	constructor(initialValue is int) returns async (
 		this.value = await load(initialValue)
@@ -237,7 +237,7 @@ For TypeScript output, async construction lowers to a static async `new()` metho
 
 Spaces use startup functions for initialization.
 
-```ty
+```typical
 Registry (
 	items is Array(string) = []
 	

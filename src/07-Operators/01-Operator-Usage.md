@@ -8,7 +8,7 @@ For the complete operator list and precedence table, see [[06-Operators]] in the
 
 Arithmetic operators work on numeric values and on other values that define the relevant operation.
 
-```ty
+```typical
 width = 12
 height = 4
 
@@ -19,7 +19,7 @@ scaled = area / 2
 
 Typical separates fractional division from integer division.
 
-```ty
+```typical
 items = 7
 boxes = 2
 
@@ -32,14 +32,14 @@ fullBoxes = items \ boxes
 
 Use `%` for remainders and `**` for exponentiation.
 
-```ty
+```typical
 index = 17 % 5
 volume = side ** 3
 ```
 
 Typical does not include `++` or `--`. Reassign explicitly when a mutable value needs to change by one.
 
-```ty
+```typical
 var count = 0
 
 count += 1
@@ -49,7 +49,7 @@ count += 1
 
 `=` assigns a new value to a mutable binding, field, or indexed target.
 
-```ty
+```typical
 var retries = 0
 
 retries = 1
@@ -57,7 +57,7 @@ retries = 1
 
 Compound assignment combines an operation with assignment.
 
-```ty
+```typical
 var total = 10
 
 total += 5
@@ -70,7 +70,7 @@ Compound assignment uses the same underlying operation as the non-assignment for
 
 Comparison operators return `boolean`.
 
-```ty
+```typical
 age = 41
 
 isAdult = age >= 18
@@ -80,7 +80,7 @@ isDifferent = age != 0
 
 Use comparisons explicitly. Typical does not treat numbers, strings, arrays, or objects as general truthy or falsy conditions.
 
-```ty
+```typical
 count = 3
 
 hasItems = count != 0
@@ -90,7 +90,7 @@ hasItems = count != 0
 
 Use `not` to negate a boolean.
 
-```ty
+```typical
 isReady = false
 
 shouldWait = not isReady
@@ -98,7 +98,7 @@ shouldWait = not isReady
 
 Use `and` and `or` for boolean logic when both sides are boolean expressions.
 
-```ty
+```typical
 canSend = isReady and hasConnection
 canRetry = hasRetries or isManualOverride
 ```
@@ -111,7 +111,7 @@ The same words are also used by coalescing forms in value-producing expressions.
 
 Bitwise operators operate on integer bits.
 
-```ty
+```typical
 read = 0b001
 write = 0b010
 
@@ -126,7 +126,7 @@ Selection types such as `many of` are usually clearer than raw bit masks. Use bi
 
 The ternary operator chooses between two expressions from a boolean condition.
 
-```ty
+```typical
 label = count == 0 ? "Empty" : "Ready"
 ```
 
@@ -136,7 +136,7 @@ Use a ternary when both branches are ordinary values. Use coalescing when the ch
 
 `key of` returns the source name of a visible declaration or member as a string.
 
-```ty
+```typical
 Name = "Bob"
 
 Animal (

@@ -2,7 +2,7 @@ Ghosts define destructor behavior for class values.
 
 A ghost is written with the `ghost` keyword followed by a body. It has no name, parameters, return type, generic parameters, or overload list.
 
-```ty
+```typical
 FileHandle (
 	handle is NativeHandle
 	
@@ -36,7 +36,7 @@ A class may define at most one local ghost.
 
 Inside a ghost, `this` refers to the value being destroyed.
 
-```ty
+```typical
 Subscription (
 	constructor
 	
@@ -62,7 +62,7 @@ For owned values, destruction happens when the value's lifetime ends. For refere
 
 Ghosts are not called directly.
 
-```ty
+```typical
 // > notice
 user.ghost()
 ```
@@ -75,7 +75,7 @@ When a value is destroyed, the most-derived local ghost body runs before stored 
 
 After the ghost body finishes, stored fields are destroyed automatically in the reverse of their initialization order. Instance-owned spaces add no destruction stage: their fields occupy their source-order positions in the owning class's field sequence.
 
-```ty
+```typical
 Pair (
 	constructor
 	
@@ -104,7 +104,7 @@ For a class with parents, destruction runs in the reverse of construction order:
 2. Inherited parent ghosts run in reverse parent order.
 3. Fields are destroyed in reverse declaration order for each corresponding class part.
 
-```ty
+```typical
 Animal (
 	constructor
 	
@@ -130,7 +130,7 @@ Bunny is Animal, Pet (
 
 Destroying a `Bunny` logs:
 
-```ty
+```typical
 "bunny"
 "pet"
 "animal"
@@ -146,7 +146,7 @@ A ghost does not call `super`.
 
 The compiler is responsible for running inherited ghosts and field destruction in the correct order. User code should only describe the cleanup owned by the current class part.
 
-```ty
+```typical
 Bunny is Animal (
 	👻 ghost (
 		cleanUpBunny()
@@ -195,7 +195,7 @@ Typical code should treat ghost failure as a last-resort programming fault rathe
 
 For Rust output, a local ghost lowers to `Drop::drop`.
 
-```ty
+```typical
 FileHandle (
 	constructor
 	

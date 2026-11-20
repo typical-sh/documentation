@@ -11,13 +11,13 @@ Typical does not provide separate `for`, `while`, or `do` statements.
 
 `each` is a contextual suffix applied to an iterable expression.
 
-```ty
+```typical
 <iterable-expression> each <bindings> (
 	<body>
 )
 ```
 
-```ty
+```typical
 getItems() each item index source (
 	console.log(item)
 )
@@ -29,7 +29,7 @@ The iterable expression is evaluated exactly once. The compiler obtains one iter
 
 A loop may be labeled with `as` after its iteration bindings:
 
-```ty
+```typical
 rows each row as outer (
 	row each cell as inner (
 		if (skipRow(cell)) (
@@ -49,7 +49,7 @@ Every iterable defines an ordered iteration-binding contract. Each identifier fo
 
 Bindings are separated by whitespace. Commas are not used.
 
-```ty
+```typical
 items each item index source (
 )
 ```
@@ -58,7 +58,7 @@ Binding names do not determine their meaning. Position determines meaning. The n
 
 Loop headers do not destructure the values occupying those positions. When an array item is itself a tuple, the first binding receives the whole tuple.
 
-```ty
+```typical
 pairs each pair index source (
 	left right = pair
 )
@@ -66,7 +66,7 @@ pairs each pair index source (
 
 Changing the binding names does not turn the header into destructuring:
 
-```ty
+```typical
 pairs each left right (
 	// left is the whole pair; right is the array index.
 )
@@ -78,7 +78,7 @@ Destructuring remains a separate operation inside the loop body and follows the 
 
 Bindings form a positional prefix. Any number of trailing bindings may be omitted, including all of them.
 
-```ty
+```typical
 items each item (
 	console.log(item)
 )
@@ -90,7 +90,7 @@ items each (
 
 Typical has no discard placeholder. When an author needs a later position but not an earlier one, the earlier position is still bound and may remain unused.
 
-```ty
+```typical
 items each unusedItem index (
 	console.log(index)
 )
@@ -102,7 +102,7 @@ Unused bindings are removed when they are not needed by generated code.
 
 Bindings beyond the iterable's maximum supported position are ignored and receive compiler notices. Typist renders these tokens with strike-out styling.
 
-```ty
+```typical
 items each item index source extra another (
 	console.log(item)
 )
@@ -123,7 +123,7 @@ These are standard-library conventions, not restrictions on custom iteration con
 
 Array iteration mirrors the callback arguments of JavaScript's `Array.prototype.forEach()`.
 
-```ty
+```typical
 items each item index array (
 )
 ```
@@ -138,7 +138,7 @@ For an array produced by a transformation, the index and source belong to the tr
 
 Ranges mirror the array binding shape.
 
-```ty
+```typical
 1 to 10 step 2 each value index range (
 )
 ```
@@ -149,7 +149,7 @@ Ranges mirror the array binding shape.
 
 Range direction comes entirely from the range's `step`. An omitted step is positive `1`; direction is not inferred from the relative boundary values. Descending iteration therefore requires a negative step.
 
-```ty
+```typical
 10 to 0 step -1 each value (
 	console.log(value)
 )
@@ -161,7 +161,7 @@ The complete range rules are defined in [[08-Ranges]].
 
 Map iteration uses key-value order and exposes the source Map last.
 
-```ty
+```typical
 map each key value map (
 )
 ```
@@ -172,7 +172,7 @@ This keeps the conventional key-value order used when destructuring JavaScript M
 
 Sets expose the current value and source Set. They do not synthesize an index.
 
-```ty
+```typical
 set each value set (
 )
 ```
@@ -201,7 +201,7 @@ A collection cannot be mutated while it is being traversed by `each`. A mutable 
 
 When mutation is required, authors iterate an independent range and perform indexed operations explicitly.
 
-```ty
+```typical
 0 til items.length each index (
 	// Mutate items through explicit indexed operations.
 )
@@ -211,7 +211,7 @@ Ownership of the iterable and produced values is inferred from surrounding use u
 
 Later use can inform that inference:
 
-```ty
+```typical
 items = getItems()
 
 items each item (
@@ -223,7 +223,7 @@ console.log(items.length)
 
 A temporary iterable may instead be consumed when surrounding use permits it:
 
-```ty
+```typical
 getItems() each item (
 	store(item)
 )
@@ -233,7 +233,7 @@ getItems() each item (
 
 Iteration bindings are immutable locals whose scope is the loop body.
 
-```ty
+```typical
 items each item index (
 	console.log(item)
 	console.log(index)
@@ -242,7 +242,7 @@ items each item index (
 
 They may shadow outer immutable locals under the ordinary shadowing rules.
 
-```ty
+```typical
 item = fallback
 
 items each item (
@@ -254,7 +254,7 @@ console.log(item)
 
 They cannot shadow mutable locals and cannot be reassigned.
 
-```ty
+```typical
 🐝 item is var = fallback
 
 // > ❌ Wrong: mutable locals cannot be shadowed
@@ -262,7 +262,7 @@ items each item (
 )
 ```
 
-```ty
+```typical
 items each item (
 	// > ❌ Wrong
 	item = replacement
@@ -279,7 +279,7 @@ The concrete result types normally live in the standard library or beside a cust
 
 A qualifying iteration-result type is a `one case of` with exactly two compiler-significant cases:
 
-```ty
+```typical
 ItemIterationResult is one case of (
 	value(item is Item, index is uint, source is Items)
 	done()
@@ -300,7 +300,7 @@ An iterable provides `iterator()`. The value returned from `iterator()` provides
 
 Conceptually:
 
-```ty
+```typical
 Items (
 	constructor
 	
@@ -349,7 +349,7 @@ A production build may make similar eliminations for custom iterators when whole
 
 A value with only `next()` is an iterator, but it cannot be used directly with `each`.
 
-```ty
+```typical
 // > ❌ Wrong: iterator() returns missing
 iterator each value (
 )
@@ -361,7 +361,7 @@ An ordinary iterable produces an independent iteration context for each `iterato
 
 An iterable iterator may deliberately return itself from `iterator()`:
 
-```ty
+```typical
 ItemIterator (
 	constructor
 	
@@ -388,7 +388,7 @@ Generators are sequential and single-consumer. They have no consumer-input or fi
 
 An iterator may provide a compiler-recognized `break()` function for early cleanup.
 
-```ty
+```typical
 ItemIterator (
 	constructor
 	
@@ -423,7 +423,7 @@ Every member of an iterable source union must independently provide a qualifying
 
 At runtime, the source's active union member selects the corresponding `iterator()` implementation. That implementation is still selected and called only once for the loop.
 
-```ty
+```typical
 items is Item[] or null
 
 // > ❌ Wrong
@@ -431,7 +431,7 @@ items each item (
 )
 ```
 
-```ty
+```typical
 if (items) (
 	items each item (
 	)
@@ -442,7 +442,7 @@ When union members provide iteration results with different payload lengths, Typ
 
 Given three result types whose `value` cases are:
 
-```ty
+```typical
 value(first is A, second is B, third is C)
 value(first is D, second is E)
 value(first is F)
@@ -450,7 +450,7 @@ value(first is F)
 
 the combined loop bindings have these types:
 
-```ty
+```typical
 first is A or D or F
 second is B or E or null
 third is C or null
@@ -462,13 +462,13 @@ At each position, the compiler unions every type provided there and adds `null` 
 
 Loops are expressions. They may appear uncaptured or in any expression position that captures their result, including a local initializer or function argument.
 
-```ty
+```typical
 captured = getItems() each item (
 	yield item
 )
 ```
 
-```ty
+```typical
 consume(
 	getItems() each item (
 		yield item
@@ -486,7 +486,7 @@ All loops are skipped during return-target lookup, including captured loops. `re
 
 A captured loop containing only ordinary body expressions has no captured value. Its capture receives frozen `null` and a notice because the capture is pointless.
 
-```ty
+```typical
 captured = getItems() each item (
 	console.log(item)
 )
@@ -498,7 +498,7 @@ The complete targeting and control-transfer rules are defined in [[07-Yield]], [
 
 `loop` creates indefinite repetition without constructing a range or iterator.
 
-```ty
+```typical
 loop (
 	performWork()
 )
@@ -506,7 +506,7 @@ loop (
 
 It may expose one counter binding:
 
-```ty
+```typical
 loop index (
 	console.log(index)
 )
@@ -514,7 +514,7 @@ loop index (
 
 It may also be labeled after the counter binding, or directly after `loop` when no counter is needed:
 
-```ty
+```typical
 loop index as outer (
 	loop as inner (
 		break outer
@@ -541,7 +541,7 @@ The counter follows the same body scope and immutability rules as an `each` bind
 
 The asynchronous spelling is `await each` and retains Typical's expression-first order.
 
-```ty
+```typical
 stream await each value (
 	consume(value)
 )

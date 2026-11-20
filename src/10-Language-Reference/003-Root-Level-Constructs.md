@@ -30,7 +30,7 @@ The project root accepts `declare target` with a lowercase backend name and an o
 
 ## Selections
 
-```ty
+```typical
 Width is one of (16, 32)
 Person is one of (User, Admin, null)
 Permission is many of (read, write)

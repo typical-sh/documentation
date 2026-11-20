@@ -2,7 +2,7 @@
 
 Object literals create anonymous object shapes.
 
-```ty
+```typical
 myObject = { name is string = "bob", amount is int = 12 }
 ```
 
@@ -12,7 +12,7 @@ This is intentionally close to a TypeScript object literal, but the field declar
 
 Each value-position field entry has a name, an optional type annotation, and a value.
 
-```ty
+```typical
 person = {
 	name is string = "bob",
 	age is int = 42,
@@ -26,7 +26,7 @@ The commas separate fields. Field order is source order for reading and display,
 
 In type position, the same shape is written without field values:
 
-```ty
+```typical
 { name is string, age is int, active is bool }
 ```
 
@@ -34,7 +34,7 @@ In type position, the same shape is written without field values:
 
 An object literal does not declare a class and does not create a nominal type name. It produces a value whose shape is known from its fields.
 
-```ty
+```typical
 total(item is { name is string, amount is int }) returns int (
 	return item.amount
 )
@@ -51,7 +51,7 @@ Named classes remain the way to define nominal objects with constructors, functi
 
 Fields are accessed with ordinary member access.
 
-```ty
+```typical
 order = { id is int = 1001, amount is int = 12 }
 amount = order.amount
 ```
@@ -62,7 +62,7 @@ An object literal only has the fields it declares. Accessing a missing field pro
 
 Object literals are not JSON, even when they look similar.
 
-```ty
+```typical
 settings = {
 	retries is int = 3,
 	label is string = "default"
@@ -82,7 +82,7 @@ Use serialization APIs when a program needs to read or write JSON text.
 
 Object literals follow the ordinary binding and field mutability rules. A non-`var` binding cannot be rebound.
 
-```ty
+```typical
 item = { name is string = "bob", amount is int = 12 }
 
 // Rebinding, produces a notice
@@ -97,12 +97,12 @@ Objects are for small structural values. Use a class when the value needs identi
 
 The main grammar choice is that object fields use declaration syntax instead of JSON colon syntax. This keeps object literals aligned with the rest of Typical:
 
-```ty
+```typical
 name is string = "bob"
 ```
 
 rather than:
 
-```ty
+```typical
 name: string = "bob"
 ```

@@ -2,7 +2,7 @@
 
 An ordinary class body may contain fields, functions, properties, a constructor, a ghost, imports, nested spaces, and nested classes. Imports precede all other semantic members. A class has at most one constructor and one local ghost.
 
-```ty
+```typical
 Panel (
 	import Theme
 
@@ -29,7 +29,7 @@ A startup function is not a direct class member. It may occur in a nested space,
 
 A nested space is a protected structural partition of the class. A nested class creates a protected nominal type and a new instance boundary. Its declaration-qualified path is valid in type positions. Calling it requires authority over its owning class:
 
-```ty
+```typical
 panel = Panel("Inbox")
 item is Panel.Item = panel.Item()
 ```
@@ -40,7 +40,7 @@ Stored fields may use an anchor-only body after their complete declaration. The 
 
 The `is Type` portion of a field declaration is optional. A bare field is equivalent to `is unknown`. When a field has an initializer and no explicit type, the initializer determines the field type. Eager field initializers are restricted to literals and single named values; expression evaluation belongs in constructors, lazy field initializers, or other executable bodies.
 
-```ty
+```typical
 Panel (
 	identifier
 	mode = DefaultMode

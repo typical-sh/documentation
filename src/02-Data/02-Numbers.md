@@ -8,7 +8,7 @@ Typical combines TypeScript-style numeric expressions with concrete Rust-style n
 
 Typical provides five signed and five unsigned fixed-width integer types:
 
-```ty
+```typical
 i8
 i16
 i32
@@ -28,7 +28,7 @@ Their widths, ranges, binary representations, and ordinary bitwise operations ma
 
 Fixed-width integer arithmetic uses two's-complement wrapping. Overflow never panics or terminates execution, and development and release builds produce the same value.
 
-```ty
+```typical
 value is u8 = 255
 value += 1
 
@@ -52,7 +52,7 @@ A fixed decimal stores an integer together with a fixed number of decimal places
 
 For a type with scale `N`, the represented value is its backing integer divided by `10 ** N`.
 
-```ty
+```typical
 amount is i16.2 = 123.45
 ```
 
@@ -76,7 +76,7 @@ The available unsigned fixed-decimal types are:
 
 Fixed decimals inherit the wrapping behavior of their backing integers.
 
-```ty
+```typical
 signed is i8.2 = 1.27
 signed += 0.01
 // > -1.28
@@ -90,7 +90,7 @@ console.log(unsigned)
 
 The common type for fixed-decimal arithmetic uses the widest operand backing type and the greatest operand scale.
 
-```ty
+```typical
 left is i32.4 = getLeft()
 right is i64.2 = getRight()
 // > i64.4
@@ -114,7 +114,7 @@ These values allocate storage as needed. They do not overflow because of magnitu
 
 Typical provides four IEEE 754 binary floating-point types:
 
-```ty
+```typical
 f16
 f32
 f64
@@ -125,7 +125,7 @@ They respectively implement the IEEE 754 binary16, binary32, binary64, and binar
 
 The special values are spelled in lowercase:
 
-```ty
+```typical
 nan
 infinity
 -infinity
@@ -133,7 +133,7 @@ infinity
 
 A decimal-point literal is a provisional fixed decimal by default. A lowercase `f` suffix explicitly creates an `f32`; `ff` creates an `f64`.
 
-```ty
+```typical
 // > Provisional fixed decimal
 1.25
 // > f32
@@ -146,14 +146,14 @@ A decimal-point literal is a provisional fixed decimal by default. A lowercase `
 
 `/` is fractional division. Dividing integers with `/` does not silently perform Rust-style truncating integer division.
 
-```ty
+```typical
 // > 2.5
 5 / 2
 ```
 
 `\` is integer division and truncates toward zero.
 
-```ty
+```typical
 // > 2
 5 \ 2
 // > -2
@@ -187,7 +187,7 @@ Cross-compilation uses the destination target. The architecture of the machine r
 
 `primitive` is the top type of every built-in and user-defined primitive. A custom primitive may inherit from a built-in primitive, another custom primitive, or directly from `primitive` to define a fresh value representation. See [[07-Custom-Primitives]].
 
-```ty
+```typical
 writePrimitive(value is primitive) (
 	console.log(value)
 )

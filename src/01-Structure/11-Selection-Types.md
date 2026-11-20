@@ -2,7 +2,7 @@
 
 Typical has three selection forms: `one of` (one named value, literal value, or value belonging to a listed type), `many of` (zero or more named flags), and `one case of` (one named case with its payload).
 
-```ty
+```typical
 Day is one of (
 	monday
 	tuesday
@@ -30,7 +30,7 @@ Selection declarations may be generic under [[03-Generics]].
 
 A standalone runtime-style name declares a named entry. It never captures a same-named local. `name = value` supplies an explicit named value. A literal, qualified value reference, or type reference contributes an unnamed alternative. Named and unnamed entries cannot be mixed in a resulting selection; doing so produces a notice. Type and literal alternatives may be mixed.
 
-```ty
+```typical
 Settings (
 	small = 16
 
@@ -52,7 +52,7 @@ Named.small is inferred as 1. Values contains 16 and 32 and does not acquire a m
 
 Compose declarations with `or` in the header. Any number of compatible sources may be listed, with an optional final inline selection body.
 
-```ty
+```typical
 Base is one of (
 	a
 	b
@@ -83,7 +83,7 @@ Selection bodies do not accept `...` spreads of selections, objects, or arrays. 
 
 Reserve all explicit numeric values before assigning inferred entries, regardless of their positions. For `one of`, start above the highest explicit numeric value, then increment by one in declaration order. Inferred values are assigned locally within each declaration before composition; composing a selection preserves the values already assigned by its sources. Inferred values are integers; if explicit fractional values coexist with inferred entries, start at the smallest integer strictly above the highest explicit value. Non-numeric explicit values consume no numeric positions. With no explicit numeric values, begin at 1.
 
-```ty
+```typical
 Base is one of (
 	// > 3
 	a
@@ -129,7 +129,7 @@ Equality uses no string/number coercion or user-defined equality. Resolve provis
 
 Selections are structurally typed. A selected value fits a target if all its possible values belong to the target. A larger set does not fit a smaller set without narrowing.
 
-```ty
+```typical
 Small is one of (16, 32)
 Large is one of (16, 32, 64)
 

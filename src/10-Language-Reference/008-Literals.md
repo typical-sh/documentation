@@ -39,7 +39,7 @@ String and byte string literals may span physical lines. Their escaping, indenta
 
 Regular expression literals follow the current JavaScript regular expression literal form.
 
-```ty
+```typical
 pattern = /[a-z0-9]+/i
 ```
 
@@ -58,7 +58,7 @@ Array and object literals are also permitted as exact literal values in selectio
 
 Ranges are created with range literal syntax.
 
-```ty
+```typical
 0 to 10
 0 til 10
 0 to 10 step 2
@@ -70,7 +70,7 @@ Ranges are created with range literal syntax.
 
 Markup literals use Typical's JSX-like surface without a separate file extension.
 
-```ty
+```typical
 link = <a class=name href=url>Text {value}</a>
 ```
 
@@ -80,7 +80,7 @@ Attribute values are ordinary expressions. Text may contain `{expression}` islan
 
 Resource tokens have the form `scheme:payload`.
 
-```ty
+```typical
 figma:file-id
 asset:icons/logo.svg
 ```

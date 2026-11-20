@@ -4,7 +4,7 @@
 
 This example uses a default parameter and interpolation.
 
-```ty
+```typical
 greeting(name is string, punctuation is string = "!") returns string (
 	return `Hello, {name}{punctuation}`
 )
@@ -14,7 +14,7 @@ greeting(name is string, punctuation is string = "!") returns string (
 
 Both string delimiter forms support multiline text. Backticks allow interpolation; the shared leading whitespace is trimmed, and whitespace-only boundary lines are excluded.
 
-```ty
+```typical
 addressLabel(name is string, city is string, country is string) returns string (
 	return `
 		{name}
@@ -28,7 +28,7 @@ addressLabel(name is string, city is string, country is string) returns string (
 
 This function combines array iteration, branching, mutation, and interpolation.
 
-```ty
+```typical
 bulletList(items is string[]) returns string (
 	result is var string = "Items:"
 	
@@ -45,7 +45,7 @@ bulletList(items is string[]) returns string (
 
 This denser string example keeps each meaningful operation on its own line.
 
-```ty
+```typical
 scoreReport(name is string, scores is int[]) returns string (
 	total is var int = 0
 	

@@ -21,7 +21,7 @@ This includes:
 - entries inside selection types
 - built-in primitive type names
 
-```ty
+```typical
 displayName(user is User) returns string (
 	label = user.name
 	return label
@@ -55,7 +55,7 @@ This includes:
 - generic type parameters
 - import names and import aliases
 
-```ty
+```typical
 App (
 	User (
 		name is string
@@ -76,7 +76,7 @@ import Postgres as Database
 
 The selection declaration name is structural and therefore uppercase. Entries inside the selection are runtime names and therefore lowercase.
 
-```ty
+```typical
 Direction is many of (
 	up
 	down
@@ -92,7 +92,7 @@ Message is one case of (
 
 Literal alternatives and type alternatives are not identifier declarations.
 
-```ty
+```typical
 Width is one of (16, 32, 64)
 Person is one of (User, Admin, null)
 ```
@@ -101,7 +101,7 @@ Person is one of (User, Admin, null)
 
 Unit definitions may use either casing. This allows conventional unit symbols without creating a separate naming family.
 
-```ty
+```typical
 m is unit
 cm is unit
 K is unit
@@ -112,14 +112,14 @@ Hz is unit
 
 Qualified names are made from separate identifiers joined by dots. The dot is not part of the identifier.
 
-```ty
+```typical
 App.Backend.User
 user.displayName()
 ```
 
 Named declarations cannot use dotted names in their declaration header. Write the nesting explicitly instead.
 
-```ty
+```typical
 App (
 	Backend (
 		User (
@@ -132,7 +132,7 @@ App (
 
 Casing affects how a form is read. An uppercase call-shaped declaration is structural. A lowercase call-shaped declaration is a function.
 
-```ty
+```typical
 DisplayName (
 )
 

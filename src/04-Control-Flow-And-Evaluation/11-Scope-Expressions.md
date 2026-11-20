@@ -2,7 +2,7 @@
 
 An executable parenthesized scope may appear in an expression position and have its result captured.
 
-```ty
+```typical
 result = (
 	return "complete"
 )
@@ -10,7 +10,7 @@ result = (
 
 Scope expressions do not implicitly return their final expression. A value reaches the capture only through a `return` targeting that scope.
 
-```ty
+```typical
 result = (
 	"discarded"
 	return "captured"
@@ -21,7 +21,7 @@ Here, `"discarded"` has no effect on the capture and `result` receives `"capture
 
 A captured scope is both a `return` target and a `break` target. `return` exits it with a supplied value. `break` exits it with frozen `null`.
 
-```ty
+```typical
 result = (
 	if (cancelled) (
 		break
@@ -35,7 +35,7 @@ The resulting type includes the operands of all reachable returns targeting the 
 
 An uncaptured standalone scope remains a `break` target but is invisible to `return` target lookup. A return inside it continues outward to the nearest captured single-result construct or the current function.
 
-```ty
+```typical
 run() (
 	(
 		return "function result"
@@ -45,7 +45,7 @@ run() (
 
 Explicit standalone scopes are distinct from incidental bodies belonging to conditionals and matches. Incidental bodies do not independently intercept `break` or `return`.
 
-```ty
+```typical
 result = (
 	if (condition) (
 		return "early"

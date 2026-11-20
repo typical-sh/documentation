@@ -6,7 +6,7 @@ Typical's built-in primitive types are immutable value types. This page is the c
 
 ### Signed Integers
 
-```ty
+```typical
 i8
 i16
 i32
@@ -16,7 +16,7 @@ i128
 
 ### Unsigned Integers
 
-```ty
+```typical
 u8
 u16
 u32
@@ -48,7 +48,7 @@ The maximum scale is chosen so that the scaled value remains representable by th
 
 ## Floating-Point Types
 
-```ty
+```typical
 f16
 f32
 f64
@@ -65,7 +65,7 @@ Typical does not provide unsigned `big` types.
 
 ## Other Primitive Types
 
-```ty
+```typical
 boolean
 string
 byte string

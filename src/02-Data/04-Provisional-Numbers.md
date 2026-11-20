@@ -6,7 +6,7 @@
 
 `number` has a different meaning: it is an alias for the concrete `f64` type.
 
-```ty
+```typical
 provisional is numeric = 1.25
 floatingPoint is number = 1.25
 ```
@@ -17,7 +17,7 @@ The first value begins as a fixed decimal. The second value is an `f64`.
 
 An unsuffixed whole-number literal begins with the narrowest integer type that can represent its value. Positive values prefer unsigned integers; negative values require signed integers.
 
-```ty
+```typical
 count = 0
 // > u8
 console.log(getPrimitiveTypeName(count))
@@ -25,7 +25,7 @@ console.log(getPrimitiveTypeName(count))
 
 An unsuffixed literal with a decimal point begins as the narrowest fixed decimal that can represent the written value.
 
-```ty
+```typical
 amount = 1.25
 // > u8.2
 console.log(getPrimitiveTypeName(amount))
@@ -33,7 +33,7 @@ console.log(getPrimitiveTypeName(amount))
 
 A lowercase `f` suffix pins a literal to `f32`. A lowercase `ff` suffix pins it to `f64`.
 
-```ty
+```typical
 single = 1.25f
 double = 1.25ff
 ```
@@ -42,7 +42,7 @@ double = 1.25ff
 
 The compiler revises a provisional number when later operations require another concrete representation.
 
-```ty
+```typical
 x is var numeric = 0
 x += getInt16()
 
@@ -50,7 +50,7 @@ x += getInt16()
 console.log(getPrimitiveTypeName(x))
 ```
 
-```ty
+```typical
 x is var numeric = 0
 x += getInt16()
 x += getFloat32()
@@ -67,7 +67,7 @@ When control-flow paths require different representations, the compiler first se
 
 Context can pin a provisional number to a concrete type.
 
-```ty
+```typical
 small is u8 = 10
 ratio is f32 = 1 / 3
 price is decimal = 19.99
@@ -87,7 +87,7 @@ Typical automatically converts compatible numeric representations:
 
 The saw is an editor decoration. It communicates that the generated program contains a conversion that can discard information.
 
-```ty
+```typical
 source is u16 = 257
 target is u8 = 🪚source
 
@@ -101,7 +101,7 @@ Typical still produces compiled output when an automatic conversion violates `de
 
 Converting a fixed decimal to a smaller scale truncates toward zero by default.
 
-```ty
+```typical
 source is i32.4 = 1.2399
 target is i32.2 = 🪚source
 
@@ -129,7 +129,7 @@ There is no type-wide provably lossless conversion from floats to integers, floa
 
 `numeric` can test whether an otherwise broad value is one of Typical's built-in numeric primitives. `number` tests specifically for `f64` because it is an alias for that type.
 
-```ty
+```typical
 write(value is any) (
 	if (value is numeric) (
 		console.log(value)
@@ -139,7 +139,7 @@ write(value is any) (
 
 A provisional value may also be tested against its currently selected concrete primitive. The result is determined statically for a given compilation.
 
-```ty
+```typical
 x is var numeric = 0
 
 if (x is u8) (

@@ -2,7 +2,7 @@
 
 Case analysis uses the `matches` keyword. A match may run as a standalone statement or produce a captured value.
 
-```ty
+```typical
 name matches (
 	"alice" callAlice()
 	"bob" callBob()
@@ -10,7 +10,7 @@ name matches (
 )
 ```
 
-```ty
+```typical
 result = name matches (
 	"alice" makeAliceResult()
 	"bob" makeBobResult()
@@ -32,7 +32,7 @@ The initial pattern language deliberately permits only statically analyzable for
 
 Arbitrary locals, calls, arithmetic, and other runtime expressions are not patterns.
 
-```ty
+```typical
 Day is one of (
 	monday
 	tuesday
@@ -44,7 +44,7 @@ day matches (
 )
 ```
 
-```ty
+```typical
 limit = calculateLimit()
 
 value matches (
@@ -57,7 +57,7 @@ Literal and constant patterns use strict value equality equivalent to `===`. Pat
 
 Primitive values, selection values, `one case of` values, and values accepted by range patterns may be matched. Array and anonymous-object literals are also valid exact-value patterns. They use the same deeply immutable structural equality as selection membership: arrays compare in order, objects require exactly the same fields and values. These patterns do not introduce bindings or perform partial destructuring.
 
-```ty
+```typical
 Reply is one of ({ code = 1 }, { code = 2 })
 
 show(reply is Reply) (
@@ -76,7 +76,7 @@ A pattern incompatible with the matched expression's type receives a prominent n
 
 Patterns may overlap. The first matching arm wins, so authors may intentionally place a specific pattern before a broader one.
 
-```ty
+```typical
 value matches (
 	1 to 10 handleSmall()
 	1 to 100 handleLarger()
@@ -93,7 +93,7 @@ An empty match is valid. It evaluates the matched expression once and then follo
 
 `else` matches every value not selected by an earlier arm and must be the final reachable arm.
 
-```ty
+```typical
 value matches (
 	1 handleOne()
 	else handleOther()
@@ -108,7 +108,7 @@ A match arm may contain one expression or multiple expressions.
 
 An arm containing exactly one top-level body expression supplies that expression as its implicit result. In a standalone match, the value is discarded under the ordinary discarded-value rules.
 
-```ty
+```typical
 result = value matches (
 	"a" makeA()
 	"b" makeB()
@@ -117,7 +117,7 @@ result = value matches (
 
 The expression may be written beside the pattern or indented beneath it. Expression count, not placement, determines whether the result is implicit.
 
-```ty
+```typical
 result = value matches (
 	"a"
 		makeA()
@@ -126,7 +126,7 @@ result = value matches (
 
 An arm containing multiple top-level body expressions is a statement body. It supplies a value only through a `return` targeting the captured match. Reaching the end of the body without such a return supplies frozen `null`, regardless of the final operation's own type. In a standalone match, the values of its ordinary expressions are discarded.
 
-```ty
+```typical
 result = value matches (
 	"a" makeA()
 	
@@ -140,7 +140,7 @@ Typist draws a non-editable implicit-`return` marker beside the sole expression 
 
 Match-arm bodies are incidental scopes. They are neither independent `break` targets nor independent `return` targets. A captured match itself is eligible for both operations.
 
-```ty
+```typical
 result = value matches (
 	"a"
 		if (cancelled) (
@@ -159,7 +159,7 @@ In an uncaptured match, `return` does not target the match. It continues outward
 
 Same-indentation patterns without bodies join the next pattern that has a body.
 
-```ty
+```typical
 value matches (
 	"a"
 	"b"
@@ -172,7 +172,7 @@ This creates one logical arm for `"a"`, `"b"`, and `"c"`. Selecting any of those
 
 The shared body may instead be indented beneath the final pattern.
 
-```ty
+```typical
 result = value matches (
 	"a"
 	"b"
@@ -185,7 +185,7 @@ A bare pattern at the end of the block has no following body. It remains matchab
 
 Commas and newlines are interchangeable separators between match entries.
 
-```ty
+```typical
 result = value matches (
 	"a", "b", "c" makeABC()
 	"d" makeD()
@@ -217,7 +217,7 @@ A `return` targeting an outer capture or function contributes its operand type t
 
 `always matches` opts into exhaustiveness checking.
 
-```ty
+```typical
 letter always matches (
 	"a" handleA()
 	"b" handleB()
@@ -245,7 +245,7 @@ Floating-point domains do not receive range-based exhaustiveness proofs. Open do
 
 When the matched expression has a `one case of` type, patterns may name its case constructors.
 
-```ty
+```typical
 message matches (
 	default() showDefault()
 	text(🥚 value) showText(value)
@@ -263,7 +263,7 @@ A supplied payload position may contain:
 
 An ordinary identifier does not create a binding. Under the static pattern rules, it must resolve to a compile-time constant.
 
-```ty
+```typical
 message matches (
 	// > ❌ Wrong: `value` is not a constant or new binding
 	text(value) showText(value)
@@ -272,7 +272,7 @@ message matches (
 
 Case patterns may omit any number of trailing payload positions. Omitted payloads are ignored.
 
-```ty
+```typical
 result matches (
 	failed(500, "timeout") handleTimeout()
 	failed(500) handleAny500Failure()
@@ -290,7 +290,7 @@ When multiple patterns share one body, they must introduce the same binding name
 
 Integer and character ranges may be used as patterns.
 
-```ty
+```typical
 amountText = amount matches (
 	1 til 30 "low"
 	30 til 70 "med"
@@ -300,7 +300,7 @@ amountText = amount matches (
 
 `to` remains inclusive and `til` remains exclusive. A range pattern respects its step and matches only when `range.contains(subject, true)` succeeds.
 
-```ty
+```typical
 value matches (
 	0 to 10 step 2 handleEven()
 	else handleOther()

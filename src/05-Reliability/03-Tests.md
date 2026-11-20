@@ -2,7 +2,7 @@
 
 Typical has no special test declaration syntax. Tests are ordinary calls into compiler-known standard modules.
 
-```ty
+```typical
 import Test
 import Assert
 
@@ -13,7 +13,7 @@ Test.case("addition works", () => (
 
 Tests can be grouped.
 
-```ty
+```typical
 import Test
 import Assert
 

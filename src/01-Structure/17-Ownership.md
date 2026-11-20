@@ -4,7 +4,7 @@ Typical uses gradual ownership. The compiler infers ordinary ownership, borrowin
 
 Ownership modifiers are needed only when the programmer must express lifetime behavior that inference cannot choose or acknowledge a potentially leaking ownership cycle.
 
-```ty
+```typical
 Node (
 	constructor
 	
@@ -23,7 +23,7 @@ An unannotated stored reference uses inferred ownership.
 
 The compiler may represent an inferred reference as an owned value, a borrow, a uniquely allocated value, or a reference-counted value. It may also generate the machinery needed for shared mutation. The representation is an implementation detail and may change without changing the observable behavior of the program.
 
-```ty
+```typical
 Tree (
 	constructor
 	
@@ -39,7 +39,7 @@ When a more precise representation cannot be used, the compiler may conservative
 
 A `weak` reference does not keep its target alive.
 
-```ty
+```typical
 Child (
 	constructor
 	
@@ -59,7 +59,7 @@ Only reference-class types may be weak. Value types cannot be weak because their
 
 `strong` acknowledges that a reference intentionally participates in a potential strong ownership cycle.
 
-```ty
+```typical
 Node (
 	constructor
 	
@@ -79,7 +79,7 @@ Explicit strong ownership does not form a distinct assignable type. It is owners
 
 Recursive type relationships are permitted.
 
-```ty
+```typical
 Parent (
 	constructor
 	
@@ -101,7 +101,7 @@ If every edge completing a potential type-level ownership cycle is strong, at le
 
 Containers own their storage normally. Ownership modifiers on generic arguments classify the values stored in the corresponding generic positions.
 
-```ty
+```typical
 Graph (
 	constructor
 	
@@ -115,7 +115,7 @@ In this example, `nodes` stores strong `Node` references, `observers` stores wea
 
 An ownership modifier applied to the container type itself classifies the container reference rather than its elements.
 
-```ty
+```typical
 Cache (
 	constructor
 	
@@ -131,7 +131,7 @@ Unannotated generic positions use the container type's ordinary ownership behavi
 
 Ownership modifiers may classify stored fields.
 
-```ty
+```typical
 Link (
 	constructor(target is weak Node) (
 		this.target = target
@@ -149,7 +149,7 @@ Ownership modifiers do not classify ordinary parameters, local variables, or clo
 
 When mutability and ownership modifiers are both present, their canonical order is mutability, ownership, then the type.
 
-```ty
+```typical
 Selection (
 	constructor
 	

@@ -20,13 +20,13 @@ A wrapper package is a Typical-facing module generated around a Rust crate. Typi
 
 The basic import form uses a module's canonical name:
 
-```ty
+```typical
 import Postgres
 ```
 
 An alias changes the local binding:
 
-```ty
+```typical
 import Postgres as MyPostgres
 ```
 
@@ -34,13 +34,13 @@ The alias may be any valid non-reserved Typical identifier. UpperCamelCase is co
 
 An import may specify Cargo features and an exact package version:
 
-```ty
+```typical
 import Sqlx features postgres mysql sqlite version 1.2.3
 ```
 
 Features are whitespace-separated. When an alias, features, and a version are all present, they occur in that order, with the version last:
 
-```ty
+```typical
 import Sqlx as Database features postgres mysql sqlite version 1.2.3
 ```
 
@@ -48,13 +48,13 @@ import Sqlx as Database features postgres mysql sqlite version 1.2.3
 
 A `declare import` establishes inherited package policy without introducing a module binding:
 
-```ty
+```typical
 declare import Sqlx features postgres mysql sqlite version 1.2.3
 ```
 
 The declaration applies in its containing space or class and in nested spaces and classes. A matching import inherits any version or features it does not state itself:
 
-```ty
+```typical
 declare import Sqlx features postgres version 1.2.3
 
 DataAccess (
@@ -70,13 +70,13 @@ Versions are exact semantic versions. A version written on an import or inherite
 
 Bare imports are valid:
 
-```ty
+```typical
 import Postgres
 ```
 
 The package manager first selects the newest compatible wrapper version already available in its local cache. If no compatible cached version exists, it selects and downloads the newest compatible non-yanked registry version. The editor then rewrites the import with the exact selected version:
 
-```ty
+```typical
 import Postgres version 1.2.3
 ```
 
@@ -109,7 +109,7 @@ Two-letter initialisms remain uppercase. Longer initialisms use ordinary word ca
 
 Built-in module names are reserved. In the rare case where a Cargo package collides with a built-in or otherwise cannot be named unambiguously, its exact Cargo name may be quoted and must be aliased:
 
-```ty
+```typical
 import Path
 import "path" as CratePath version 1.2.3
 ```
@@ -132,7 +132,7 @@ Within one space or class, the first import of a package creates its module bind
 
 A module import creates a runtime module value:
 
-```ty
+```typical
 import Postgres version 1.2.3
 
 entries = Object.entries(Postgres)

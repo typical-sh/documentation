@@ -2,7 +2,7 @@
 
 `declare target` selects a backend and configures the output for a space.
 
-```ty
+```typical
 declare target swift {
 	path = "../src-swift",
 	options = {}
@@ -20,7 +20,7 @@ The backend name is an all-lowercase identifier. Backend implementations define 
 
 The configuration object and both fields are optional.
 
-```ty
+```typical
 declare target swift
 
 declare target rust {
@@ -40,7 +40,7 @@ A target declaration directly in a class or function produces a notice and has n
 
 Different backends declared in one logical space form its target set. Shared source targeting several backends is compiled separately for each.
 
-```ty
+```typical
 Common (
 	declare target typescript
 	declare target rust
@@ -60,7 +60,7 @@ A space with neither explicit nor inherited targets produces no output. This is 
 
 Several declarations for the same backend in one logical space merge their configuration objects using shallow copy-over behavior, like `Object.assign`. Later supplied fields replace earlier fields; omitted fields preserve earlier values. A supplied `options` object replaces the earlier `options` object rather than recursively merging it.
 
-```ty
+```typical
 declare target rust {
 	path = "../src-rust"
 }

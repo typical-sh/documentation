@@ -6,7 +6,7 @@ Typical uses the word function for top-level functions, space functions, and fun
 
 A stable function declaration starts with a lowercase function name, followed by a parameter list, an optional return type, and an optional body.
 
-```ty
+```typical
 greet() (
 	console.log("Hello")
 )
@@ -20,13 +20,13 @@ When a body is present, the opening parenthesis attaches to the complete functio
 
 A named function may omit its implementation body. Body omission is available only in declaration contexts; inside executable code, `name()` remains an ordinary call.
 
-```ty
+```typical
 displayName() returns string
 ```
 
 An omitted body, an empty body, and a body containing only anchors have the same executable behavior. Calling the function still evaluates the receiver, arguments, and parameter defaults normally, then produces the function result according to the ordinary return rules.
 
-```ty
+```typical
 displayName() returns string
 
 // Same executable result as:
@@ -42,7 +42,7 @@ For an explicitly typed ordinary function, normal fall-through supplies the zero
 
 Body omission does not create declaration/definition pairs. A second same-named function is still a duplicate declaration. A function signature may instead attach to an implementation partition under the partition rules.
 
-```ty
+```typical
 add(a is int, b is int) returns int #123
 ```
 
@@ -50,7 +50,7 @@ add(a is int, b is int) returns int #123
 
 Parameters are written as `name is Type`.
 
-```ty
+```typical
 greet(name is string) (
 	console.log("Hello, " + name)
 )
@@ -58,7 +58,7 @@ greet(name is string) (
 
 Multiple parameters are separated with commas.
 
-```ty
+```typical
 fullName(first is string, last is string) returns string (
 	return first + " " + last
 )
@@ -68,7 +68,7 @@ Typical does not support TypeScript-style parameter destructuring in function de
 
 This is invalid:
 
-```ty
+```typical
 greet({ name } is User) (
 	console.log(name)
 )
@@ -80,7 +80,7 @@ Destructuring, where supported, belongs to value and pattern syntax rather than 
 
 A function can declare its return type after the parameter list using `returns`.
 
-```ty
+```typical
 add(a is int, b is int) returns int (
 	return a + b
 )
@@ -88,7 +88,7 @@ add(a is int, b is int) returns int (
 
 Parameter type annotations may omit `is Type`. A bare parameter is equivalent to a parameter annotated as `unknown`.
 
-```ty
+```typical
 log(message) (
 )
 ```
@@ -97,13 +97,13 @@ This shorthand is only for unknown-typed parameters. Parameters with defaults or
 
 When the return type is omitted, the compiler infers it from reachable `return` operations that target the function. Returns captured by nested matches or standalone scopes do not contribute to the function's return type. If any reachable path falls through without returning, `null` is included in the inferred result type and that path returns `null`. An explicit `return null` also contributes `null`.
 
-```ty
+```typical
 add(a is int, b is int) (
 	return a + b
 )
 ```
 
-```ty
+```typical
 maybeLabel(ready is boolean) (
 	if (ready) (
 		return "ready"
@@ -122,14 +122,14 @@ Every Typical type has a zero value for typed fallback when one can be synthesiz
 
 A parameter can be marked optional with `= ?`.
 
-```ty
+```typical
 find(id is string, fallback is User = ?) (
 )
 ```
 
 An optional parameter may be omitted by the caller.
 
-```ty
+```typical
 find("current")
 ```
 
@@ -139,14 +139,14 @@ Optional parameters use the `= ?` form. Typical does not use `T?` to mark an opt
 
 A parameter can provide a default value.
 
-```ty
+```typical
 connect(port is int = 8080) (
 )
 ```
 
 When the caller omits the argument, the default value is used.
 
-```ty
+```typical
 connect()
 connect(3000)
 ```
@@ -155,7 +155,7 @@ connect(3000)
 
 Rest parameters collect remaining arguments into an array.
 
-```ty
+```typical
 sum(...values is int[]) returns int (
 	🐝 total is var int = 0
 	
@@ -173,7 +173,7 @@ A function can have at most one rest parameter, and it must be the final paramet
 
 Function calls use the function name followed by an argument list.
 
-```ty
+```typical
 greet("Ada")
 add(1, 2)
 connect()
@@ -185,7 +185,7 @@ Arguments are matched to parameters in order.
 
 Classes can contain functions.
 
-```ty
+```typical
 User (
 	constructor
 	
@@ -201,7 +201,7 @@ Inside a class-contained function, `this` refers to the current class value. The
 
 From outside the class value, the function is accessed through the value that provides it.
 
-```ty
+```typical
 user.displayName()
 ```
 
@@ -221,7 +221,7 @@ A runnable `yield` targeting its current function statically makes that function
 
 A function may also declare generator status without an implementation by writing `returns yield Type` in the signature.
 
-```ty
+```typical
 values() returns yield int
 ```
 

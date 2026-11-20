@@ -2,7 +2,7 @@ Custom primitives define nominal value types.
 
 They are used for branded primitives and small value-shaped aggregates. Custom primitives live in a separate type universe from reference classes. A custom primitive cannot inherit from a reference class, and a reference class cannot inherit from a custom primitive.
 
-```ty
+```typical
 UserId is u64
 ```
 
@@ -22,7 +22,7 @@ Custom primitives also support single inheritance from another custom primitive.
 
 Inheriting from a concrete primitive creates a branded primitive with the same underlying representation.
 
-```ty
+```typical
 UserId is u64 (
 )
 
@@ -33,7 +33,7 @@ id = UserId(123)
 
 Custom primitives based on a concrete primitive receive an implicit first construction parameter. The parameter is compatible with the base primitive. The editor may show this parameter in the function signature, but it does not appear in the underlying text file.
 
-```ty
+```typical
 BracketedString is string (
 )
 
@@ -42,7 +42,7 @@ value = BracketedString("hello")
 
 Custom primitive chains rooted in a concrete primitive cannot declare stored fields. Once the chain has chosen a concrete primitive representation, its shape is fixed.
 
-```ty
+```typical
 UserId is u64 (
 	// > ❌ compiler notice
 	label is string
@@ -53,7 +53,7 @@ UserId is u64 (
 
 Inheriting directly from `primitive` creates a fresh primitive shape.
 
-```ty
+```typical
 Point is primitive (
 	x is f32
 	y is f32
@@ -64,7 +64,7 @@ Fields are allowed only for custom primitive chains rooted at `primitive`.
 
 Aggregate custom primitives may contain primitive fields and reference fields.
 
-```ty
+```typical
 LabeledPoint is primitive (
 	x is f32
 	y is f32
@@ -81,7 +81,7 @@ Custom primitives based directly on `primitive` do not receive an implicit first
 
 A custom primitive may inherit from one other custom primitive.
 
-```ty
+```typical
 Vector2 is primitive (
 	x is f32
 	y is f32
@@ -96,7 +96,7 @@ The root of the custom primitive chain determines its representation family.
 
 If the chain is rooted at `primitive`, descendants may add stored fields.
 
-```ty
+```typical
 Vector4 is Vector3 (
 	w is f32
 )
@@ -104,7 +104,7 @@ Vector4 is Vector3 (
 
 If the chain is rooted at a concrete primitive, descendants keep the same scalar representation family and cannot add stored fields.
 
-```ty
+```typical
 UserId is u64 (
 )
 
@@ -114,7 +114,7 @@ AdminUserId is UserId (
 
 Custom primitive inheritance creates nominal compatibility and an ancestor view. A value accessed through an ancestor type shows the ancestor's member and field surface.
 
-```ty
+```typical
 v is Vector2 = Vector3(1, 2, 3)
 
 v.x
@@ -125,7 +125,7 @@ v.z
 
 The descendant view can be restored with an attestation. If the attestation fails, the access path short-circuits.
 
-```ty
+```typical
 zValue = (v is Vector3).z
 // > f32 or null if the attestation fails
 console.log(zValue)
@@ -139,7 +139,7 @@ For concrete primitive bases, construction begins with the implicit first parame
 
 A constructor may call `super(value)` to replace the underlying base value for the value being constructed.
 
-```ty
+```typical
 BracketedString is string (
 	constructor() (
 		super("[" + this + "]")
@@ -155,7 +155,7 @@ The value passed to `super(...)` must be compatible with the base primitive. If 
 
 For custom primitives based directly on `primitive`, there is no base value to replace, so `super(...)` is not available.
 
-```ty
+```typical
 Point is primitive (
 	x is f32
 	y is f32
@@ -175,7 +175,7 @@ An empty custom-primitive body may be omitted. When a body is present, it keeps 
 
 Custom primitives may define functions and getters. Scalar-backed custom primitives may also define operator overloads. They may also use nested spaces to group otherwise permitted members. A group does not relax the custom primitive's representation rules: scalar-backed custom primitive chains cannot add fields at any depth, while fresh primitive shapes treat grouped fields as part of the same primitive storage. Directly accessible program-owned members belong in a same-name space.
 
-```ty
+```typical
 Counter is u64 (
 	next() returns Counter (
 		return Counter(this + 1)
@@ -195,7 +195,7 @@ There is no virtual dispatch. Member lookup is selected by the static type of th
 
 When a shadowing member needs to call the base behavior, it can use `super`.
 
-```ty
+```typical
 MyString is string (
 	toString() returns string (
 		return "MyString(" + super.toString() + ")"
@@ -205,7 +205,7 @@ MyString is string (
 
 For ordinary operations, use `this`.
 
-```ty
+```typical
 Score is int (
 	add(amount is int) returns Score (
 		return Score(this + amount)
@@ -221,7 +221,7 @@ Strict equality requires the custom primitive and the underlying value to match.
 
 Loose equality compares the underlying data. Branded primitive types may be different.
 
-```ty
+```typical
 UserId is u64 (
 )
 
@@ -243,7 +243,7 @@ For numeric custom primitives with different concrete numeric representations, l
 
 Units are compile-time numeric tags, not custom primitives.
 
-```ty
+```typical
 cm is unit
 
 width = 10cm
@@ -257,7 +257,7 @@ Operator overloads are supported only for scalar-backed custom primitives.
 
 They may be defined inside a scalar-backed custom primitive.
 
-```ty
+```typical
 Score is i32 (
 	
 	operator + (this, that is Score) (
@@ -268,7 +268,7 @@ Score is i32 (
 
 Operator overloads use the `operator` keyword. The canonical operands are `this` and `that`. `this` is untyped and means the containing custom primitive; `that` is typed with ordinary `is` syntax.
 
-```ty
+```typical
 UserId is u64 (
 	operator == != (this, that is UserId) (
 		return this == that

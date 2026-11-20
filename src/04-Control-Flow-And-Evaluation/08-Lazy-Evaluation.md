@@ -2,7 +2,7 @@
 
 Lazy evaluation delays an initializer until the binding is first read. The result is then memoized and every later read returns the same value.
 
-```ty
+```typical
 value defer = getValue()
 ```
 
@@ -12,7 +12,7 @@ value defer = getValue()
 
 A local binding may be lazy:
 
-```ty
+```typical
 render() (
 	value defer = getValue()
 
@@ -32,7 +32,7 @@ The initializer runs at most once for each execution of the scope that creates t
 
 A stored field may also be lazy:
 
-```ty
+```typical
 Report (
 	summary defer = buildSummary()
 
@@ -50,7 +50,7 @@ Lazy field initializers follow ordinary field access rules. A protected lazy fie
 
 A lazy binding has the same type it would have if the initializer were eager. If the declaration has an explicit type, the initializer must produce a value assignable to that type. If the declaration omits the type, the initializer determines it.
 
-```ty
+```typical
 count is int defer = expensiveCount()
 name defer = loadName()
 ```

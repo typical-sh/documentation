@@ -9,7 +9,7 @@ Standalone scopes, conditionals, `matches` expressions, and other non-iterative 
 
 Every `yield` requires an explicit operand.
 
-```ty
+```typical
 // > ❌ Wrong: a yielded value is required.
 yield
 ```
@@ -20,7 +20,7 @@ Typist may expand an incomplete `yield` by inserting `null`, but the resulting s
 
 The nearest captured loop is the default yield destination.
 
-```ty
+```typical
 positive = numbers each number (
 	if (number > 0) (
 		yield number
@@ -36,7 +36,7 @@ A loop-targeting `yield`:
 
 The captured array's element type is the union of all values lexically yielded to that loop.
 
-```ty
+```typical
 values = items each item (
 	if (item is TextItem) (
 		yield item.text
@@ -54,7 +54,7 @@ Here, the captured element type is the union of the yielded text and number type
 
 A named loop capture is visible inside its own body as the current accumulated array. It begins empty and reflects every value previously yielded to that loop.
 
-```ty
+```typical
 unique = items each item (
 	if (!unique.includes(item)) (
 		yield item
@@ -66,7 +66,7 @@ The current capture is immutable. It cannot be reassigned or mutated from inside
 
 When the current capture is emitted to the function, the consumer receives a stable immutable snapshot. Later loop yields create newer accumulated versions without changing an already exposed snapshot. The compiler may implement this through freezing, structural sharing, or copy-on-write storage without changing source semantics.
 
-```ty
+```typical
 snapshots(items is Item[]) (
 	collected = items each item (
 		yield item
@@ -81,7 +81,7 @@ snapshots(items is Item[]) (
 
 To emit a final value and then terminate the loop, write both operations:
 
-```ty
+```typical
 values = items each item (
 	yield transform(item)
 	break
@@ -105,7 +105,7 @@ An unqualified `yield` targets the nearest eligible destination. A targeted loop
 - `yield outer value` targets the visible captured loop labeled `outer`.
 - `yield function value` targets the current function.
 
-```ty
+```typical
 produce() (
 	outerValues = outerItems each outerItem as outer (
 		innerValues = innerItems each innerItem as inner (
@@ -131,7 +131,7 @@ A runnable `yield` lexically targeting the current function statically makes tha
 
 A function may also declare generator status in its signature without relying on an implementation body.
 
-```ty
+```typical
 values() returns yield int
 ```
 
@@ -176,7 +176,7 @@ When a function-targeting `return` carries an operand inside a ping-pong functio
 
 To emit a final value and then complete, write both operations:
 
-```ty
+```typical
 yield value
 return
 ```
