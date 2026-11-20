@@ -10,7 +10,7 @@ Panel (
 	In (
 		count is var int = 0
 	)
-	count() is int (
+	count() returns int (
 		return In.count
 	)
 )
@@ -34,7 +34,7 @@ Panel (
 		constructor
 		name is string = "subject"
 	)
-	createItem() is Panel.Item (
+	createItem() returns Panel.Item (
 		return Item()
 	)
 )
@@ -64,7 +64,7 @@ Base (
 )
 
 Child is Base (
-	read(other is Base) is int (
+	read(other is Base) returns int (
 		return other.In.count
 	)
 )

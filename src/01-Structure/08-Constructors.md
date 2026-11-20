@@ -221,7 +221,7 @@ A constructor may be asynchronous.
 
 ```first
 Foo (
-	constructor(initialValue is int) is async (
+	constructor(initialValue is int) returns async (
 		this.value = await load(initialValue)
 	)
 	

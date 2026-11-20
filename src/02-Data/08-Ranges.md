@@ -107,38 +107,38 @@ Ranges have the following definition:
 	step is T
 	inclusive is boolean
 	
-	get length is T
+	length is T
 	
 	// Returns whether the specified value is between start
 	// and end. If useStep is true, the value must also land
 	// on one of the range's steps.
-	contains(value is T, useStep is boolean = false) is boolean
+	contains(value is T, useStep is boolean = false) returns boolean
 	
 	// Returns whether there is overlapping area between this
 	// range and another range. Step alignment is ignored.
-	overlaps(other is Range(T)) is boolean
+	overlaps(other is Range(T)) returns boolean
 	
-	reverse() is Range(T)
+	reverse() returns Range(T)
 	
 	// Produces the range intersection, or an empty range if
 	// the ranges contain no overlapping area. Step alignment
 	// is ignored.
-	intersect(other is Range(T)) is Range(T)
+	intersect(other is Range(T)) returns Range(T)
 	
 	// Produces the smallest range that contains both ranges,
 	// filling in any intermediate hole. Step alignment is ignored.
-	union(other is Range(T)) is Range(T)
+	union(other is Range(T)) returns Range(T)
 	
 	// Produces zero, one, or two ranges where the area of the
 	// second range has been removed from this range. Step
 	// alignment is ignored.
-	difference(other is Range(T)) is Range(T)[]
+	difference(other is Range(T)) returns Range(T)[]
 	
-	isSubsetOf(other is Range(T)) is boolean
+	isSubsetOf(other is Range(T)) returns boolean
 	
-	isSupersetOf(other is Range(T)) is boolean
+	isSupersetOf(other is Range(T)) returns boolean
 	
-	toArray() is T[]
+	toArray() returns T[]
 )
 ```
 

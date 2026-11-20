@@ -21,19 +21,19 @@ When a body is present, the opening parenthesis attaches to the complete functio
 A named function may omit its implementation body. Body omission is available only in declaration contexts; inside executable code, `name()` remains an ordinary call.
 
 ```first
-displayName() is string
+displayName() returns string
 ```
 
 An omitted body, an empty body, and a body containing only anchors have the same executable behavior. Calling the function still evaluates the receiver, arguments, and parameter defaults normally, then produces the function result according to the ordinary return rules.
 
 ```first
-displayName() is string
+displayName() returns string
 
 // Same executable result as:
-displayName() is string ()
+displayName() returns string ()
 
 // Also the same executable result, with owned anchors:
-displayName() is string (
+displayName() returns string (
 	- Names the visible user.
 )
 ```
@@ -43,7 +43,7 @@ For an explicitly typed ordinary function, normal fall-through supplies the zero
 Body omission does not create declaration/definition pairs. A second same-named function is still a duplicate declaration. A function signature may instead attach to an implementation partition under the partition rules.
 
 ```first
-add(a is int, b is int) is int #123
+add(a is int, b is int) returns int #123
 ```
 
 ## Parameters
@@ -59,7 +59,7 @@ greet(name is string) (
 Multiple parameters are separated with commas.
 
 ```first
-fullName(first is string, last is string) is string (
+fullName(first is string, last is string) returns string (
 	return first + " " + last
 )
 ```
@@ -78,10 +78,10 @@ Destructuring, where supported, belongs to value and pattern syntax rather than 
 
 ## Return Types
 
-A function can declare its return type after the parameter list.
+A function can declare its return type after the parameter list using `returns`.
 
 ```first
-add(a is int, b is int) is int (
+add(a is int, b is int) returns int (
 	return a + b
 )
 ```
@@ -156,7 +156,7 @@ connect(3000)
 Rest parameters collect remaining arguments into an array.
 
 ```first
-sum(...values is int[]) is int (
+sum(...values is int[]) returns int (
 	🐝 total is var int = 0
 	
 	values each value (
@@ -189,7 +189,7 @@ Classes can contain functions.
 User (
 	constructor
 	
-	displayName() is string (
+	displayName() returns string (
 		return firstName + " " + lastName
 	)
 )
@@ -219,10 +219,10 @@ Function expressions use related syntax, but they are covered separately. This p
 
 A runnable `yield` targeting its current function statically makes that function a generator. First presents generator functions as 🏓 ping-pong functions.
 
-A function may also declare generator status without an implementation by writing `is yield Type` in the signature.
+A function may also declare generator status without an implementation by writing `returns yield Type` in the signature.
 
 ```first
-values() is yield int
+values() returns yield int
 ```
 
 A bodyless generator returns an empty generator. Its first `next()` reports completion and emits no element. When an implementation body is present, generator classification can still be inferred from a runnable function-targeting `yield`.

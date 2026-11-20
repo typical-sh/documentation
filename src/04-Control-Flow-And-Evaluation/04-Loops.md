@@ -304,7 +304,7 @@ Conceptually:
 Items (
 	constructor
 	
-	iterator() is ItemIterator (
+	iterator() returns ItemIterator (
 // > Return a new iteration context.
 	
 	)
@@ -313,7 +313,7 @@ Items (
 ItemIterator (
 	constructor
 	
-	next() is ItemIterationResult (
+	next() returns ItemIterationResult (
 // > Return value(...) or done().
 	
 	)
@@ -350,7 +350,7 @@ A production build may make similar eliminations for custom iterators when whole
 A value with only `next()` is an iterator, but it cannot be used directly with `each`.
 
 ```first
-// > ❌ Wrong: iterator() is missing
+// > ❌ Wrong: iterator() returns missing
 iterator each value (
 )
 ```
@@ -365,11 +365,11 @@ An iterable iterator may deliberately return itself from `iterator()`:
 ItemIterator (
 	constructor
 	
-	iterator() is ItemIterator (
+	iterator() returns ItemIterator (
 		return this
 	)
 	
-	next() is ItemIterationResult (
+	next() returns ItemIterationResult (
 // > Advance this iteration context.
 	
 	)

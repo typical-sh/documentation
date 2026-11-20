@@ -5,11 +5,11 @@
 This example shows declarations, nested calls, and intermediate values.
 
 ```first
-square(value is int) is int (
+square(value is int) returns int (
 	return value * value
 )
 
-distanceSquared(x is int, y is int) is int (
+distanceSquared(x is int, y is int) returns int (
 	xSquared = square(x)
 	ySquared = square(y)
 	return xSquared + ySquared
@@ -21,7 +21,7 @@ distanceSquared(x is int, y is int) is int (
 This function accepts both a default value and an optional fallback.
 
 ```first
-clamp(value is int, minimum is int = 0, maximum is int = 100) is int (
+clamp(value is int, minimum is int = 0, maximum is int = 100) returns int (
 	if (value < minimum) (
 		return minimum
 	)
@@ -39,7 +39,7 @@ clamp(value is int, minimum is int = 0, maximum is int = 100) is int (
 This example collects an arbitrary number of integer arguments.
 
 ```first
-sum(...values is int[]) is int (
+sum(...values is int[]) returns int (
 	total is var int = 0
 	
 	values each value (
@@ -49,7 +49,7 @@ sum(...values is int[]) is int (
 	return total
 )
 
-sampleTotal() is int (
+sampleTotal() returns int (
 	return sum(3, 5, 8, 13)
 )
 ```
@@ -59,7 +59,7 @@ sampleTotal() is int (
 This example keeps a nested calculation readable by naming its intermediate results.
 
 ```first
-clamp(value is int, minimum is int = 0, maximum is int = 100) is int (
+clamp(value is int, minimum is int = 0, maximum is int = 100) returns int (
 	if (value < minimum) (
 		return minimum
 	)
@@ -71,11 +71,11 @@ clamp(value is int, minimum is int = 0, maximum is int = 100) is int (
 	return value
 )
 
-percentage(part is int, whole is int) is int (
+percentage(part is int, whole is int) returns int (
 	return part * 100 / whole
 )
 
-completionLabel(completed is int, total is int) is string (
+completionLabel(completed is int, total is int) returns string (
 	value = percentage(completed, total)
 	bounded = clamp(value)
 	return `{bounded}% complete`

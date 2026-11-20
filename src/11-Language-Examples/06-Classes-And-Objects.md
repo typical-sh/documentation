@@ -14,7 +14,7 @@ Point (
 		this.y = y
 	)
 	
-	distanceSquared() is int (
+	distanceSquared() returns int (
 		return x * x + y * y
 	)
 )
@@ -32,12 +32,12 @@ Counter (
 		this.value = value
 	)
 	
-	advanced(amount is int) is Counter (
+	advanced(amount is int) returns Counter (
 		return Counter(value + amount)
 	)
 )
 
-nextCounter() is Counter (
+nextCounter() returns Counter (
 	counter = Counter(10)
 	return counter.advanced(5)
 )
@@ -55,7 +55,7 @@ Animal (
 		this.name = name
 	)
 	
-	description() is string (
+	description() returns string (
 		return name
 	)
 )
@@ -65,7 +65,7 @@ Dog is Animal (
 		super(name)
 	)
 	
-	description() is string (
+	description() returns string (
 		return super.description() + " the dog"
 	)
 )
@@ -85,12 +85,12 @@ LineItem (
 		this.price = price
 	)
 	
-	total() is int (
+	total() returns int (
 		return price
 	)
 )
 
-receiptTotal(items is LineItem[]) is int (
+receiptTotal(items is LineItem[]) returns int (
 	total is var int = 0
 	
 	items each item (

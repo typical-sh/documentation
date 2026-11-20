@@ -132,7 +132,7 @@ A runnable `yield` lexically targeting the current function statically makes tha
 A function may also declare generator status in its signature without relying on an implementation body.
 
 ```first
-values() is yield int
+values() returns yield int
 ```
 
 When a function has an implementation body, this explicit spelling is optional if a runnable function-targeting `yield` already infers the same generator kind. When the body is omitted, the `yield` annotation supplies the generator classification and element type.

@@ -48,7 +48,7 @@ The expanded values are checked against the callee's ordinary parameter list.
 In a parameter list, `...name is T[]` declares a rest parameter. A rest parameter collects remaining positional arguments into an array.
 
 ```first
-sum(...values is int[]) is int (
+sum(...values is int[]) returns int (
 	total is var int = 0
 	
 	values each value (

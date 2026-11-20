@@ -22,7 +22,7 @@ This includes:
 - built-in primitive type names
 
 ```first
-displayName(user is User) is string (
+displayName(user is User) returns string (
 	label = user.name
 	return label
 )
@@ -30,8 +30,8 @@ displayName(user is User) is string (
 User (
 	name is string
 
-	get displayName() is string (
-		return name
+	displayName is string (
+		get name
 	)
 )
 

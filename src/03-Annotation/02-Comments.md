@@ -8,7 +8,7 @@ Comments are free-form text for human readers. They begin with `//` and continue
 retryLimit = 3
 ```
 
-A comment may occupy its own line or follow code on the same line. The compiler ignores the comment text.
+Comments occupy their own physical lines and cannot follow code on the same line. The compiler ignores the comment text.
 
 First has no block-comment syntax. In particular, JavaScript-style `/* ... */` comments are not supported. Use `//` on each line instead.
 

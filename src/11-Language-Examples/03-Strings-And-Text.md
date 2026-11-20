@@ -5,7 +5,7 @@
 This example uses a default parameter and interpolation.
 
 ```first
-greeting(name is string, punctuation is string = "!") is string (
+greeting(name is string, punctuation is string = "!") returns string (
 	return `Hello, {name}{punctuation}`
 )
 ```
@@ -15,7 +15,7 @@ greeting(name is string, punctuation is string = "!") is string (
 Both string delimiter forms support multiline text. Backticks allow interpolation; the shared leading whitespace is trimmed, and whitespace-only boundary lines are excluded.
 
 ```first
-addressLabel(name is string, city is string, country is string) is string (
+addressLabel(name is string, city is string, country is string) returns string (
 	return `
 		{name}
 		{city}
@@ -29,7 +29,7 @@ addressLabel(name is string, city is string, country is string) is string (
 This function combines array iteration, branching, mutation, and interpolation.
 
 ```first
-bulletList(items is string[]) is string (
+bulletList(items is string[]) returns string (
 	result is var string = "Items:"
 	
 	items each item index (
@@ -46,7 +46,7 @@ bulletList(items is string[]) is string (
 This denser string example keeps each meaningful operation on its own line.
 
 ```first
-scoreReport(name is string, scores is int[]) is string (
+scoreReport(name is string, scores is int[]) returns string (
 	total is var int = 0
 	
 	scores each score (

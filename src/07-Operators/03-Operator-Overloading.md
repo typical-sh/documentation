@@ -8,7 +8,7 @@ An operator overload starts with `operator`, followed by the operator token or f
 
 ```first
 📏 cm is unit (
-	operator + (this, that is cm) is cm (
+	operator + (this, that is cm) returns cm (
 		return cm(this + that)
 	)
 )
@@ -28,11 +28,11 @@ The operand order is exact. The compiler does not assume that an operator is com
 
 ```first
 📏 cm is unit (
-	operator - (this, that is i32) is cm (
+	operator - (this, that is i32) returns cm (
 		return cm(this - that)
 	)
 	
-	operator - (that is i32, this) is cm (
+	operator - (that is i32, this) returns cm (
 		return cm(that - this)
 	)
 )

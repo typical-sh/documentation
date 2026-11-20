@@ -35,7 +35,7 @@ In type position, the same shape is written without field values:
 An object literal does not declare a class and does not create a nominal type name. It produces a value whose shape is known from its fields.
 
 ```first
-total(item is { name is string, amount is int }) is int (
+total(item is { name is string, amount is int }) returns int (
 	return item.amount
 )
 

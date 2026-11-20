@@ -18,12 +18,12 @@ OrderLine (
 		this.unitPrice = unitPrice
 	)
 	
-	total() is int (
+	total() returns int (
 		return quantity * unitPrice
 	)
 )
 
-orderSummary(lines is OrderLine[]) is string (
+orderSummary(lines is OrderLine[]) returns string (
 	total is var int = 0
 	
 	lines each line (
@@ -40,7 +40,7 @@ orderSummary(lines is OrderLine[]) is string (
 Nested arrays arise naturally when a program groups sequential readings into batches.
 
 ```first
-groupMeasurements(values is int[], groupSize is int) is int[][] (
+groupMeasurements(values is int[], groupSize is int) returns int[][] (
 	groups is editable int[][]
 	current is editable var int[]
 	
@@ -67,7 +67,7 @@ groupMeasurements(values is int[], groupSize is int) is int[][] (
 This program mixes matching, nested control flow, member calls, and accumulated text while preserving useful breakpoint locations.
 
 ```first
-diagnosticReport(readings is int[]) is string (
+diagnosticReport(readings is int[]) returns string (
 	report is var string = "Readings"
 	
 	readings each reading index (
@@ -92,7 +92,7 @@ diagnosticReport(readings is int[]) is string (
 This example creates a meaningful level of nesting through a two-dimensional data transformation.
 
 ```first
-scaleGrid(grid is int[][], factor is int) is int[][] (
+scaleGrid(grid is int[][], factor is int) returns int[][] (
 	result is editable int[][]
 	
 	grid each sourceRow (

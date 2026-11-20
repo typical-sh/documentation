@@ -24,8 +24,8 @@ Simple aliases can name primitive, class, selection, generic, union, intersectio
 ```first
 Primitive is alias of string or int or boolean
 NamedItems is alias of Item[]
-Reader is alias of () is string
-Transform is alias of (value is int) is string
+Reader is alias of () returns string
+Transform is alias of (value is int) returns string
 ```
 
 Use aliases when an inline annotation would need precedence grouping or a mixed composition.
@@ -34,7 +34,7 @@ Use aliases when an inline annotation would need precedence grouping or a mixed 
 LoadSource is alias of Cached or Remote
 Combined is alias of A and B or C
 
-load() is LoadSource[] (
+load() returns LoadSource[] (
 )
 ```
 
@@ -46,17 +46,17 @@ Generic aliases follow [[03-Generics]].
 
 ## Callable Aliases
 
-A callable type is written as `(parameters) is Result`. Callable types use `is` and do not contain `=>`.
+A callable type is written as `(parameters) returns Result`. Callable types use `returns` and do not contain `=>`.
 
 ```first
-ReadInt is alias of () is int
-Formatter is alias of (value is int) is string
+ReadInt is alias of () returns int
+Formatter is alias of (value is int) returns string
 ```
 
 Callable result types nest to the right.
 
 ```first
-Factory is alias of () is () is int
+Factory is alias of () returns () returns int
 ```
 
 Name callable types before forming arrays, nullable callables, or overload-like unions.
@@ -69,14 +69,14 @@ maybeReader is ReadInt or null = null
 Default expressions belong to the implementation, not to callable types. A type-only signature may write `= ?`, but not an executable default.
 
 ```first
-Connector is alias of (port is int = ?) is int
+Connector is alias of (port is int = ?) returns int
 ```
 
 A union of callable aliases in callable position acts as a simple overload list. Calls resolve to the first callable member in alias order whose signature accepts the provided arguments. Later, more specific signatures do not win.
 
 ```first
-TextReader is alias of (value is int) is string
-NumberReader is alias of (value is int) is int
+TextReader is alias of (value is int) returns string
+NumberReader is alias of (value is int) returns int
 
 Reader is alias of TextReader or NumberReader
 readerFn is Reader
@@ -100,13 +100,13 @@ Callable intersections are unsupported.
 Callable assignment uses exact positional parameter-type matching. Result types may be covariant: an implementation may return a more specific type than the destination requires.
 
 ```first
-DogReader is alias of (dog is Dog) is Animal
+DogReader is alias of (dog is Dog) returns Animal
 
-readDogFn = (dog is Dog) is Dog => makeDog()
+readDogFn = (dog is Dog) returns Dog => makeDog()
 readerFn is DogReader = readDogFn
 // Valid: the parameter type matches and Dog is usable as Animal.
 
-readAnimalFn = (animal is Animal) is Dog => makeDog()
+readAnimalFn = (animal is Animal) returns Dog => makeDog()
 badReaderFn is DogReader = readAnimalFn
 // Invalid: Animal is not exactly Dog.
 ```
@@ -125,7 +125,7 @@ Arguments is alias of transformFn.arguments
 For callable values, `.return` extracts the callable result type and `.arguments` extracts the callable parameter signature.
 
 ```first
-Transform is alias of (value is int) is string
+Transform is alias of (value is int) returns string
 transformFn is Transform = value => "converted"
 
 TransformResult is alias of transformFn.return
@@ -144,8 +144,8 @@ Extraction uses the finalized static signature. It does not inspect runtime clos
 For callable overload aliases, `.return` follows the same first-matching signature rule as invocation when enough argument context exists. Otherwise, narrow to one callable member before extraction. `.arguments` is available only when one callable member is known or every callable member has the same labels, types, optionality, and rest shape.
 
 ```first
-TextReader is alias of (value is int) is string
-NumberReader is alias of (value is int) is int
+TextReader is alias of (value is int) returns string
+NumberReader is alias of (value is int) returns int
 Reader is alias of TextReader or NumberReader
 
 ReaderArguments is alias of Reader.arguments

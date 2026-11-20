@@ -77,7 +77,7 @@ emptyFn = () => ()
 An explicit result type is written before `=>`.
 
 ```first
-readIntFn = () is int => 1
+readIntFn = () returns int => 1
 ```
 
 When the result type is omitted, First infers it from the expression body or from reachable `return` operations targeting the function expression. If a reachable path falls through without returning, `null` is included in the inferred result and that path returns `null`.
@@ -94,7 +94,7 @@ maybeOneFn = (ready is boolean) => (
 When an explicitly typed function expression falls through, it returns the declared result type's zero value.
 
 ```first
-zeroFn = () is int => ()
+zeroFn = () returns int => ()
 // > 0
 zeroFn()
 ```
@@ -192,16 +192,16 @@ readNameFn()
 
 ## Async, Yield, And Recovery
 
-Async function expressions use `is async`.
+Async function expressions use `returns async`.
 
 ```first
-readAsyncFn = () is async => readRemote()
+readAsyncFn = () returns async => readRemote()
 ```
 
 Function expressions cannot be generators and cannot contain function-targeting `yield`.
 
 ```first
-valuesFn = () is yield int => (
+valuesFn = () returns yield int => (
 	yield 1
 )
 // Invalid.

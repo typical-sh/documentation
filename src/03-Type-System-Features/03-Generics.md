@@ -9,7 +9,7 @@ Classes, functions, selection types, and aliases may be generic.
 Generic parameters share the ordinary parameter list with runtime parameters. An uppercase-leading parameter is generic; a lowercase-leading parameter is a runtime parameter.
 
 ```first
-identity(T, value is T) is T (
+identity(T, value is T) returns T (
 	return value
 )
 ```
@@ -19,7 +19,7 @@ A bare generic parameter is unconstrained. This follows the ordinary rule that a
 Annotate a generic parameter to constrain it. `TCol is Collection` is analogous to TypeScript's `TCol extends Collection`.
 
 ```first
-first(T, TCol is Collection(T), values is TCol) is T (
+first(T, TCol is Collection(T), values is TCol) returns T (
 	return values[0]
 )
 ```
@@ -47,14 +47,14 @@ Generic arguments are compile-time arguments. They do not become runtime values.
 A reference to a generic function preserves its generic signature. Assignment to a monomorphic callable type specializes it using the expected signature.
 
 ```first
-IntIdentity is alias of (value is int) is int
+IntIdentity is alias of (value is int) returns int
 intIdentity is IntIdentity = identity
 ```
 
 Generic function expressions follow the same rules.
 
 ```first
-identityFn = (T, value is T) is T => value
+identityFn = (T, value is T) returns T => value
 ```
 
 ## Generic Classes
@@ -189,7 +189,7 @@ inspect(T is Animal, value is T) (
 A generic function must be specialized before its signature can be extracted. An expected callable alias can provide that specialization.
 
 ```first
-StringIdentity is alias of (value is string) is string
+StringIdentity is alias of (value is string) returns string
 stringIdentity is StringIdentity = identity
 StringIdentityReturn is alias of stringIdentity.return
 ```
@@ -197,7 +197,7 @@ StringIdentityReturn is alias of stringIdentity.return
 To keep the extracted alias generic, explicitly declare and forward its generic parameters through a generic callable alias.
 
 ```first
-Identity(T) is alias of (value is T) is T
+Identity(T) is alias of (value is T) returns T
 IdentityReturn(T) is alias of Identity(T).return
 ```
 

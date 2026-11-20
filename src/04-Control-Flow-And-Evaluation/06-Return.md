@@ -9,7 +9,7 @@
 `return` does not target loops. Captured loops construct arrays through `yield` rather than receiving one returned value.
 
 ```first
-findItem(items is Item[]) is Item or null (
+findItem(items is Item[]) returns Item or null (
 	items each item (
 		if (isMatch(item)) (
 			return item
@@ -136,7 +136,7 @@ maybeOne(ready is boolean) (
 ```
 
 ```first
-label() is string (
+label() returns string (
 	if condition (
 		return "ready"
 	)
@@ -147,7 +147,7 @@ label() is string (
 An explicit return operand that is incompatible with the destination type also produces a notice and recovers with that destination's zero value.
 
 ```first
-label() is string (
+label() returns string (
 	// > Notice; returns "".
 	return 42
 )
@@ -164,7 +164,7 @@ Fallback follows the actual return destination. A return captured by a nested ma
 - `return.2` targets the destination outside that.
 
 ```first
-resolve(value is string) is Result (
+resolve(value is string) returns Result (
 	local = value matches (
 		"local" return makeLocalResult()
 		"global" return.1 makeFunctionResult()

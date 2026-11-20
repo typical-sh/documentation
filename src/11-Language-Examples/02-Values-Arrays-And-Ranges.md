@@ -5,7 +5,7 @@
 This function adds the integers from one through a supplied limit.
 
 ```first
-sumThrough(limit is int) is int (
+sumThrough(limit is int) returns int (
 	total is var int = 0
 	
 	1 to limit each value (
@@ -21,7 +21,7 @@ sumThrough(limit is int) is int (
 This function searches an array and returns the first matching index.
 
 ```first
-indexOf(values is int[], wanted is int) is uint or null (
+indexOf(values is int[], wanted is int) returns uint or null (
 	values each value index (
 		if (value == wanted) (
 			return index
@@ -37,7 +37,7 @@ indexOf(values is int[], wanted is int) is uint or null (
 This example combines array access, a range, arithmetic, and an array result.
 
 ```first
-changes(values is int[]) is int[] (
+changes(values is int[]) returns int[] (
 	result is editable int[]
 	
 	1 til values.length each index (
@@ -55,7 +55,7 @@ changes(values is int[]) is int[] (
 This naturally nested example produces a two-dimensional array.
 
 ```first
-multiplicationTable(size is int) is int[][] (
+multiplicationTable(size is int) returns int[][] (
 	rows is editable int[][]
 	
 	1 to size each rowNumber (

@@ -177,7 +177,7 @@ Custom primitives may define functions and getters. Scalar-backed custom primiti
 
 ```first
 Counter is u64 (
-	next() is Counter (
+	next() returns Counter (
 		return Counter(this + 1)
 	)
 )
@@ -197,7 +197,7 @@ When a shadowing member needs to call the base behavior, it can use `super`.
 
 ```first
 MyString is string (
-	toString() is string (
+	toString() returns string (
 		return "MyString(" + super.toString() + ")"
 	)
 )
@@ -207,7 +207,7 @@ For ordinary operations, use `this`.
 
 ```first
 Score is int (
-	add(amount is int) is Score (
+	add(amount is int) returns Score (
 		return Score(this + amount)
 	)
 )

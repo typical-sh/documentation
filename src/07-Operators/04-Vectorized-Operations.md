@@ -247,7 +247,7 @@ Vector2 is primitive (
 	x is f64
 	y is f64
 	
-	* (scale is f64) is Vector2 (
+	* (scale is f64) returns Vector2 (
 		return Vector2(this.x * scale, this.y * scale)
 	)
 )

@@ -4,7 +4,7 @@
 
 `as` is contextual within import aliases and loop labels.
 
-`abstract` is contextual after `constructor is`, after a function signature's `is`, and before an abstract function's return type. `space` and `static` are not language keywords.
+`abstract` is contextual after `constructor returns`, after a function signature's `returns`, and before an abstract function's return type. `space` and `static` are not language keywords.
 
 ## Reserved Token Candidates (via TypeScript)
 
@@ -72,3 +72,5 @@
 ## Selection Tokens
 
 `one of`, `many of`, and `one case of` are compound selection keywords. `or` also composes selections in declaration headers. The former `one value of` compound token is removed; no legacy-spelling metadata is retained.
+
+`returns` introduces function result annotations, including async and generator results. `get` and `set` prefix property accessor statements. `value` is contextual inside a property setter.

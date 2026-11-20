@@ -143,32 +143,32 @@ The list of "methods" available on each `many of` is as follows:
 ```first
 // Returns true if this value contains the flag.
 // Replaces: (target & flag) === flag
-hasFlag(flag is TManyOf) is boolean
+hasFlag(flag is TManyOf) returns boolean
 
 // Returns a new value with the flag added.
 // Replaces: target | flag
-addFlag(flag is TManyOf) is TManyOf
+addFlag(flag is TManyOf) returns TManyOf
 
 // Returns a new value with the flag removed.
 // Replaces: target & ~flag
-removeFlag(flag is TManyOf) is TManyOf
+removeFlag(flag is TManyOf) returns TManyOf
 
 // Returns a new value with the flag's state inverted.
 // Replaces: target ^ flag
-toggleFlag(flag is TManyOf) is TManyOf
+toggleFlag(flag is TManyOf) returns TManyOf
 
 // Returns true if this value has no flags set (is 0).
-hasNoFlags() is boolean
+hasNoFlags() returns boolean
 
 // Returns true if any of the provided flags are present in this value.
 // Replaces: (target & (flagA | flagB)) !== 0
-hasAnyFlag(...flags is TManyOf[]) is boolean
+hasAnyFlag(...flags is TManyOf[]) returns boolean
 
 // Returns true only if every provided flag is present in this value.
-hasAllFlag(...flags is TManyOf[]) is boolean
+hasAllFlag(...flags is TManyOf[]) returns boolean
 
 // Returns a list of numbers representing the individual flag values that make up this value.
 // This handles overlapping values (like 'vertical = 3') by decomposing 
 // based on the smallest power-of-two components. The empty flag state is not included in the result.
-decomposeFlags() is number[]
+decomposeFlags() returns number[]
 ```

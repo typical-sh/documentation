@@ -4,10 +4,10 @@ They are useful when behavior belongs with a type at the call site, but the orig
 
 ```first
 🔌 StringMethods is extension of string (
-	reverseTrim() is string (
+	reverseTrim() returns string (
 	)
 	
-	trimUnicode() is string (
+	trimUnicode() returns string (
 	)
 )
 ```
@@ -39,7 +39,7 @@ An extension can target multiple types with a space-separated target list. Comma
 ```first
 🔌 ReadableTools is extension of string File Buffer (
 	
-	readText() is string (
+	readText() returns string (
 	)
 )
 ```
@@ -51,7 +51,7 @@ When an extension applies to multiple targets, `this` has the union of the possi
 ```first
 🔌 DebugTools is extension of string User (
 	
-	debugLabel() is string (
+	debugLabel() returns string (
 		return this.toString()
 	)
 )
@@ -64,7 +64,7 @@ Inside an extension member, `this` refers to the value being extended.
 ```first
 🔌 StringMethods is extension of string (
 	
-	wrapped() is string (
+	wrapped() returns string (
 		return "[" + this + "]"
 	)
 )
@@ -89,13 +89,13 @@ When resolving a member call, real members on the type win over extension member
 User (
 	constructor
 	
-	displayName() is string (
+	displayName() returns string (
 		return "real"
 	)
 )
 
 🔌 UserDisplayExtensions is extension of User (
-	displayName() is string (
+	displayName() returns string (
 		return "extension"
 	)
 )
@@ -107,13 +107,13 @@ If more than one applicable extension provides the same member, ordinary member 
 
 ```first
 🔌 FirstUserExtensions is extension of User (
-	label() is string (
+	label() returns string (
 		return "first"
 	)
 )
 
 🔌 SecondUserExtensions is extension of User (
-	label() is string (
+	label() returns string (
 		return "second"
 	)
 )
@@ -146,7 +146,7 @@ Panel (
 )
 
 PanelTools is extension of Panel (
-	readCount() is int (
+	readCount() returns int (
 		return this.In.count
 	)
 )

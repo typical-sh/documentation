@@ -10,7 +10,7 @@ User (
 	
 name is string
 	
-displayName() is string (
+displayName() returns string (
 	return name
 )
 )
@@ -139,7 +139,7 @@ Base (
 	constructor
 	In (
 		a is int = 1
-		label() is string (
+		label() returns string (
 			return "base"
 		)
 	)
@@ -148,7 +148,7 @@ Base (
 Child is Base (
 	In (
 		b is int = 2
-		label() is string (
+		label() returns string (
 			return super.In.label() + " child"
 		)
 	)
@@ -175,7 +175,7 @@ Left (
 	In (
 		left is int = 1
 	)
-	readLeft(other is Left) is int (
+	readLeft(other is Left) returns int (
 		return other.In.left
 	)
 )
@@ -188,7 +188,7 @@ Right (
 )
 
 Combined is Left, Right (
-	readBoth(other is Combined) is int (
+	readBoth(other is Combined) returns int (
 		return other.In.left + other.In.right
 	)
 )
@@ -223,7 +223,7 @@ Right (
 
 Extra (
 	constructor
-	label() is string (
+	label() returns string (
 		return "extra"
 	)
 )
@@ -255,7 +255,7 @@ Panel (
 		constructor
 		name is string = "subject"
 	)
-	createItem() is Panel.Item (
+	createItem() returns Panel.Item (
 		return Item()
 	)
 )

@@ -42,7 +42,7 @@ A unit may have a body for functions and operator overloads. Fields, constructor
 m is unit
 
 cm is unit (
-	operator + (this, that is cm) is cm (
+	operator + (this, that is cm) returns cm (
 		return cm(this + that)
 	)
 )
@@ -52,7 +52,7 @@ Functions associated with a unit are resolved as compile-time member syntax on t
 
 ```first
 cm is unit (
-	toM(this) is m (
+	toM(this) returns m (
 		return m(this / 100)
 	)
 )
@@ -97,7 +97,7 @@ Unit application lowers to the expression's underlying numeric value after check
 Validation, normalization, and conversion belong in ordinary functions or explicit operator overloads.
 
 ```first
-requirePositiveMeters(value is m) is m (
+requirePositiveMeters(value is m) returns m (
 	if (value < m(0)) (
 // > library-defined notice or bomb behavior
 	
@@ -186,13 +186,13 @@ Libraries may define conversions or cross-unit operations with unit functions an
 
 ```first
 inch is unit (
-	toCm(this) is cm (
+	toCm(this) returns cm (
 		return cm(this * 2.54)
 	)
 )
 
 cm is unit (
-	operator + (this, that is inch) is cm (
+	operator + (this, that is inch) returns cm (
 		return cm(this + that.toCm())
 	)
 )
@@ -225,11 +225,11 @@ s is unit
 mps is unit
 
 m is unit (
-	operator * (this, that is m) is m2 (
+	operator * (this, that is m) returns m2 (
 		return m2(this * that)
 	)
 
-	operator / (this, that is s) is mps (
+	operator / (this, that is s) returns mps (
 		return mps(this / that)
 	)
 )

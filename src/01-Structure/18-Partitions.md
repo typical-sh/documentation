@@ -148,3 +148,5 @@ Compiling an incomplete partition view is distinct from executing the fully asse
 The compiler reports notices for same-partition duplicate declarations, references across a forbidden visibility boundary, forbidden changes to architectural parameters or successful result types, widened non-function ancestor contracts, incompatible returned values, and multiple bodyless architectural declarations of one function.
 
 Partition merging does not silently select the first or last implementation to resolve these conflicts. Construct-specific recovery follows the respective language rules.
+
+A field declaration can receive a property implementation in a lower partition. Both use the same member type and architectural contract; the implementation adds a body containing `get` and/or `set` statements. Access follows partition rules without separate accessor visibility modifiers. See [[09-Properties]].

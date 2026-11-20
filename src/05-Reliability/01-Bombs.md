@@ -12,7 +12,7 @@ The most natural way to throw a bomb is to just use a `throw` expression that Ty
 // This method has a throw, so the 💣 appears,
 // and the return type of the method becomes int | bomb
 // instead of just int.
-start() is int 💣 (
+start() returns int 💣 (
 	if (1 + 1 === 3) (
 		throw "We can't math."
 	)
@@ -54,7 +54,7 @@ start() (
 Alternatively, you can use `throw` as an operator and suffix it after the bomb-ridden expression. Using throw as an operator is the quick escape hatch to pass it off to the containing context without thinking too much.
 
 ```first
-// start() is bombable now, because of the throw operator.
+// start() returns bombable now, because of the throw operator.
 start() 💣 (
 	// > foo is just Foo
 	🥚 foo = getFooOrBomb() 💣 throw
@@ -136,11 +136,11 @@ start() (
 	)
 )
 
-getStringMaybe() is string 💣 (
+getStringMaybe() returns string 💣 (
 	return Math.random() > 0.5 ? "Hello" : throw "Bomb"
 )
 
-getStringOrGenericBomb() is string 💣 (
+getStringOrGenericBomb() returns string 💣 (
 	return Math.random() > 0.5 ? "Foo" : throw
 )
 ```
@@ -150,7 +150,7 @@ getStringOrGenericBomb() is string 💣 (
 Propagation happens using a bomb type inference system.
 
 ```first
-mightFail() is string 💣 (
+mightFail() returns string 💣 (
 	if (Math.random() > 0.5) (
 		throw "Error"
 	)
@@ -204,7 +204,7 @@ catchFirst() (
 	return str + "!"
 )
 
-getStringNullBomb() is string 💣 (
+getStringNullBomb() returns string 💣 (
 	🥚 r = Math.random()
 	if (r < 0.33)
 		return "Hello"

@@ -5,7 +5,7 @@
 This function uses sequential conditions with early returns.
 
 ```first
-classify(value is int) is string (
+classify(value is int) returns string (
 	if (value < 0) (
 		return "negative"
 	)
@@ -23,7 +23,7 @@ classify(value is int) is string (
 This captured match assigns a label according to the first matching arm.
 
 ```first
-temperatureLabel(celsius is int) is string (
+temperatureLabel(celsius is int) returns string (
 	return celsius matches (
 		-50 to 0 "freezing"
 		1 to 15 "cold"
@@ -39,7 +39,7 @@ temperatureLabel(celsius is int) is string (
 Several command names intentionally select the same behavior.
 
 ```first
-normalizedCommand(command is string) is string (
+normalizedCommand(command is string) returns string (
 	return command matches (
 		"q"
 		"quit"
@@ -58,7 +58,7 @@ normalizedCommand(command is string) is string (
 This composed example uses a loop, a condition, and a captured match.
 
 ```first
-firstPassingGrade(grades is int[]) is string (
+firstPassingGrade(grades is int[]) returns string (
 	grades each grade index (
 		label = grade matches (
 			90 to 100 "excellent"

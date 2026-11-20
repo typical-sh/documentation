@@ -60,7 +60,7 @@ Panel (
 
 Panel (
 	constructor
-	readTitle() is string (
+	readTitle() returns string (
 		return title
 	)
 )
@@ -77,7 +77,7 @@ Panel (
 )
 
 Panel (
-	readDefault() is string (
+	readDefault() returns string (
 		return "Inbox"
 	)
 )
@@ -88,7 +88,7 @@ console.log(Panel.readDefault())
 // panel.readDefault(): notice.
 ```
 
-Merging recursively unions distinct nested members. Duplicate fields, functions, properties of the same accessor kind, implemented constructors, or ghosts produce notices. Distinct getter and setter fragments may form one property. Conflicting parent lists produce a notice; as recovery, later fragments are internally reordered to match the first accepted parent order rather than creating a new order.
+Merging recursively unions distinct nested members. Duplicate fields, functions, property implementations, implemented constructors, or ghosts produce notices. Conflicting parent lists produce a notice; as recovery, later fragments are internally reordered to match the first accepted parent order rather than creating a new order.
 
 Imports belong to the logical merged container. Identical imports may coalesce. Conflicting aliases or package versions in the same container produce notices.
 
@@ -126,7 +126,7 @@ A lexical scope may contain one space and one class with the same name:
 
 ```first
 User (
-	find(id is string) is User (
+	find(id is string) returns User (
 	)
 )
 
@@ -219,7 +219,7 @@ Counter (
 	bump() (
 		In.count += 1
 	)
-	read() is int (
+	read() returns int (
 		return In.count
 	)
 )
@@ -255,7 +255,7 @@ item = panel.Item()
 The declaration-qualified path remains valid in type positions and parent lists because naming a type performs no runtime access:
 
 ```first
-read(item is Panel.Item) is string (
+read(item is Panel.Item) returns string (
 	return item.name
 )
 ```
@@ -270,7 +270,7 @@ Panel (
 	)
 	Item (
 		constructor
-		read(outer is Panel) is int (
+		read(outer is Panel) returns int (
 			return outer.In.count
 		)
 	)

@@ -160,7 +160,7 @@ This lets setup code live beside the space that owns it.
 
 Instance-owned startup runs only after all required parent constructor bodies and the most-derived constructor body have completed successfully. A `super(...)` call initializes the parent fields and runs the parent constructor body; it does not run parent-owned startup before returning.
 
-Startup remains inside the construction success boundary. The instance is unavailable to its caller until every startup block completes. A bomb stops the remaining traversal and fails construction through ordinary constructor bomb handling. An `await` inside startup is permitted only when the owning constructor is declared `constructor(...) is async`; startup has no separate async annotation.
+Startup remains inside the construction success boundary. The instance is unavailable to its caller until every startup block completes. A bomb stops the remaining traversal and fails construction through ordinary constructor bomb handling. An `await` inside startup is permitted only when the owning constructor is declared `constructor(...) returns async`; startup has no separate async annotation.
 
 Inherited startup contributions all run. Parent class parts are traversed in parent order, each using its own source-order depth-first traversal, followed by the child's local traversal. Same-name merged spaces do not override one another's startup blocks. Ordinary later-parent precedence still governs member lookup after construction.
 

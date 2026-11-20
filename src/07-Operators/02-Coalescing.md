@@ -104,7 +104,7 @@ handle() (
 	return str + "!"
 )
 
-getStringMaybe() is string 💣 (
+getStringMaybe() returns string 💣 (
 	return Math.random() > 0.5 ? "Hello" : throw "Bomb"
 )
 ```

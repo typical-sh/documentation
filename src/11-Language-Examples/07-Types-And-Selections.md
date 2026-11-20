@@ -15,7 +15,7 @@ Day is one of (
 	sunday
 )
 
-isWeekend(day is Day) is bool (
+isWeekend(day is Day) returns bool (
 	return day matches (
 		Day.saturday
 		Day.sunday true
@@ -36,7 +36,7 @@ Status is one of (
 	notFound = 404
 )
 
-isSuccess(status is Status) is bool (
+isSuccess(status is Status) returns bool (
 	return status matches (
 		Status.ok
 		Status.created true
@@ -50,11 +50,11 @@ isSuccess(status is Status) is bool (
 Generic type parameters appear first in the ordinary parameter list. Their uppercase names distinguish them from runtime parameters.
 
 ```first
-identity(T, value is T) is T (
+identity(T, value is T) returns T (
 	return value
 )
 
-retainName(name is string) is string (
+retainName(name is string) returns string (
 	return identity(name)
 )
 ```
@@ -71,7 +71,7 @@ Priority is one of (
 	urgent = 4
 )
 
-priorityNames() is string[] (
+priorityNames() returns string[] (
 	names is editable string[]
 	
 	Priority each name value (
