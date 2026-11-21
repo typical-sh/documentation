@@ -167,7 +167,7 @@ Inside an instance-owned space, `super` still denotes the owning class's inherit
 
 Inheritance parents are classes. A non-constructible space cannot be used as a parent merely to share its declarations.
 
-Protected nested partitions follow the declaring class, not the final merged child view. A child body may access protected partitions owned by any of its ancestors through any compatible receiver. An inherited parent body keeps the authority and bindings it had where it was declared; it does not gain access to child-only partitions or unrelated-parent partitions merely because a child merges those groups.
+Protected nested layers follow the declaring class, not the final merged child view. A child body may access protected layers owned by any of its ancestors through any compatible receiver. An inherited parent body keeps the authority and bindings it had where it was declared; it does not gain access to child-only layers or unrelated-parent layers merely because a child merges those groups.
 
 ```typical
 Left (
@@ -194,7 +194,7 @@ Combined is Left, Right (
 )
 ```
 
-`Combined.readBoth` can see both inherited protected partitions. `Left.readLeft` keeps its original `Left` authority and does not acquire a binding for `In.right`.
+`Combined.readBoth` can see both inherited protected layers. `Left.readLeft` keeps its original `Left` authority and does not acquire a binding for `In.right`.
 
 Typical does not have abstract classes, abstract constructors, or abstract members. A declaration without a constructor remains a space. Bodyless functions and members are ordinary incomplete declarations with fallback behavior, not descendant implementation requirements.
 

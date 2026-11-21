@@ -164,7 +164,7 @@ download() (
 
 Semantic disagreement is reported through agent evaluation, not a compiler notice for otherwise valid statements. The agent may also identify missing implementation or an instruction that is only partly satisfied. An empty context remains valid sketch material and must be distinguishable from a completed implementation.
 
-These local contexts are separate from the named criticality partitions described in [[18-Partitions]]. They do not create partition paths or participate in declaration merging. Anchors may describe responsibilities and guardrails relevant to deeper partition contributions without becoming partitions themselves.
+These local contexts are separate from the named layers described in [[18-Layers]]. They do not create layer paths or participate in declaration merging. Anchors may describe responsibilities and guardrails relevant to deeper layer contributions without becoming layers themselves.
 
 ## Ownership
 
@@ -219,4 +219,4 @@ Tooling may retain history, provenance, authorship, conversation records, evalua
 - Invariants established with `declare` alter compiler behavior deterministically.
 - Contracts, including `ensure` postconditions, and tests are deterministic language mechanisms.
 - Partial Verification checks semantic islands used by anchors and examples.
-- Criticality partitions organize declaration contributions by level of detail. Imperative implementation contexts organize work within an executable body.
+- Layers of criticality organize declaration contributions by level of detail. Imperative implementation contexts organize work within an executable body.

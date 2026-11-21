@@ -1,6 +1,6 @@
 # Spaces and Classes
 
-Spaces are Typical's primary mechanism for partitioning programs by responsibility. A space contains the declarations that collectively implement one responsibility and may contain classes, functions, values, types, startup functions, and nested spaces. Spaces may be nested to whatever depth the program's decomposition requires.
+Spaces are Typical's primary mechanism for organizing programs by responsibility. A space contains the declarations that collectively implement one responsibility and may contain classes, functions, values, types, startup functions, and nested spaces. Spaces may be nested to whatever depth the program's decomposition requires.
 
 Spaces are not merely namespaces. Although they provide qualified names, avoiding naming collisions is not their primary purpose. Source files are likewise not part of this semantic structure: they do not create scopes or divide the program into components. Files are a storage and interchange detail; spaces express the program's architectural boundaries.
 
@@ -208,7 +208,7 @@ console.log(b.read())
 
 The path is part of each grouped member's address. `a.In.count` does not create an alias named `a.count`. A space adds no allocation, identity, receiver, or runtime value of its own, so a space cannot be assigned, passed, returned, compared, or replaced. Compiler-side code may inspect its declarations through the compiler's reflection facilities.
 
-Nested spaces and nested classes below a class are protected structural partitions. Their paths are available to the owning class, structurally nested class bodies with an explicit receiver, and nominal descendants. They are not public instance paths:
+Nested spaces and nested classes below a class are protected structural layers. Their paths are available to the owning class, structurally nested class bodies with an explicit receiver, and nominal descendants. They are not public instance paths:
 
 ```typical
 Counter (
@@ -260,7 +260,7 @@ read(item is Panel.Item) returns string (
 )
 ```
 
-Two `Panel` instances expose the same nested nominal type. This receiver requirement does not create object-dependent types or give `Item` an implicit reference to its `Panel`. A nested class that needs outer instance state must receive or store an explicit reference. Structurally nested class bodies may use that explicit receiver to access the outer class's protected partitions:
+Two `Panel` instances expose the same nested nominal type. This receiver requirement does not create object-dependent types or give `Item` an implicit reference to its `Panel`. A nested class that needs outer instance state must receive or store an explicit reference. Structurally nested class bodies may use that explicit receiver to access the outer class's protected layers:
 
 ```typical
 Panel (

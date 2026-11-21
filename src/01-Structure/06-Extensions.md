@@ -135,7 +135,7 @@ An extension is a structural declaration. Its availability follows the program's
 
 An extension defined in the current program participates in the effective structural program. An extension provided by an imported package participates according to the package import rules. Source files do not create local extension scopes.
 
-An extension target does not grant protected access to the target's nested implementation partitions. Extension bodies have the authority of their own logical declaration, not the authority of the type they extend.
+An extension target does not grant protected access to the target's nested implementation layers. Extension bodies have the authority of their own logical declaration, not the authority of the type they extend.
 
 ```typical
 Panel (

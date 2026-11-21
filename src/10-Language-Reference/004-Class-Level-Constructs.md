@@ -27,7 +27,7 @@ Panel (
 
 A startup function is not a direct class member. It may occur in a nested space, where it participates in construction of the owning class instance. A nested space does not create an object or receiver; its fields and functions remain members of the surrounding instance under their qualified paths.
 
-A nested space is a protected structural partition of the class. A nested class creates a protected nominal type and a new instance boundary. Its declaration-qualified path is valid in type positions. Calling it requires authority over its owning class:
+A nested space is a protected structural layer of the class. A nested class creates a protected nominal type and a new instance boundary. Its declaration-qualified path is valid in type positions. Calling it requires authority over its owning class:
 
 ```typical
 panel = Panel("Inbox")

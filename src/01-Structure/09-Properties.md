@@ -31,10 +31,10 @@ name is string (
 
 `value` is a contextual keyword in the setter: it denotes the incoming value and has the property's declared type. It is not a declared parameter or a globally reserved identifier. Both accessors use the same property type. Setters do not supply a result.
 
-## Fields And Partitions
+## Fields And Layers
 
 There are no automatic properties or bodyless accessor declarations. A stored member is a field, such as `name is string`. A body containing only anchors remains a field annotation body.
 
-Fields and properties are compatible in architectural contracts. A lower partition can provide a property implementation for a field declared in an ancestor partition. Access follows architectural partition rules; properties do not introduce separate getter/setter visibility modifiers. See [[18-Partitions]].
+Fields and properties are compatible in architectural contracts. A lower layer can provide a property implementation for a field declared in an ancestor layer. Access follows architectural layer rules; properties do not introduce separate getter/setter visibility modifiers. See [[18-Layers]].
 
 Properties can appear in classes, spaces, and extensions. Space properties have no implicit instance.

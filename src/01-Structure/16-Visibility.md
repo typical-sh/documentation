@@ -2,7 +2,7 @@
 
 Typical does not use visibility modifiers or visibility lists for ordinary source declarations. Access follows the program's structural hierarchy.
 
-Direct ordinary members of a class are public. Nested spaces and nested classes inside a class are protected structural partitions. They are visible to the owning class, structurally nested class bodies when they have an explicit compatible receiver, and nominal descendants. They are not public instance paths.
+Direct ordinary members of a class are public. Nested spaces and nested classes inside a class are protected structural layers. They are visible to the owning class, structurally nested class bodies when they have an explicit compatible receiver, and nominal descendants. They are not public instance paths.
 
 ```typical
 Panel (
@@ -21,7 +21,7 @@ console.log(panel.count())
 // panel.In.count: notice.
 ```
 
-`In` is only a convention for an internal partition. It is not a keyword and does not receive special treatment. Any nested space below a class has the same protected access rule.
+`In` is only a convention for an internal layer. It is not a keyword and does not receive special treatment. Any nested space below a class has the same protected access rule.
 
 ## Nested Types
 
@@ -53,7 +53,7 @@ Using a protected nested class as an inheritance parent requires the same protec
 
 ## Descendants
 
-A descendant class may access protected partitions owned by its ancestors. The access check is on the declaring body, not on whether the receiver is the current object.
+A descendant class may access protected layers owned by its ancestors. The access check is on the declaring body, not on whether the receiver is the current object.
 
 ```typical
 Base (
@@ -70,7 +70,7 @@ Child is Base (
 )
 ```
 
-An inherited parent body keeps the authority it had where it was declared. It does not gain access to child-only partitions or unrelated-parent partitions merely because a child merges inherited spaces.
+An inherited parent body keeps the authority it had where it was declared. It does not gain access to child-only layers or unrelated-parent layers merely because a child merges inherited spaces.
 
 ## Structural Fragments
 
@@ -80,7 +80,7 @@ Imported package declarations retain package identity and cannot be reopened mer
 
 ## Invalid Access
 
-Attempting to cross a protected structural partition without authority produces a notice. The protected access does not execute; the affected operation becomes a no-op under ordinary recovery.
+Attempting to cross a protected structural layer without authority produces a notice. The protected access does not execute; the affected operation becomes a no-op under ordinary recovery.
 
 ```typical
 Panel (

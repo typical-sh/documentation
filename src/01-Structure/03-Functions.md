@@ -40,7 +40,7 @@ displayName() returns string (
 
 For an explicitly typed ordinary function, normal fall-through supplies the zero value of the declared result type silently. If the result annotation is invalid or unresolved, the compiler reports the type notice and the call returns `null` for recovery.
 
-Body omission does not create declaration/definition pairs. A second same-named function is still a duplicate declaration. A function signature may instead attach to an implementation partition under the partition rules.
+Body omission does not create declaration/definition pairs. A second same-named function is still a duplicate declaration. A function signature may instead attach to an implementation layer under the layer rules.
 
 ```typical
 add(a is int, b is int) returns int #123

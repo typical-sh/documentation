@@ -6,7 +6,7 @@ Typical is a statically typed language for describing the shape of a system. It'
 
 Typical describes a system’s structure in a readable, code-like format instead of prose. It can replace Markdown or HTML for specs. Early experiments suggest that agents translating Typical specs into code can use significantly less capable models while producing better results.
 
-We call Typical a _criticality-partitioned_ language. Today, the highest-criticality structure is written in Typical, while lower-criticality implementation is generated  into TypeScript, Swift, Rust, or Kotlin. Soon, both sides of that boundary will live in Typical. Humans will author the structure that must stay explicit and agents will expand the implementation where acceptable. The completed Typical program will then be mechanically translated to TypeScript, Swift, Rust, or Kotlin.
+We call Typical a language organized into layers of criticality. Today, the highest-criticality structure is written in Typical, while lower-criticality implementation is generated  into TypeScript, Swift, Rust, or Kotlin. Soon, both sides of that boundary will live in Typical. Humans will author the structure that must stay explicit and agents will expand the implementation where acceptable. The completed Typical program will then be mechanically translated to TypeScript, Swift, Rust, or Kotlin.
 
 ## Status
 
