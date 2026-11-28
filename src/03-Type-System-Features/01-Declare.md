@@ -18,6 +18,7 @@ F = Function
 
 | Member                                       | Description                                                                                                                                                                                                                                                                                               | Scope |
 | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| declare layer [path] | Selects a space-separated layer path for a contribution. See [[18-Layers]]. | S |
 | declare target [language] | Selects and configures a backend for a space. See [[02-Target-Configuration]]. | S |
 | declare sealed                               | Defines the class as not inheritable (sealed)                                                                                                                                                                                                                                                             | C     |
 | declare union                                | Declares a type as a structural union                                                                                                                                                                                                                                                                     | C     |
@@ -53,7 +54,7 @@ F = Function
 | declare worker W                             | Defines the thread on which code in a given scope executes                                                                                                                                                                                                                                                | SCF   |
 | declare size [primitive]                     | Fallback for rust's `#[repr(primitive)]`. Used on one-of's                                                                                                                                                                                                                                                | O     |
 | declare enableNanProtection                  | Causes the interpreter to break whenever a nan value is generated                                                                                                                                                                                                                                         | SCF   |
-| declare import P [version V] [features F...] | Establishes inherited wrapper-package features and version policy without creating a module binding.                                                                                                                                                                                                      | S     |
+| declare import P [features F...] [version V] | Establishes inherited wrapper-package features and version policy without creating a module binding.                                                                                                                                                                                                      | S     |
 
 ## Implicit Null Returns
 
@@ -78,10 +79,10 @@ The declaration does not change the inferred `string or null` result or the runt
 `declare import` establishes package policy in a space or class without introducing a module binding:
 
 ```typical
-declare import Sqlx version 1.2.3 features postgres mysql sqlite
+declare import Sqlx features postgres mysql sqlite version 1.2.3
 ```
 
-The `version` and `features` clauses are optional, and their ordering as described above is required.
+Both clauses are optional. When both appear, `features` comes before `version`.
 
 The declaration is visible in its containing space or class and in nested spaces and classes. A matching import inherits omitted features and versions from the nearest visible declaration. Options written directly on an import take precedence.
 
